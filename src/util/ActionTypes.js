@@ -17,6 +17,8 @@ export const ADD_GoldBug_FULFILLED = 'ADD_GoldBug_FULFILLED' ;
 
 export const ADD_GoldBug_REJECTED = 'ADD_GoldBug_REJECTED' ;
 
+export const HOMEPAGE_Visibility = "HOMEPAGE_Visibility";
+
 export const PAGE1_Visibility = "PAGE1_Visibility";
 
 export const PAGE2_Visibility = "PAGE2_Visibility";

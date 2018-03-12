@@ -3,7 +3,7 @@ import { Navigator_ } from "../components/NavigationPage"
 import { NavigationActions } from "react-navigation"
 import * as constant from '../util/Constant'
 
-const Original_Action = Navigator_.router.getActionForPathAndParams(constant.route_pathName.addGoldBugPage1);
+const Original_Action = Navigator_.router.getActionForPathAndParams(constant.route_pathName.homePage);
 const Original_State = Navigator_.router.getStateForAction(Original_Action);//用action和旧状态返回新状态，没有旧状态
 
 const init_state = {

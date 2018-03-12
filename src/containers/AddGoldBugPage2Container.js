@@ -3,7 +3,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import AddGoldBugPage2 from "../components/AddGoldBugPage2"
-import { addGoldBug, switchToPage1 } from "../actions/AddGoldBugAction"
+import { addGoldBug, page2ToPage1, switchToHome } from "../actions/AddGoldBugAction"
 import { push, pop, reset, goBack } from '../actions/NavigatorAction'
 
 export default connect(
@@ -19,6 +19,6 @@ export default connect(
     },
     (dispatch) => {
 
-        return (Object.assign({ dispatch: dispatch }, { actions: bindActionCreators({ push, pop, reset, goBack, addGoldBug, switchToPage1 }, dispatch) }));
+        return (Object.assign({ dispatch: dispatch }, { actions: bindActionCreators({ push, pop, reset, goBack, addGoldBug, page2ToPage1, switchToHome }, dispatch) }));
     }
 )(AddGoldBugPage2);

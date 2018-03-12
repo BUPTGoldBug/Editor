@@ -3,8 +3,9 @@ import * as types from '../util/ActionTypes'
 const initialState = {
     isAddingGoldBug: true,
     isAddingGoldBugSuccess: true,
-    isPage1Visible: true,
+    isPage1Visible: false,
     isPage2Visible: false,
+    isHomePageVisible:true,
     contentText: "Connecting..."
 };
 
@@ -72,6 +73,13 @@ export default function GoldBugReducer(state = initialState, action = {}) {
             let newState = {
                 ...state,
                 isPage2Visible: action.payload
+            };
+            return newState;
+        }
+        case types.HOMEPAGE_Visibility:{
+            let newState = {
+                ...state,
+                isHomePageVisible: action.payload
             };
             return newState;
         }

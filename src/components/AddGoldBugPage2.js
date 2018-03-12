@@ -114,7 +114,7 @@ export default class AddGoldBugPage2 extends Component {
                         <Grid style={{ marginTop: 15 }}>
                             <Col style={{}}>
                                 <Button block rounded style={{  backgroundColor: "#1CBBCF", height:60 }} onPress={() => {
-                                    this.props.actions.switchToPage1();
+                                    this.props.actions.page2ToPage1();
                                 }}>
                                     <Text >Previous</Text>
                                 </Button>

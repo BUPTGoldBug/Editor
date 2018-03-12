@@ -51,13 +51,13 @@ export default class AddGoldBugPage1 extends Component {
             posP_1: "",
             posP_2: "",
             posP_3: "",
-            //birthTime: "",
             deathTime: ""
         };
     }
 
     render() {
-        const { isPage1Visible} = this.props;
+        const {  isPage1Visible} = this.props;
+        const { lon, lat, planter } = this.props.navigation.state.params;
         console.log("ISADDGOLDBUGPAGE1 isVisible?");
         console.log(isPage1Visible);
 
@@ -79,7 +79,10 @@ export default class AddGoldBugPage1 extends Component {
                             </Item>
                         </Form>
                         <Button block rounded style={{ backgroundColor: "#ff00c9", height:60, marginTop:20 }} onPress={() => {
-                            this.props.actions.switchToPage2({ bugBasic: this.state });
+                            this.setState({ lon: lon});
+                            this.setState({ lat: lat });
+                            this.setState({ planter: planter });
+                            this.props.actions.page1ToPage2({ bugBasic: this.state });
                         }}>
                             <Text >Next</Text>
                         </Button>

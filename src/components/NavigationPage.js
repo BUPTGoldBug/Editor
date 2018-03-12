@@ -9,8 +9,15 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import AddGoldBugPage1 from '../containers/AddGoldBugPage1Container';
 import AddGoldBugPage2 from '../containers/AddGoldBugPage2Container';
+import HomePage from '../containers/HomePageContainer';
 
 export const routerConfig = {
+    HomePage:{
+        screen: HomePage,
+        navigationOptions: (navigation) => ({
+            header: null
+        })
+    },
     AddGoldBugPage1: {
         screen: AddGoldBugPage1,
         navigationOptions: (navigation) => ({
