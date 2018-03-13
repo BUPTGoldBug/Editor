@@ -29,6 +29,11 @@ import { View } from 'react-native'
 import * as constant from '../util/Constant'
 import Modal from "react-native-modal";
 
+
+import { TextInput, Image, Animated, Keyboard, KeyboardAvoidingView } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
+
 export default class AddGoldBugPage1 extends Component {
     constructor(props, context) {
         console.log("AddGoldBugPage1 props");
@@ -56,7 +61,7 @@ export default class AddGoldBugPage1 extends Component {
     }
 
     render() {
-        const {  isPage1Visible} = this.props;
+        const { isPage1Visible } = this.props;
         const { lon, lat, planter } = this.props.navigation.state.params;
         console.log("ISADDGOLDBUGPAGE1 isVisible?");
         console.log(isPage1Visible);
@@ -64,22 +69,22 @@ export default class AddGoldBugPage1 extends Component {
         return (
             <View>
                 <Modal isVisible={isPage1Visible} swipeDirection="right">
-                <View style={{ marginTop:120, marginBottom:150, marginLeft:40, marginRight:40, backgroundColor:"#D5EAE9",borderRadius:5,flex: 1, paddingTop:70, paddingLeft:25, paddingRight:25, paddingBottom:15}}>
+                    <View style={{ marginTop: 120, marginLeft: 40, marginRight: 40, marginBottom: 150, backgroundColor: "#D5EAE9", borderRadius: 5, flex: 1, paddingTop: 70, paddingLeft: 25, paddingRight: 25, paddingBottom: 25 }}>
                         <Form>
-                            <Item rounded style={{backgroundColor:"#D5EAE9",borderRadius:14, borderColor:"#555555"}}>
+                            <Item rounded style={{ backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>
                                 <Input placeholder='Time Change Setting' onChangeText={this.setTimeChangeEvent} />
                             </Item>
 
-                            <Item rounded style={{backgroundColor:"#D5EAE9", borderRadius:14,borderColor:"#555555"}}>
+                            <Item rounded style={{ backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>
                                 <Input placeholder='Position Change Setting' onChangeText={this.setPosChangeEvent} />
                             </Item>
 
-                            <Item rounded style={{backgroundColor:"#D5EAE9",borderRadius:14, borderColor:"#555555"}}>
+                            <Item rounded style={{ backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>
                                 <Input placeholder='GoldBug DeathTime' onChangeText={this.setDeathTimeEvent} />
                             </Item>
                         </Form>
-                        <Button block rounded style={{ backgroundColor: "#ff00c9", height:60, marginTop:20 }} onPress={() => {
-                            this.setState({ lon: lon});
+                        <Button block rounded style={{ backgroundColor: "#ff00c9", height: 60, marginTop: 20 }} onPress={() => {
+                            this.setState({ lon: lon });
                             this.setState({ lat: lat });
                             this.setState({ planter: planter });
                             this.props.actions.page1ToPage2({ bugBasic: this.state });
@@ -130,5 +135,40 @@ export default class AddGoldBugPage1 extends Component {
         this.setState({ deathTime: deathTime });
     }
 
-
 }
+
+    /*
+    constructor(props) {
+        super(props);
+
+    }
+
+    componentWillMount() {
+        this.keyboardWillShowSub = Keyboard.addListener('keyboardWillShow', this.keyboardWillShow);
+        this.keyboardWillHideSub = Keyboard.addListener('keyboardWillHide', this.keyboardWillHide);
+    }
+
+    componentWillUnmount() {
+        this.keyboardWillShowSub.remove();
+        this.keyboardWillHideSub.remove();
+    }
+
+    keyboardWillShow = (event) => {
+        /* Animated.timing(this.imageHeight, {
+           duration: event.duration,
+           toValue: IMAGE_HEIGHT_SMALL,
+         }).start();
+    };
+
+    keyboardWillHide = (event) => {
+        /* Animated.timing(this.imageHeight, {
+           duration: event.duration,
+           toValue: IMAGE_HEIGHT,
+         }).start();
+    };
+    // paddingBottom: 15 , paddingTop: 70, 
+    render() {
+        return (
+
+        );
+    }*/

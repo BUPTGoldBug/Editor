@@ -29,6 +29,8 @@ import Icon1 from 'react-native-vector-icons/FontAwesome'
 import { View } from 'react-native'
 import * as constant from '../util/Constant'
 import Modal from "react-native-modal";
+import { TextInput, Image, Animated, Keyboard, KeyboardAvoidingView } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 export default class AddGoldBugPage2 extends Component {
     constructor(props, context) {
@@ -78,60 +80,122 @@ export default class AddGoldBugPage2 extends Component {
 
 
         return (
-            <View>
-                <Modal isVisible={isPage2Visible} swipeDirection="right">
-                    <View style={{ marginTop: 50, marginBottom: 100, marginLeft: 40, marginRight: 40, backgroundColor: "#D5EAE9", borderRadius: 5, flex: 1, paddingTop: 30, paddingLeft: 25, paddingRight: 25, paddingBottom: 15 }}>
-                        <Form>
-                            <Item rounded style={{ backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>
-                                <Input placeholder='Question' onChangeText={this.setQuestionEvent} />
-                            </Item>
+            <KeyboardAwareScrollView
+                style={{ backgroundColor: "#D5EAE9", marginTop:30,marginBottom: 60, marginLeft: 20, marginRight: 20, borderRadius: 5, flex: 1 }}
+                resetScrollToCoords={{ x: 20, y: 20 }}
+                contentContainerStyle={{ backgroundColor: "#D5EAE9" }}
+            >
+  
+                    <Modal isVisible={isPage2Visible} swipeDirection="right">
 
-                            <Item rounded style={{ backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>
-                                <Input placeholder='Answer Candidate 1' onChangeText={this.setAns1Event} />
-                                <CheckBox checked={this.state.ans_1_selected} onPress={() => { this.setAns1SelectEvent(); console.log("ANS_1_SELECTED IS "); console.log(this.state.ans_1_selected); }} style={{ marginRight: 20 }} />
-                            </Item>
 
-                            <Item rounded style={{ backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>
-                                <Input placeholder='Answer Candidate 2' onChangeText={this.setAns2Event} />
-                                <CheckBox checked={this.state.ans_2_selected} onPress={() => { this.setAns2SelectEvent(); }} style={{ marginRight: 20 }} />
-                            </Item>
+                        <KeyboardAwareScrollView style={{ marginTop:60,marginBottom:20, marginLeft: 20, marginRight: 20, backgroundColor: "#D5EAE9", borderRadius: 5, flex: 1, paddingTop: 30, paddingLeft: 25, paddingRight: 25, paddingBottom: 30 }}>
+                            <Form>
+                                <Item rounded style={{ height : 80,backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>
+                                    <TextInput placeholder="Question" style={{ flex: 1 }} underlineColorAndroid='transparent' />
+                                </Item>
 
-                            <Item rounded style={{ backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>
-                                <Input placeholder='Answer Candidate 3' onChangeText={this.setAns3Event} />
-                                <CheckBox checked={this.state.ans_3_selected} onPress={() => { this.setAns3SelectEvent(); }} style={{ marginRight: 20 }} />
-                            </Item>
+                                <Item rounded style={{ backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>
+                                    <TextInput placeholder="Answer Candidate 1" style={{ flex: 1 }} underlineColorAndroid='transparent' />
+                                    <CheckBox checked={this.state.ans_1_selected} onPress={() => { this.setAns1SelectEvent(); console.log("ANS_1_SELECTED IS "); console.log(this.state.ans_1_selected); }} style={{ marginRight: 20 }} />
+                                </Item>
 
-                            <Item rounded style={{ backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>
-                                <Input placeholder='Answer Candidate 4' onChangeText={this.setAns4Event} />
-                                <CheckBox checked={this.state.ans_4_selected} onPress={() => { this.setAns4SelectEvent(); }} style={{ marginRight: 20 }} />
-                            </Item>
+                                <Item rounded style={{ backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>
+                                    <TextInput placeholder="Answer Candidate 2" style={{ flex: 1 }} underlineColorAndroid='transparent' />
+                                    <CheckBox checked={this.state.ans_2_selected} onPress={() => { this.setAns2SelectEvent(); }} style={{ marginRight: 20 }} />
+                                </Item>
 
-                            <Item rounded style={{ backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>
-                                <Input placeholder='Scores' onChangeText={this.setScoresEvent} />
-                            </Item>
+                                <Item rounded style={{ backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>
+                                    <TextInput placeholder="Answer Candidate 3" style={{ flex: 1 }} underlineColorAndroid='transparent' />
+                                    <CheckBox checked={this.state.ans_3_selected} onPress={() => { this.setAns3SelectEvent(); }} style={{ marginRight: 20 }} />
+                                </Item>
 
-                        </Form>
-                        <Grid style={{ marginTop: 15 }}>
-                            <Col style={{}}>
-                                <Button block rounded style={{  backgroundColor: "#1CBBCF", height:60 }} onPress={() => {
-                                    this.props.actions.page2ToPage1();
-                                }}>
-                                    <Text >Previous</Text>
-                                </Button>
-                            </Col>
-                            <Col style={{}}>
-                                <Button block rounded style={{  backgroundColor: "#ff00c9", height:60 }} onPress={() => { this.commitGoldBug(bugBasic) }}>
-                                    <Text >Plant</Text>
-                                </Button>
-                            </Col>
-                        </Grid>
-                    </View>
+                                <Item rounded style={{ backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>
+                                    <TextInput placeholder="Answer Candidate 4" style={{ flex: 1 }} underlineColorAndroid='transparent' />
+                                    <CheckBox checked={this.state.ans_4_selected} onPress={() => { this.setAns4SelectEvent(); }} style={{ marginRight: 20 }} />
+                                </Item>
+
+                                <Item rounded style={{ backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>
+                                    <TextInput placeholder="Scores" style={{ flex: 1 }} underlineColorAndroid='transparent' />
+                                </Item>
+
+                            </Form>
+
+                            <Grid style={{ marginTop: 25 }}>
+                                <Col style={{}}>
+                                    <Button block rounded style={{ backgroundColor: "#1CBBCF", height: 70 }} onPress={() => {
+                                        this.props.actions.page2ToPage1();
+                                    }}>
+                                        <Text >Previous</Text>
+                                    </Button>
+                                </Col>
+                                <Col style={{}}>
+                                    <Button block rounded style={{ backgroundColor: "#ff00c9", height: 70 }} onPress={() => { this.commitGoldBug(bugBasic) }}>
+                                        <Text >Plant</Text>
+                                    </Button>
+                                </Col>
+                            </Grid>
+
+                        </KeyboardAwareScrollView>
+
                 </Modal>
-            </View>
+
+            </KeyboardAwareScrollView >
         );
 
     }
-
+    /*
+     <View>
+                    <Modal isVisible={isPage2Visible} swipeDirection="right">
+                        <View style={{ marginTop: 50, marginBottom: 100, marginLeft: 40, marginRight: 40, backgroundColor: "#D5EAE9", borderRadius: 5, flex: 1, paddingTop: 30, paddingLeft: 25, paddingRight: 25, paddingBottom: 15 }}>
+                            <Form>
+                                <Item rounded style={{ backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>
+                                    <Input placeholder='Question' onChangeText={this.setQuestionEvent} />
+                                </Item>
+    
+                                <Item rounded style={{ backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>
+                                    <Input placeholder='Answer Candidate 1' onChangeText={this.setAns1Event} />
+                                    <CheckBox checked={this.state.ans_1_selected} onPress={() => { this.setAns1SelectEvent(); console.log("ANS_1_SELECTED IS "); console.log(this.state.ans_1_selected); }} style={{ marginRight: 20 }} />
+                                </Item>
+    
+                                <Item rounded style={{ backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>
+                                    <Input placeholder='Answer Candidate 2' onChangeText={this.setAns2Event} />
+                                    <CheckBox checked={this.state.ans_2_selected} onPress={() => { this.setAns2SelectEvent(); }} style={{ marginRight: 20 }} />
+                                </Item>
+    
+                                <Item rounded style={{ backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>
+                                    <Input placeholder='Answer Candidate 3' onChangeText={this.setAns3Event} />
+                                    <CheckBox checked={this.state.ans_3_selected} onPress={() => { this.setAns3SelectEvent(); }} style={{ marginRight: 20 }} />
+                                </Item>
+    
+                                <Item rounded style={{ backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>
+                                    <Input placeholder='Answer Candidate 4' onChangeText={this.setAns4Event} />
+                                    <CheckBox checked={this.state.ans_4_selected} onPress={() => { this.setAns4SelectEvent(); }} style={{ marginRight: 20 }} />
+                                </Item>
+    
+                                <Item rounded style={{ backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>
+                                    <Input placeholder='Scores' onChangeText={this.setScoresEvent} />
+                                </Item>
+    
+                            </Form>
+                            <Grid style={{ marginTop: 15 }}>
+                                <Col style={{}}>
+                                    <Button block rounded style={{  backgroundColor: "#1CBBCF", height:60 }} onPress={() => {
+                                        this.props.actions.page2ToPage1();
+                                    }}>
+                                        <Text >Previous</Text>
+                                    </Button>
+                                </Col>
+                                <Col style={{}}>
+                                    <Button block rounded style={{  backgroundColor: "#ff00c9", height:60 }} onPress={() => { this.commitGoldBug(bugBasic) }}>
+                                        <Text >Plant</Text>
+                                    </Button>
+                                </Col>
+                            </Grid>
+                        </View>
+                    </Modal>
+                </View>
+    */
     setAns1SelectEvent() {
         if (this.state.ans_1_selected == true) {
             this.setState({ ans_1_selected: false });
