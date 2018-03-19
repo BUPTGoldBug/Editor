@@ -72,6 +72,7 @@ export default class HomePage extends Component {
         };
     }
 
+
     componentDidMount() {
         this.mounted = true
         setInterval(() => {
@@ -84,6 +85,7 @@ export default class HomePage extends Component {
     componentWillUnmount() {
         this.mounted = false
     }
+
 
     _coordinates = [
         {
@@ -107,13 +109,18 @@ export default class HomePage extends Component {
     _onMarkerPress = () => Alert.alert('Catch me to win bonus~')
     _onInfoWindowPress = () => Alert.alert('Catch me to win bonus~')
     _onDragEvent = ({ nativeEvent }) => {
-        console.log("PPOINT READ FROM AMAP IS ");
+        console.log("PPOINT READ FROM AMAP IS~~~~~~~~~~~~~~~~~ ");
         console.log(nativeEvent.longitude);
         console.log(nativeEvent.latitude);
 
-        this.setState({ lon: nativeEvent.longitude});
-        this.setState({ lat: nativeEvent.latitude});
-        this.props.actions.homeToPage1({ pointBasic: this.state });
+        var newState = Object.assign({}, this.state);
+        newState.lon = nativeEvent.longitude;
+        newState.lat = nativeEvent.latitude;
+
+
+        console.log("STATE FROM HOME PAGE IS -------");
+        console.log(newState);
+        this.props.actions.homeToPage1({ pointBasic: newState });
     }
     
 

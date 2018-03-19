@@ -26,7 +26,7 @@ import {
 } from "native-base";
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import Icon1 from 'react-native-vector-icons/FontAwesome'
-import { View } from 'react-native'
+import { View, TouchableWithoutFeedback, Alert } from 'react-native'
 import * as constant from '../util/Constant'
 import Modal from "react-native-modal";
 import { TextInput, Image, Animated, Keyboard, KeyboardAvoidingView } from 'react-native';
@@ -81,62 +81,107 @@ export default class AddGoldBugPage2 extends Component {
 
         return (
             <KeyboardAwareScrollView
-                style={{ backgroundColor: "#D5EAE9", marginTop:30,marginBottom: 60, marginLeft: 20, marginRight: 20, borderRadius: 5, flex: 1 }}
+                style={{ backgroundColor: "#D5EAE9", marginTop: 30, marginBottom: 60, marginLeft: 20, marginRight: 20, borderRadius: 5, flex: 1 }}
                 resetScrollToCoords={{ x: 20, y: 20 }}
                 contentContainerStyle={{ backgroundColor: "#D5EAE9" }}
             >
-  
-                    <Modal isVisible={isPage2Visible} swipeDirection="right">
+
+                <Modal isVisible={isPage2Visible} swipeDirection="right">
 
 
-                        <KeyboardAwareScrollView style={{ marginTop:60,marginBottom:20, marginLeft: 20, marginRight: 20, backgroundColor: "#D5EAE9", borderRadius: 5, flex: 1, paddingTop: 30, paddingLeft: 25, paddingRight: 25, paddingBottom: 30 }}>
-                            <Form>
-                                <Item rounded style={{ height : 80,backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>
-                                    <TextInput placeholder="Question" style={{ flex: 1 }} underlineColorAndroid='transparent' />
+                    <KeyboardAwareScrollView style={{ marginTop: 60, marginBottom: 20, marginLeft: 20, marginRight: 20, backgroundColor: "#D5EAE9", borderRadius: 5, flex: 1, paddingTop: 30, paddingLeft: 25, paddingRight: 25, paddingBottom: 30 }}>
+                        <Form>
+                            <Item rounded style={{ height: 80, backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>
+                                <TextInput placeholder="Question" onChangeText={this.setQuestionEvent} style={{ flex: 1 }} underlineColorAndroid='transparent' />
+                            </Item>
+
+                            <View style={{ marginTop: 10,borderRadius: 14, backgroundColor: this.state.ans_1_selected == true ? '#ADD8E6' : '#D5EAE9' }}>
+                                <Item rounded style={{ borderRadius: 14, borderColor: "#555555" }}>
+                                    <View style={{ flex: 3 }}>
+                                        <TextInput placeholder="Answer Candidate 1" onChangeText={this.setAns1Event} style={{ flex: 1 }} underlineColorAndroid='transparent' />
+                                    </View>
+                                    <TouchableWithoutFeedback
+                                        style={{ flex: 1, paddingTop: 15, paddingLeft: 30 }}
+                                        onPressIn={() => { this.setAns1SelectEvent(); }}
+                                    >
+                                        <View style={{ flex: 1 }}>
+                                            <CheckBox checked={this.state.ans_1_selected} onPress={() => { this.setAns1SelectEvent(); console.log("ANS_1_SELECTED IS "); console.log(this.state.ans_1_selected); }} style={{ marginRight: 20 }} />
+                                        </View>
+                                    </TouchableWithoutFeedback>
                                 </Item>
+                            </View>
 
-                                <Item rounded style={{ backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>
-                                    <TextInput placeholder="Answer Candidate 1" style={{ flex: 1 }} underlineColorAndroid='transparent' />
-                                    <CheckBox checked={this.state.ans_1_selected} onPress={() => { this.setAns1SelectEvent(); console.log("ANS_1_SELECTED IS "); console.log(this.state.ans_1_selected); }} style={{ marginRight: 20 }} />
+
+                            <View style={{ borderRadius: 14, backgroundColor: this.state.ans_2_selected == true ? '#ADD8E6' : '#D5EAE9' }}>
+                                <Item rounded style={{ borderRadius: 14, borderColor: "#555555" }}>
+                                    <View style={{ flex: 3 }}>
+                                        <TextInput placeholder="Answer Candidate 2" onChangeText={this.setAns2Event} style={{ flex: 1 }} underlineColorAndroid='transparent' />
+                                    </View>
+                                    <TouchableWithoutFeedback
+                                        style={{ flex: 1, paddingTop: 15, paddingLeft: 30 }}
+                                        onPressIn={() => { this.setAns2SelectEvent(); }}
+                                    >
+                                        <View style={{ flex: 1 }}>
+                                            <CheckBox checked={this.state.ans_2_selected} onPress={() => { this.setAns2SelectEvent(); }} style={{ marginRight: 20 }} />
+                                        </View>
+                                    </TouchableWithoutFeedback>
                                 </Item>
+                            </View>
 
-                                <Item rounded style={{ backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>
-                                    <TextInput placeholder="Answer Candidate 2" style={{ flex: 1 }} underlineColorAndroid='transparent' />
-                                    <CheckBox checked={this.state.ans_2_selected} onPress={() => { this.setAns2SelectEvent(); }} style={{ marginRight: 20 }} />
+                            <View style={{ borderRadius: 14, backgroundColor: this.state.ans_3_selected == true ? '#ADD8E6' : '#D5EAE9' }}>
+                                <Item rounded style={{ borderRadius: 14, borderColor: "#555555" }}>
+                                    <View style={{ flex: 3 }}>
+                                        <TextInput placeholder="Answer Candidate 3" onChangeText={this.setAns3Event} style={{ flex: 1 }} underlineColorAndroid='transparent' />
+                                    </View>
+                                    <TouchableWithoutFeedback
+                                        style={{ flex: 1, paddingTop: 15, paddingLeft: 30 }}
+                                        onPressIn={() => { this.setAns3SelectEvent(); }}
+                                    >
+                                        <View style={{ flex: 1 }}>
+                                            <CheckBox checked={this.state.ans_3_selected} onPress={() => { this.setAns3SelectEvent(); }} style={{ marginRight: 20 }} />
+                                        </View>
+                                    </TouchableWithoutFeedback>
                                 </Item>
+                            </View>
 
-                                <Item rounded style={{ backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>
-                                    <TextInput placeholder="Answer Candidate 3" style={{ flex: 1 }} underlineColorAndroid='transparent' />
-                                    <CheckBox checked={this.state.ans_3_selected} onPress={() => { this.setAns3SelectEvent(); }} style={{ marginRight: 20 }} />
+                            <View style={{ borderRadius: 14, backgroundColor: this.state.ans_4_selected == true ? '#ADD8E6' : '#D5EAE9' }}>
+                                <Item rounded style={{ borderRadius: 14, borderColor: "#555555" }}>
+                                    <View style={{ flex: 3 }}>
+                                        <TextInput placeholder="Answer Candidate 4" onChangeText={this.setAns4Event} style={{ flex: 1 }} underlineColorAndroid='transparent' />
+                                    </View>
+                                    <TouchableWithoutFeedback
+                                        style={{ flex: 1, paddingTop: 15, paddingLeft: 30 }}
+                                        onPressIn={() => { this.setAns4SelectEvent(); }}
+                                    >
+                                        <View style={{ flex: 1 }}>
+                                            <CheckBox checked={this.state.ans_4_selected} onPress={() => { this.setAns4SelectEvent(); }} style={{ marginRight: 20 }} />
+                                        </View>
+                                    </TouchableWithoutFeedback>
                                 </Item>
+                            </View>
 
-                                <Item rounded style={{ backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>
-                                    <TextInput placeholder="Answer Candidate 4" style={{ flex: 1 }} underlineColorAndroid='transparent' />
-                                    <CheckBox checked={this.state.ans_4_selected} onPress={() => { this.setAns4SelectEvent(); }} style={{ marginRight: 20 }} />
-                                </Item>
+                            <Item rounded style={{ backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>
+                                <TextInput placeholder="Scores" onChangeText={this.setScoresEvent} style={{ flex: 1 }} underlineColorAndroid='transparent' />
+                            </Item>
 
-                                <Item rounded style={{ backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>
-                                    <TextInput placeholder="Scores" style={{ flex: 1 }} underlineColorAndroid='transparent' />
-                                </Item>
+                        </Form>
 
-                            </Form>
+                        <Grid style={{ marginTop: 25 }}>
+                            <Col style={{}}>
+                                <Button block rounded style={{ backgroundColor: "#1CBBCF", height: 70 }} onPress={() => {
+                                    this.props.actions.page2ToPage1();
+                                }}>
+                                    <Text >Previous</Text>
+                                </Button>
+                            </Col>
+                            <Col style={{}}>
+                                <Button block rounded style={{ backgroundColor: "#ff00c9", height: 70 }} onPress={() => { this.commitGoldBug(bugBasic) }}>
+                                    <Text >Plant</Text>
+                                </Button>
+                            </Col>
+                        </Grid>
 
-                            <Grid style={{ marginTop: 25 }}>
-                                <Col style={{}}>
-                                    <Button block rounded style={{ backgroundColor: "#1CBBCF", height: 70 }} onPress={() => {
-                                        this.props.actions.page2ToPage1();
-                                    }}>
-                                        <Text >Previous</Text>
-                                    </Button>
-                                </Col>
-                                <Col style={{}}>
-                                    <Button block rounded style={{ backgroundColor: "#ff00c9", height: 70 }} onPress={() => { this.commitGoldBug(bugBasic) }}>
-                                        <Text >Plant</Text>
-                                    </Button>
-                                </Col>
-                            </Grid>
-
-                        </KeyboardAwareScrollView>
+                    </KeyboardAwareScrollView>
 
                 </Modal>
 
@@ -226,15 +271,27 @@ export default class AddGoldBugPage2 extends Component {
     }
     setAns1Event(ans_1) {
         this.setState({ ans_1: ans_1 });
+        if (this.state.ans_1_selected == true) {
+            this.setState({ ans_1_selected: false });
+        }
     }
     setAns2Event(ans_2) {
         this.setState({ ans_2: ans_2 });
+        if (this.state.ans_2_selected == true) {
+            this.setState({ ans_2_selected: false });
+        }
     }
     setAns3Event(ans_3) {
         this.setState({ ans_3: ans_3 });
+        if (this.state.ans_3_selected == true) {
+            this.setState({ ans_3_selected: false });
+        }
     }
     setAns4Event(ans_4) {
         this.setState({ ans_4: ans_4 });
+        if (this.state.ans_4_selected == true) {
+            this.setState({ ans_4_selected: false });
+        }
     }
 
     setScoresEvent(scores) {
@@ -250,19 +307,19 @@ export default class AddGoldBugPage2 extends Component {
         this.setState({ birthTime: tmpTime });
 
         var key = "";
-        if (ans_1_selected == true) {
+        if (this.state.ans_1_selected == true) {
             key += "1";
         }
         else key += "0";
-        if (ans_2_selected == true) {
+        if (this.state.ans_2_selected == true) {
             key += "1";
         }
         else key += "0";
-        if (ans_3_selected == true) {
+        if (this.state.ans_3_selected == true) {
             key += "1";
         }
         else key += "0";
-        if (ans_4_selected == true) {
+        if (this.state.ans_4_selected == true) {
             key += "1";
         }
         else key += "0";
@@ -299,7 +356,7 @@ export default class AddGoldBugPage2 extends Component {
 
         console.log("GOLGBUG PARAMS AFTER ADDGOLDBUGPAGE2>>>>>>>");
         console.log(goldBugInfo);
-        this.props.actions.addGoldBug(goldBugInfo);
+        this.props.actions.Page2ToHome(goldBugInfo);
 
     }
 

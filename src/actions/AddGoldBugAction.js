@@ -30,7 +30,7 @@ export const addGoldBug = function (state) {
             ans_3: state.content.ans_3,
             ans_4: state.content.ans_4,
             contentType: state.content.contentType,
-            key: state.content.key
+            // key: state.content.key
         },
     });
 
@@ -85,6 +85,23 @@ export const homeToPage1 = function (params) {
         dispatch(setHomePageVisibility(false));
         //3.Set the Visibility of Page 1
         dispatch(setPage1Visibility(true));
+        //3.Set the Visibility of Page 2
+        dispatch(setPage2Visibility(false));
+    }
+}
+
+export const Page2ToHome = function (goldBugInfo) {
+
+    return (dispatch) => {
+
+        dispatch(addGoldBug(goldBugInfo));
+
+        //1.AddHomePage
+        dispatch(goBack(constant.route_pathName.homePage));
+        //2.Set the Visibility of Homepage
+        dispatch(setHomePageVisibility(true));
+        //3.Set the Visibility of Page 1
+        dispatch(setPage1Visibility(false));
         //3.Set the Visibility of Page 2
         dispatch(setPage2Visibility(false));
     }

@@ -62,9 +62,13 @@ export default class AddGoldBugPage1 extends Component {
 
     render() {
         const { isPage1Visible } = this.props;
-        const { lon, lat, planter } = this.props.navigation.state.params;
+        const { pointBasic } = this.props.navigation.state.params;
         console.log("ISADDGOLDBUGPAGE1 isVisible?");
         console.log(isPage1Visible);
+        console.log("POINT GET FROM PAGE 1 IS ~~~~~~~~~");
+        console.log(pointBasic.lon);
+        console.log(pointBasic.lat);
+
 
         return (
             <View>
@@ -84,10 +88,12 @@ export default class AddGoldBugPage1 extends Component {
                             </Item>
                         </Form>
                         <Button block rounded style={{ backgroundColor: "#ff00c9", height: 60, marginTop: 20 }} onPress={() => {
-                            this.setState({ lon: lon });
-                            this.setState({ lat: lat });
-                            this.setState({ planter: planter });
-                            this.props.actions.page1ToPage2({ bugBasic: this.state });
+                            var newState = Object.assign({}, this.state);
+                            newState.lon = pointBasic.lon;
+                            newState.lat = pointBasic.lat;
+                            newState.planter = pointBasic.planter;
+                            
+                            this.props.actions.page1ToPage2({ bugBasic: newState });
                         }}>
                             <Text >Next</Text>
                         </Button>

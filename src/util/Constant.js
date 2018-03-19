@@ -4,7 +4,7 @@
     POSITION_FILED:3
 };*/
 
-export const ROOT_SERVER_URL = "http://10.8.180.122:8080/goldbug/"; 
+export const ROOT_SERVER_URL = "http://172.20.10.2:8080/goldbug/"; 
 
 export const URL = {
     addUser: "addUser",
