@@ -65,10 +65,12 @@ export default class HomePage extends Component {
         this.setDeathTimeEvent = this.setDeathTimeEvent.bind(this);*/
 
         this.state = {
-            lon: "200",
-            lat: "300",
+            lon: 200,
+            lat: 300,
             planter: "luyao", // +++++++++++++++++++++Wait to be set+++++++++++++++++++++++++++++
-            tmpTime: new Date()
+            tmpTime: new Date(),
+            rt_lon:200,
+            rt_lat:300
         };
     }
 
@@ -87,32 +89,26 @@ export default class HomePage extends Component {
     }
 
 
-    _coordinates = [
-        {
-            latitude: 39.806901,
-            longitude: 116.397972,
-        },
-        {
-            latitude: 39.806901,
-            longitude: 116.297972,
-        },
-        {
-            latitude: 39.906901,
-            longitude: 116.397972,
-        },
-        {
-            latitude: 39.706901,
-            longitude: 116.397972,
-        },
-    ]
+    _onMarkerPress = () => {
+        console.log("STATE PASSED FROM HOME_PAGE TO POS_SETTING_PAGE is >>>>");
+        console.log(this.state);
 
-    _onMarkerPress = () => Alert.alert('Catch me to win bonus~')
+        this.props.actions.homeToPosSetPage({ pointBasic: this.state });
+    }
+
     _onInfoWindowPress = () => Alert.alert('Catch me to win bonus~')
     _onDragEvent = ({ nativeEvent }) => {
+
+        this.setState({ lon: nativeEvent.longitude, lat:nativeEvent.latitude });
+
         console.log("PPOINT READ FROM AMAP IS~~~~~~~~~~~~~~~~~ ");
         console.log(nativeEvent.longitude);
         console.log(nativeEvent.latitude);
 
+        console.log("THE STATE AFTER UPDATE IS >>>>>>>>>");
+        console.log(this.state.lon);
+        console.log(this.state.lat);
+        /*
         var newState = Object.assign({}, this.state);
         newState.lon = nativeEvent.longitude;
         newState.lat = nativeEvent.latitude;
@@ -121,6 +117,7 @@ export default class HomePage extends Component {
         console.log("STATE FROM HOME PAGE IS -------");
         console.log(newState);
         this.props.actions.homeToPosSetPage({ pointBasic: newState });
+        */
     }
     
 
@@ -129,7 +126,15 @@ export default class HomePage extends Component {
         const { isHomePageVisible } = this.props;
 
         return (
-            <MapView isVisible={isHomePageVisible} style={StyleSheet.absoluteFill}>
+            <MapView 
+            isVisible={isHomePageVisible} 
+            style={StyleSheet.absoluteFill}
+            locationEnabled
+            onLocation={({ nativeEvent }) =>{this.setState({ rt_lon: nativeEvent.longitude } ); this.setState({rt_lat:nativeEvent.latitude}); console.log(`${nativeEvent.latitude}, ${nativeEvent.longitude}`)}
+            }
+            showsTraffic={true}
+            region={{latitude:this.state.rt_lat, longitude:this.state.rt_lon, latitudeDelta:0.08, longitudeDelta:0.08}}
+            >
                 <MapView.Marker
                     active
                     draggable
@@ -137,7 +142,10 @@ export default class HomePage extends Component {
                     onDragEnd={this._onDragEvent}
                     onInfoWindowPress={this._onInfoWindowPress}
                     onPress={this._onMarkerPress}
-                    coordinate={this._coordinates[0]}>
+                    coordinate={{
+                        latitude:this.state.rt_lat-0.03,
+                        longitude:this.state.rt_lon+0.01
+                }}>
 
                     <TouchableOpacity activeOpacity={0.9} onPress={this._onInfoWindowPress}>
                         <View style={styles.customInfoWindow}>

@@ -6,6 +6,7 @@ const initialState = {
     isPage1Visible: false,
     isPage2Visible: false,
     isPosSetHomeVisible:false,
+    isEndPointPageVisible:false,
     isHomePageVisible:true,
     contentText: "Connecting..."
 };
@@ -91,6 +92,13 @@ export default function GoldBugReducer(state = initialState, action = {}) {
             };
             console.log("HERE IS THE NEW STATE AFTER GOLDBUGREDUCER PROCESSING~~~~~");
             console.log(newState);
+            return newState;
+        }
+        case types.EndPointSetPage_Visibility:{
+            let newState = {
+                ...state,
+                isEndPointPageVisible: action.payload
+            };
             return newState;
         }
         default: {

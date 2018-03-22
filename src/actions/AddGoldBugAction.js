@@ -55,6 +55,7 @@ export const addGoldBug = function (state) {
 
 }
 
+
 export const setHomePageVisibility = function (opt) {
     return {
         type: types.HOMEPAGE_Visibility,
@@ -65,6 +66,13 @@ export const setHomePageVisibility = function (opt) {
 export const setPosSetPageVisibility = function (opt) {
     return {
         type: types.PosSetPage_Visibility,
+        payload: opt
+    }
+}
+
+export const setEndPointSetPageVisibility = function (opt) {
+    return {
+        type: types.EndPointSetPage_Visibility,
         payload: opt
     }
 }
@@ -83,9 +91,30 @@ export const setPage2Visibility = function (opt) {
     }
 }
 
+export const posSetToEndPointPage = function (params) {
+
+    return (dispatch) => {
+
+        dispatch(setEndPointSetPageVisibility(true));
+
+        //2.Set the Visibility of Homepage
+        dispatch(setHomePageVisibility(false));
+
+        dispatch(setPosSetPageVisibility(false));
+
+        //3.Set the Visibility of Page 1
+        dispatch(setPage1Visibility(false));
+        //3.Set the Visibility of Page 2
+        dispatch(setPage2Visibility(false));
+    }
+}
+
+
 export const homeToPosSetPage = function (params) {
 
     return (dispatch) => {
+
+        dispatch(setEndPointSetPageVisibility(false));
         //1.PosSetPage 
         dispatch(push(constant.route_pathName.positionSettingHome, params));
         //2.Set the Visibility of Homepage
