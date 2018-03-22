@@ -3,6 +3,7 @@ import { NavigationActions } from 'react-navigation'
 
 export const push = function (routeName, params) {
     console.log("PUSH PARAMS RECEIVED !!!!!..");
+    console.log(routeName);
     console.log(params);
     return {
         type: types.PUSH,

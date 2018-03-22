@@ -120,13 +120,16 @@ export default class HomePage extends Component {
 
         console.log("STATE FROM HOME PAGE IS -------");
         console.log(newState);
-        this.props.actions.homeToPage1({ pointBasic: newState });
+        this.props.actions.homeToPosSetPage({ pointBasic: newState });
     }
     
 
     render() {
+
+        const { isHomePageVisible } = this.props;
+
         return (
-            <MapView style={StyleSheet.absoluteFill}>
+            <MapView isVisible={isHomePageVisible} style={StyleSheet.absoluteFill}>
                 <MapView.Marker
                     active
                     draggable

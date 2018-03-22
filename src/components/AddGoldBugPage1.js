@@ -25,12 +25,13 @@ import {
 } from "native-base";
 import Icon1 from 'react-native-vector-icons/FontAwesome'
 import { Col, Row, Grid } from 'react-native-easy-grid';
-import { View } from 'react-native'
+import { View, Alert, TouchableOpacity, Image, StyleSheet } from 'react-native'
 import * as constant from '../util/Constant'
 import Modal from "react-native-modal";
+import DatePicker from 'react-native-datepicker';
+import moment from 'moment';
 
-
-import { TextInput, Image, Animated, Keyboard, KeyboardAvoidingView } from 'react-native';
+import { TextInput, Animated, Keyboard, KeyboardAvoidingView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 
@@ -45,6 +46,7 @@ export default class AddGoldBugPage1 extends Component {
         this.setPosChangeEvent = this.setPosChangeEvent.bind(this);
         this.setDeathTimeEvent = this.setDeathTimeEvent.bind(this);
 
+
         this.state = {
             lon: "200",
             lat: "300",
@@ -56,8 +58,9 @@ export default class AddGoldBugPage1 extends Component {
             posP_1: "",
             posP_2: "",
             posP_3: "",
-            deathTime: ""
+            deathTime: moment().format('YYYY-MM-DD HH:mm:ss')
         };
+
     }
 
     render() {
@@ -70,10 +73,11 @@ export default class AddGoldBugPage1 extends Component {
         console.log(pointBasic.lat);
 
 
+
         return (
             <View>
                 <Modal isVisible={isPage1Visible} swipeDirection="right">
-                    <View style={{ marginTop: 120, marginLeft: 40, marginRight: 40, marginBottom: 150, backgroundColor: "#D5EAE9", borderRadius: 5, flex: 1, paddingTop: 70, paddingLeft: 25, paddingRight: 25, paddingBottom: 25 }}>
+                    <View style={{ marginTop: 100, marginLeft: 40, marginRight: 40, marginBottom: 150, backgroundColor: "#D5EAE9", borderRadius: 5, flex: 1, paddingTop: 70, paddingLeft: 25, paddingRight: 25, paddingBottom: 25 }}>
                         <Form>
                             <Item rounded style={{ backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>
                                 <Input placeholder='Time Change Setting' onChangeText={this.setTimeChangeEvent} />
@@ -83,16 +87,40 @@ export default class AddGoldBugPage1 extends Component {
                                 <Input placeholder='Position Change Setting' onChangeText={this.setPosChangeEvent} />
                             </Item>
 
+
                             <Item rounded style={{ backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>
-                                <Input placeholder='GoldBug DeathTime' onChangeText={this.setDeathTimeEvent} />
+                                <DatePicker
+                                    style={{ flex: 1, paddingRight: 10, paddingTop: 10, paddingBottom: 10 }}
+                                    date={this.state.deathTime}
+                                    mode="datetime"
+                                    format="YYYY-MM-DD HH:mm:ss"
+                                    minDate={moment().add(1, 'hours').format('YYYY-MM-DD')}
+                                    maxDate={moment().add(3, 'months').format('YYYY-MM-DD')}
+                                    confirmBtnText="Confirm"
+                                    cancelBtnText="Cancel"
+                                    customStyles={{
+                                        dateIcon: {
+                                            position: 'absolute',
+                                            left: 0,
+                                            top: 3,
+                                            marginLeft: 3
+                                        },
+                                        dateInput: {
+                                            marginLeft: 36
+                                        }
+
+                                    }}
+                                    onDateChange={this.setDeathTimeEvent}
+                                />
                             </Item>
+
                         </Form>
-                        <Button block rounded style={{ backgroundColor: "#ff00c9", height: 60, marginTop: 20 }} onPress={() => {
+                        <Button block rounded style={{ backgroundColor: "#ff00c9", height: 60, marginTop: 18 }} onPress={() => {
                             var newState = Object.assign({}, this.state);
                             newState.lon = pointBasic.lon;
                             newState.lat = pointBasic.lat;
                             newState.planter = pointBasic.planter;
-                            
+
                             this.props.actions.page1ToPage2({ bugBasic: newState });
                         }}>
                             <Text >Next</Text>
@@ -103,7 +131,6 @@ export default class AddGoldBugPage1 extends Component {
         );
 
     }
-
 
 
     setTimeChangeEvent(timeChange) {
@@ -138,43 +165,30 @@ export default class AddGoldBugPage1 extends Component {
 
     setDeathTimeEvent(deathTime) {
 
+        console.log("The time you JUST chose is >>>>>>>>>>>>>>>>>");
+        console.log(deathTime);
         this.setState({ deathTime: deathTime });
+        var date = new Date(deathTime);
+        var date1 = date.getTime();
+        console.log("TIMESTAMP?????");
+        console.log(date1);
+        var date_ = new Date(moment().add(1, 'hours').format('YYYY-MM-DD HH:mm:ss'));
+        console.log("TIME LIMIT IS >>>>");
+        console.log(date_);
+        var date_1 = date_.getTime();
+        console.log("TIMESTAMP LIMIT ???????");
+        console.log(date_1);
+        if (date1 < date_1) {
+            Alert.alert('Issue', '兄弟你干啥呢，至少一小时后');
+            this.setState({ deathTime: moment().format('YYYY-MM-DD HH:mm:ss') });
+        }
+        else {
+
+            console.log("The time just selected compared NOW is >>>>>>>>>>>>>>");
+            console.log(moment(deathTime).fromNow());
+        }
     }
 
 }
 
-    /*
-    constructor(props) {
-        super(props);
 
-    }
-
-    componentWillMount() {
-        this.keyboardWillShowSub = Keyboard.addListener('keyboardWillShow', this.keyboardWillShow);
-        this.keyboardWillHideSub = Keyboard.addListener('keyboardWillHide', this.keyboardWillHide);
-    }
-
-    componentWillUnmount() {
-        this.keyboardWillShowSub.remove();
-        this.keyboardWillHideSub.remove();
-    }
-
-    keyboardWillShow = (event) => {
-        /* Animated.timing(this.imageHeight, {
-           duration: event.duration,
-           toValue: IMAGE_HEIGHT_SMALL,
-         }).start();
-    };
-
-    keyboardWillHide = (event) => {
-        /* Animated.timing(this.imageHeight, {
-           duration: event.duration,
-           toValue: IMAGE_HEIGHT,
-         }).start();
-    };
-    // paddingBottom: 15 , paddingTop: 70, 
-    render() {
-        return (
-
-        );
-    }*/

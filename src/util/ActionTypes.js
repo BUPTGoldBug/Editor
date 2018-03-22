@@ -23,6 +23,8 @@ export const PAGE1_Visibility = "PAGE1_Visibility";
 
 export const PAGE2_Visibility = "PAGE2_Visibility";
 
+export const PosSetPage_Visibility = "PosSetPage_Visibility";
+
 export const PUSH = "PUSH";
 export const POP = "POP";
 export const RESET = "RESET";//登出的时候使用
