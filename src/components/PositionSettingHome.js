@@ -66,8 +66,6 @@ export default class PositionSettingHome extends Component {
         super(props, context);
 
         this.state = {
-            rt_lon: 200,
-            rt_lat: 300,
             end_lon: 200,
             end_lat: 300,
             tmpTime: new Date(),
@@ -120,35 +118,20 @@ export default class PositionSettingHome extends Component {
         const { isPosSetHomeVisible, isEndPointPageVisible } = this.props;
         const { pointBasic } = this.props.navigation.state.params;
 
-        console.log("ISPOSSETHOME Visible??>>>>>>>>");
-        console.log(isPosSetHomeVisible);
-        console.log(pointBasic);
+        // console.log("ISPOSSETHOME Visible??>>>>>>>>");
+        // console.log(isPosSetHomeVisible);
+        //console.log(pointBasic);
         console.log("ISEndPointPageVisible??>>>>>>>>");
         console.log(isEndPointPageVisible);
 
-        return (
 
+        if (isEndPointPageVisible)
+            return (
                 <MapView
-                    isVisible={isEndPointPageVisible}
                     style={StyleSheet.absoluteFill}
-                    locationEnabled
-                    onLocation={({ nativeEvent }) => { this.setState({ rt_lon: nativeEvent.longitude }); this.setState({ rt_lat: nativeEvent.latitude }); console.log(`${nativeEvent.latitude}, ${nativeEvent.longitude}`) }
-                    }
                     showsTraffic={true}
-                    region={{ latitude: this.state.rt_lat, longitude: this.state.rt_lon, latitudeDelta: 0.08, longitudeDelta: 0.08 }}
+                    region={{ latitude: pointBasic.lat, longitude: pointBasic.lon, latitudeDelta: 0.005, longitudeDelta: 0.005 }}
                 >
-
-
-                    <Marker
-                        title='Start Point'
-                        image='flag'
-                        coordinate={{
-                            latitude: pointBasic.lat,
-                            longitude: pointBasic.lon
-                        }}
-                    />
-
-
                     <MapView.Marker
                         active
                         draggable
@@ -157,8 +140,8 @@ export default class PositionSettingHome extends Component {
                         onInfoWindowPress={this._onInfoWindowPress}
                         onPress={this._onMarkerPress}
                         coordinate={{
-                            latitude: this.state.rt_lat - 0.03,
-                            longitude: this.state.rt_lon + 0.01
+                            latitude: pointBasic.lat - 0.003,
+                            longitude: pointBasic.lon + 0.001
                         }}>
 
                         <TouchableOpacity activeOpacity={0.9} onPress={this._onInfoWindowPress}>
@@ -168,11 +151,56 @@ export default class PositionSettingHome extends Component {
                             </View>
                         </TouchableOpacity>
                     </MapView.Marker>
+                    
+                    <Marker
+                        title='Start Point'
+                        image='flag'
+                        coordinate={{
+                            latitude: pointBasic.lat,
+                            longitude: pointBasic.lon
+                        }}
+                    />
 
                 </MapView>
-     
 
-        );
+            )
+        else {
+            return (
+                <Modal isVisible={isPosSetHomeVisible} swipeDirection="right">
+                    <View style={{ marginTop: 100, marginBottom: 100, marginLeft: 25, marginRight: 25, backgroundColor: "#D5EAE9", borderRadius: 5, flex: 1 }}>
+                        <Form>
+                            <Item>
+                                <Text style={{ fontSize: 16, margin: 20, alignSelf: "center" }}>Click to Chose the END POINT</Text>
+                            </Item>
+                            <TouchableOpacity
+                                style={{ alignSelf: "center", marginTop: 50 }}
+                                onPress={this.onPress}
+                            >
+                                <Image
+                                    style={{ padding: 2, borderRadius: 14 }}
+                                    source={require('../../resource/line.jpg')}
+                                    resizeMode="contain"
+                                />
+                            </TouchableOpacity>
+
+                        </Form>
+                    </View>
+                </Modal>
+
+            );
+        }
+
+        /*return (
+                <MapView
+                    isVisible={isEndPointPageVisible}
+                    style={StyleSheet.absoluteFill}
+                    locationEnabled
+                    onLocation={({ nativeEvent }) => { this.setState({ rt_lon: nativeEvent.longitude }); this.setState({ rt_lat: nativeEvent.latitude }); console.log(`${nativeEvent.latitude}, ${nativeEvent.longitude}`) }
+                    }
+                    showsTraffic={true}
+                    region={{ latitude: this.state.rt_lat, longitude: this.state.rt_lon, latitudeDelta: 0.08, longitudeDelta: 0.08 }}
+                >
+        );*/
 
 
     }

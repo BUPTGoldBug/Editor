@@ -133,7 +133,7 @@ export default class HomePage extends Component {
             onLocation={({ nativeEvent }) =>{this.setState({ rt_lon: nativeEvent.longitude } ); this.setState({rt_lat:nativeEvent.latitude}); console.log(`${nativeEvent.latitude}, ${nativeEvent.longitude}`)}
             }
             showsTraffic={true}
-            region={{latitude:this.state.rt_lat, longitude:this.state.rt_lon, latitudeDelta:0.08, longitudeDelta:0.08}}
+            region={{latitude:this.state.rt_lat, longitude:this.state.rt_lon, latitudeDelta:0.008, longitudeDelta:0.008}}
             >
                 <MapView.Marker
                     active
@@ -143,8 +143,8 @@ export default class HomePage extends Component {
                     onInfoWindowPress={this._onInfoWindowPress}
                     onPress={this._onMarkerPress}
                     coordinate={{
-                        latitude:this.state.rt_lat-0.03,
-                        longitude:this.state.rt_lon+0.01
+                        latitude:this.state.rt_lat-0.003,
+                        longitude:this.state.rt_lon+0.001
                 }}>
 
                     <TouchableOpacity activeOpacity={0.9} onPress={this._onInfoWindowPress}>
