@@ -65,12 +65,14 @@ export default class HomePage extends Component {
         this.setDeathTimeEvent = this.setDeathTimeEvent.bind(this);*/
 
         this.state = {
+            isMoved: false,
+            rt_lon: 200,
+            rt_lat: 300,
             lon: 200,
             lat: 300,
             planter: "luyao", // +++++++++++++++++++++Wait to be set+++++++++++++++++++++++++++++
             tmpTime: new Date(),
-            rt_lon:200,
-            rt_lat:300
+
         };
     }
 
@@ -93,13 +95,22 @@ export default class HomePage extends Component {
         console.log("STATE PASSED FROM HOME_PAGE TO POS_SETTING_PAGE is >>>>");
         console.log(this.state);
 
-        this.props.actions.homeToPosSetPage({ pointBasic: this.state });
+        if (this.state.isMoved == false) {
+            var newState = Object.assign({}, this.state);
+            newState.lon = this.state.rt_lon + 0.001;
+            newState.lat = this.state.rt_lat - 0.003;
+            this.props.actions.homeToPosSetPage({ pointBasic: newState });
+        }
+        else {
+            this.props.actions.homeToPosSetPage({ pointBasic: this.state });
+        }
+
     }
 
     _onInfoWindowPress = () => Alert.alert('Catch me to win bonus~')
     _onDragEvent = ({ nativeEvent }) => {
 
-        this.setState({ lon: nativeEvent.longitude, lat:nativeEvent.latitude });
+        this.setState({ lon: nativeEvent.longitude, lat: nativeEvent.latitude, isMoved: true });
 
         console.log("PPOINT READ FROM AMAP IS~~~~~~~~~~~~~~~~~ ");
         console.log(nativeEvent.longitude);
@@ -108,32 +119,23 @@ export default class HomePage extends Component {
         console.log("THE STATE AFTER UPDATE IS >>>>>>>>>");
         console.log(this.state.lon);
         console.log(this.state.lat);
-        /*
-        var newState = Object.assign({}, this.state);
-        newState.lon = nativeEvent.longitude;
-        newState.lat = nativeEvent.latitude;
-
-
-        console.log("STATE FROM HOME PAGE IS -------");
-        console.log(newState);
-        this.props.actions.homeToPosSetPage({ pointBasic: newState });
-        */
+        
     }
-    
+
 
     render() {
 
         const { isHomePageVisible } = this.props;
 
         return (
-            <MapView 
-            isVisible={isHomePageVisible} 
-            style={StyleSheet.absoluteFill}
-            locationEnabled
-            onLocation={({ nativeEvent }) =>{this.setState({ rt_lon: nativeEvent.longitude } ); this.setState({rt_lat:nativeEvent.latitude}); console.log(`${nativeEvent.latitude}, ${nativeEvent.longitude}`)}
-            }
-            showsTraffic={true}
-            region={{latitude:this.state.rt_lat, longitude:this.state.rt_lon, latitudeDelta:0.008, longitudeDelta:0.008}}
+            <MapView
+                isVisible={isHomePageVisible}
+                style={StyleSheet.absoluteFill}
+                locationEnabled
+                onLocation={({ nativeEvent }) => { this.setState({ rt_lon: nativeEvent.longitude }); this.setState({ rt_lat: nativeEvent.latitude }); console.log(`${nativeEvent.latitude}, ${nativeEvent.longitude}`) }
+                }
+                showsTraffic={true}
+                region={{ latitude: this.state.rt_lat, longitude: this.state.rt_lon, latitudeDelta: 0.008, longitudeDelta: 0.008 }}
             >
                 <MapView.Marker
                     active
@@ -143,14 +145,14 @@ export default class HomePage extends Component {
                     onInfoWindowPress={this._onInfoWindowPress}
                     onPress={this._onMarkerPress}
                     coordinate={{
-                        latitude:this.state.rt_lat-0.003,
-                        longitude:this.state.rt_lon+0.001
-                }}>
+                        latitude: this.state.rt_lat - 0.003,
+                        longitude: this.state.rt_lon + 0.001
+                    }}>
 
                     <TouchableOpacity activeOpacity={0.9} onPress={this._onInfoWindowPress}>
                         <View style={styles.customInfoWindow}>
                             <Text>Drag me to plant GoldBug~</Text>
-                            <Text style={{textAlign: "center"}}>{this.state.tmpTime.toLocaleTimeString()}</Text>
+                            <Text style={{ textAlign: "center" }}>{this.state.tmpTime.toLocaleTimeString()}</Text>
                         </View>
                     </TouchableOpacity>
                 </MapView.Marker>

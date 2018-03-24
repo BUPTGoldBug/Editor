@@ -3,7 +3,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PositionSettingHome from "../components/PositionSettingHome"
-import { posSetToEndPointPage } from "../actions/AddGoldBugAction"
+import { posSetToEndPointPage, endPointPageToDySettingPage } from "../actions/AddGoldBugAction"
 import { push, pop, reset, goBack } from '../actions/NavigatorAction'
 
 export default connect(
@@ -12,11 +12,12 @@ export default connect(
         console.log(state);
         return Object.assign({
             isPosSetHomeVisible:state.goldBug.isPosSetHomeVisible,
-            isEndPointPageVisible:state.goldBug.isEndPointPageVisible
+            isEndPointPageVisible:state.goldBug.isEndPointPageVisible,
+            isDySettingPageVisible:state.goldBug.isDySettingPageVisible            
         })
     },
     (dispatch) => {
 
-        return (Object.assign({ dispatch: dispatch }, { actions: bindActionCreators({ push, pop, reset, goBack, posSetToEndPointPage }, dispatch) }));
+        return (Object.assign({ dispatch: dispatch }, { actions: bindActionCreators({ push, pop, reset, goBack, posSetToEndPointPage, endPointPageToDySettingPage }, dispatch) }));
     }
 )(PositionSettingHome);

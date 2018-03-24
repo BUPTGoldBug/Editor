@@ -56,6 +56,13 @@ export const addGoldBug = function (state) {
 }
 
 
+export const setDySettingPageVisibility = function (opt) {
+    return {
+        type: types.DySettingPage_Visibility,
+        payload: opt
+    }
+}
+
 export const setHomePageVisibility = function (opt) {
     return {
         type: types.HOMEPAGE_Visibility,
@@ -88,6 +95,25 @@ export const setPage2Visibility = function (opt) {
     return {
         type: types.PAGE2_Visibility,
         payload: opt
+    }
+}
+
+export const endPointPageToDySettingPage = function (params) {
+
+    return (dispatch) => {
+        dispatch(setDySettingPageVisibility(true));
+
+        dispatch(setEndPointSetPageVisibility(false));
+
+        //2.Set the Visibility of Homepage
+        dispatch(setHomePageVisibility(false));
+
+        dispatch(setPosSetPageVisibility(false));
+
+        //3.Set the Visibility of Page 1
+        dispatch(setPage1Visibility(false));
+        //3.Set the Visibility of Page 2
+        dispatch(setPage2Visibility(false));
     }
 }
 

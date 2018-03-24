@@ -15,7 +15,8 @@ export const route_pathName = {
     addGoldBugPage1: "AddGoldBugPage1",
     addGoldBugPage2: "AddGoldBugPage2",
     homePage: "HomePage",
-    positionSettingHome:"PositionSettingHome"
+    positionSettingHome:"PositionSettingHome",
+    DySettingPage:"DySettingPage"
 }
 /* Json for addGoldBug()
 {

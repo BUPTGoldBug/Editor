@@ -66,6 +66,7 @@ export default class PositionSettingHome extends Component {
         super(props, context);
 
         this.state = {
+            isMoved: false,
             end_lon: 200,
             end_lat: 300,
             tmpTime: new Date(),
@@ -91,21 +92,29 @@ export default class PositionSettingHome extends Component {
         this.props.actions.posSetToEndPointPage(this.state);
     }
 
+    onPress_ = () => {
+        this.props.actions.endPointPageToDySettingPage({ pointBasic: this.state });
+    }
+
     _onMarkerPress = () => {
         console.log("STATE PASSED FROM POS_SETTING_PAGE is >>>>");
         console.log(this.state);
 
 
-        console.log("STATE IS ABOUT TO PASS-------");
-        //this.props.actions.homeToPosSetPage({ pointBasic: this.state });
+        if (this.state.isMoved == false) {
+            Alert.alert('Reminder', 'Please MOVE to Chose the Target End Point！');
+        }
+        else {
+            console.log("STATE IS ABOUT TO PASS-------");
+            this.props.actions.endPointPageToDySettingPage({ pointBasic: this.state });
+        }
+
     }
 
     _onInfoWindowPress = () => Alert.alert('To chose the END POINT, first to drag the point to your target area (Road only please), then confirm by clicking it~ \n\n Have a try now~!')
     _onDragEvent = ({ nativeEvent }) => {
 
-        this.setState({ end_lon: nativeEvent.longitude });
-        this.setState({ end_lat: nativeEvent.latitude });
-
+        this.setState({ end_lon: nativeEvent.longitude, end_lat: nativeEvent.latitude, isMoved: true });
 
         console.log("END PPOINT READ FROM AMAP IS~~~~~~~~~~~~~~~~~ ");
         console.log(this.state.end_lat);
@@ -115,7 +124,7 @@ export default class PositionSettingHome extends Component {
 
     render() {
 
-        const { isPosSetHomeVisible, isEndPointPageVisible } = this.props;
+        const { isPosSetHomeVisible, isEndPointPageVisible, isDySettingPageVisible } = this.props;
         const { pointBasic } = this.props.navigation.state.params;
 
         // console.log("ISPOSSETHOME Visible??>>>>>>>>");
@@ -151,7 +160,7 @@ export default class PositionSettingHome extends Component {
                             </View>
                         </TouchableOpacity>
                     </MapView.Marker>
-                    
+
                     <Marker
                         title='Start Point'
                         image='flag'
@@ -163,45 +172,73 @@ export default class PositionSettingHome extends Component {
 
                 </MapView>
 
-            )
+            );
+        if (isDySettingPageVisible) {
+            return (
+                <View>
+                    <Modal isVisible={true} swipeDirection="right">
+                        <View style={{ marginTop: 140, marginLeft: 40, marginRight: 40, marginBottom: 180, backgroundColor: "#D5EAE9", borderRadius: 35, flex: 1, paddingTop: 30 }}>
+                            <Text style={{ fontSize: 20, margin: 4, alignSelf: "center" }}>Activate GoldBug</Text>
+                            <Grid style={{ marginTop: 10, marginBottom: 30 }}>
+                                <Row>
+                                    <Button rounded block style={{ margin: 10, backgroundColor: "#FF1493", height: 70, flex: 1 }} onPress={() => {
+                                        Alert.alert('', 'A');
+                                    }}>
+                                        <Icon name='pulse' />
+                                        <Text style={{ fontSize: 16, alignSelf: "center" }}>All the Time</Text>
+                                    </Button>
+                                </Row>
+                                <Row>
+                                    <Button rounded block style={{ margin: 10, backgroundColor: "#0000CD", height: 70, flex: 1 }} onPress={() => { Alert.alert('', 'B'); }}>
+                                        <Icon name='alarm' />
+                                        <Text style={{ fontSize: 16, alignSelf: "center" }}>Specific Time</Text>
+                                    </Button>
+                                </Row>
+                            </Grid>
+                        </View>
+                    </Modal>
+                </View>
+            );
+        }
         else {
             return (
                 <Modal isVisible={isPosSetHomeVisible} swipeDirection="right">
                     <View style={{ marginTop: 100, marginBottom: 100, marginLeft: 25, marginRight: 25, backgroundColor: "#D5EAE9", borderRadius: 5, flex: 1 }}>
-                        <Form>
-                            <Item>
-                                <Text style={{ fontSize: 16, margin: 20, alignSelf: "center" }}>Click to Chose the END POINT</Text>
-                            </Item>
+                        <View>
+                            <Text style={{ fontSize: 16, margin: 20, alignSelf: "center" }}>Click to Chose the END POINT</Text>
+                        </View>
+
+                        <View style={{ width: 300, height: 140, paddingLeft: 17 }}>
                             <TouchableOpacity
-                                style={{ alignSelf: "center", marginTop: 50 }}
+                                style={{ flex: 1 }}
                                 onPress={this.onPress}
                             >
                                 <Image
-                                    style={{ padding: 2, borderRadius: 14 }}
-                                    source={require('../../resource/line.jpg')}
+                                    style={{}}
+                                    source={require('../../resource/Line.jpg')}
                                     resizeMode="contain"
                                 />
                             </TouchableOpacity>
+                        </View>
 
-                        </Form>
+                        <View style={{ width: 320, height: 180, paddingLeft: 30, paddingTop: 16 }}>
+                            <TouchableOpacity
+                                style={{ flex: 1 }}
+                                onPress={this.onPress_}
+                            >
+                                <Image
+                                    style={{}}
+                                    source={require('../../resource/StaticLine.jpg')}
+                                    resizeMode="contain"
+                                />
+                            </TouchableOpacity>
+                        </View>
+
                     </View>
                 </Modal>
 
             );
         }
-
-        /*return (
-                <MapView
-                    isVisible={isEndPointPageVisible}
-                    style={StyleSheet.absoluteFill}
-                    locationEnabled
-                    onLocation={({ nativeEvent }) => { this.setState({ rt_lon: nativeEvent.longitude }); this.setState({ rt_lat: nativeEvent.latitude }); console.log(`${nativeEvent.latitude}, ${nativeEvent.longitude}`) }
-                    }
-                    showsTraffic={true}
-                    region={{ latitude: this.state.rt_lat, longitude: this.state.rt_lon, latitudeDelta: 0.08, longitudeDelta: 0.08 }}
-                >
-        );*/
-
 
     }
 
