@@ -169,7 +169,8 @@ export default class AddGoldBugPage2 extends Component {
                         <Grid style={{ marginTop: 25 }}>
                             <Col style={{}}>
                                 <Button block rounded style={{ backgroundColor: "#1CBBCF", height: 70 }} onPress={() => {
-                                    this.props.actions.page2ToPage1();
+                                    //this.props.actions.page2ToPage1();
+                                    Alert.alert("Go back to Time Setting page~");
                                 }}>
                                     <Text >Previous</Text>
                                 </Button>

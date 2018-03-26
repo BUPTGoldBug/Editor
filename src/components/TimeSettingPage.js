@@ -178,7 +178,7 @@ export default class TimeSettingPage extends Component {
                                     //this.commitGoldBug(bugBasic);
                                     console.log("Time Setting Page State is >>>>>>");
                                     console.log(this.state);
-                                    Alert.alert('', 'Go To Set Question Answer Page!');
+                                    this.props.actions.timeSettingPageToPage2({ bugBasic: this.state });
                                 }}>
                                     <Text style={{ fontSize: 17, alignSelf: "center" }}>Load my GoldBug</Text>
                                 </Button>

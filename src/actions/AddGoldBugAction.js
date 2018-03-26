@@ -106,6 +106,31 @@ export const setPage2Visibility = function (opt) {
     }
 }
 
+export const timeSettingPageToPage2 = function (params) {
+
+    return (dispatch) => {
+
+        dispatch(setTimeSettingPageVisibility(false));
+
+        dispatch(push(constant.route_pathName.addGoldBugPage2, params));
+
+       // dispatch(setDySettingPageVisibility(false));
+
+      //  dispatch(setEndPointSetPageVisibility(false));
+
+        
+        //2.Set the Visibility of Homepage
+       // dispatch(setHomePageVisibility(false));
+
+        //dispatch(setPosSetPageVisibility(false));
+
+        //3.Set the Visibility of Page 1
+      //  dispatch(setPage1Visibility(false));
+        //3.Set the Visibility of Page 2
+       dispatch(setPage2Visibility(true));
+    }
+}
+
 export const dySettingPageToTimeSettingPage = function (params) {
 
     return (dispatch) => {
