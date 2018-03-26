@@ -9,6 +9,7 @@ const initialState = {
     isEndPointPageVisible:false,
     isHomePageVisible:true,
     isDySettingPageVisible:false,
+    isTimeSettingPageVisible:false,
     contentText: "Connecting..."
 };
 
@@ -106,6 +107,13 @@ export default function GoldBugReducer(state = initialState, action = {}) {
             let newState = {
                 ...state,
                 isDySettingPageVisible: action.payload
+            };
+            return newState;
+        }
+        case types.TimeSettingPage_Visibility:{
+            let newState = {
+                ...state,
+                isTimeSettingPageVisible: action.payload
             };
             return newState;
         }

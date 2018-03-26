@@ -29,6 +29,8 @@ export const EndPointSetPage_Visibility = "EndPointSetPage_Visibility";
 
 export const DySettingPage_Visibility = "DySettingPage_Visibility";
 
+export const TimeSettingPage_Visibility = "TimeSettingPage_Visibility";
+
 export const PUSH = "PUSH";
 export const POP = "POP";
 export const RESET = "RESET";//登出的时候使用

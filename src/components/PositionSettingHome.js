@@ -70,6 +70,7 @@ export default class PositionSettingHome extends Component {
             end_lon: 200,
             end_lat: 300,
             tmpTime: new Date(),
+            ifNeedStartTime: false,
         };
 
     }
@@ -177,19 +178,25 @@ export default class PositionSettingHome extends Component {
             return (
                 <View>
                     <Modal isVisible={true} swipeDirection="right">
-                        <View style={{ marginTop: 140, marginLeft: 40, marginRight: 40, marginBottom: 180, backgroundColor: "#D5EAE9", borderRadius: 35, flex: 1, paddingTop: 30 }}>
-                            <Text style={{ fontSize: 20, margin: 4, alignSelf: "center" }}>Activate GoldBug</Text>
-                            <Grid style={{ marginTop: 10, marginBottom: 30 }}>
+                        <View style={{ marginTop: 120, marginLeft: 30, marginRight: 30, marginBottom: 160, backgroundColor: "#D5EAE9", borderRadius: 8, flex: 1, paddingTop: 30 }}>
+                            <Text style={{ fontSize: 20, margin: 4, alignSelf: "center" }}>Activate Your GoldBug</Text>
+                            <Grid style={{ marginTop: 24, marginBottom: 30 }}>
                                 <Row>
                                     <Button rounded block style={{ margin: 10, backgroundColor: "#FF1493", height: 70, flex: 1 }} onPress={() => {
-                                        Alert.alert('', 'A');
+                                        var newState = Object.assign({}, this.state);
+                                        newState.ifNeedStartTime = false;
+                                        this.props.actions.dySettingPageToTimeSettingPage({ bugBasic: newState });
                                     }}>
                                         <Icon name='pulse' />
                                         <Text style={{ fontSize: 16, alignSelf: "center" }}>All the Time</Text>
                                     </Button>
                                 </Row>
                                 <Row>
-                                    <Button rounded block style={{ margin: 10, backgroundColor: "#0000CD", height: 70, flex: 1 }} onPress={() => { Alert.alert('', 'B'); }}>
+                                    <Button rounded block style={{ margin: 10, backgroundColor: "#0000CD", height: 70, flex: 1 }} onPress={() => {
+                                        var newState = Object.assign({}, this.state);
+                                        newState.ifNeedStartTime = true;
+                                        this.props.actions.dySettingPageToTimeSettingPage({ bugBasic: newState });
+                                    }}>
                                         <Icon name='alarm' />
                                         <Text style={{ fontSize: 16, alignSelf: "center" }}>Specific Time</Text>
                                     </Button>
@@ -203,7 +210,7 @@ export default class PositionSettingHome extends Component {
         else {
             return (
                 <Modal isVisible={isPosSetHomeVisible} swipeDirection="right">
-                    <View style={{ marginTop: 100, marginBottom: 100, marginLeft: 25, marginRight: 25, backgroundColor: "#D5EAE9", borderRadius: 5, flex: 1 }}>
+                    <View style={{ marginTop: 100, marginBottom: 100, marginLeft: 25, marginRight: 25, backgroundColor: "#D5EAE9", borderRadius: 8, flex: 1 }}>
                         <View>
                             <Text style={{ fontSize: 16, margin: 20, alignSelf: "center" }}>Click to Chose the END POINT</Text>
                         </View>

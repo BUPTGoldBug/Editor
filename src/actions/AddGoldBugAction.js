@@ -56,6 +56,14 @@ export const addGoldBug = function (state) {
 }
 
 
+
+export const setTimeSettingPageVisibility = function (opt) {
+    return {
+        type: types.TimeSettingPage_Visibility,
+        payload: opt
+    }
+}
+
 export const setDySettingPageVisibility = function (opt) {
     return {
         type: types.DySettingPage_Visibility,
@@ -97,6 +105,32 @@ export const setPage2Visibility = function (opt) {
         payload: opt
     }
 }
+
+export const dySettingPageToTimeSettingPage = function (params) {
+
+    return (dispatch) => {
+
+        dispatch(setTimeSettingPageVisibility(true));
+
+        dispatch(push(constant.route_pathName.TimeSettingPage, params));
+
+        dispatch(setDySettingPageVisibility(false));
+
+      //  dispatch(setEndPointSetPageVisibility(false));
+
+        
+        //2.Set the Visibility of Homepage
+       // dispatch(setHomePageVisibility(false));
+
+        dispatch(setPosSetPageVisibility(false));
+
+        //3.Set the Visibility of Page 1
+      //  dispatch(setPage1Visibility(false));
+        //3.Set the Visibility of Page 2
+       // dispatch(setPage2Visibility(false));
+    }
+}
+
 
 export const endPointPageToDySettingPage = function (params) {
 
