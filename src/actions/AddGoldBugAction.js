@@ -114,20 +114,20 @@ export const timeSettingPageToPage2 = function (params) {
 
         dispatch(push(constant.route_pathName.addGoldBugPage2, params));
 
-       // dispatch(setDySettingPageVisibility(false));
+        // dispatch(setDySettingPageVisibility(false));
 
-      //  dispatch(setEndPointSetPageVisibility(false));
+        //  dispatch(setEndPointSetPageVisibility(false));
 
-        
+
         //2.Set the Visibility of Homepage
-       // dispatch(setHomePageVisibility(false));
+        // dispatch(setHomePageVisibility(false));
 
         //dispatch(setPosSetPageVisibility(false));
 
         //3.Set the Visibility of Page 1
-      //  dispatch(setPage1Visibility(false));
+        //  dispatch(setPage1Visibility(false));
         //3.Set the Visibility of Page 2
-       dispatch(setPage2Visibility(true));
+        dispatch(setPage2Visibility(true));
     }
 }
 
@@ -141,21 +141,20 @@ export const dySettingPageToTimeSettingPage = function (params) {
 
         dispatch(setDySettingPageVisibility(false));
 
-      //  dispatch(setEndPointSetPageVisibility(false));
-
-        
-        //2.Set the Visibility of Homepage
-       // dispatch(setHomePageVisibility(false));
-
         dispatch(setPosSetPageVisibility(false));
 
-        //3.Set the Visibility of Page 1
-      //  dispatch(setPage1Visibility(false));
-        //3.Set the Visibility of Page 2
-       // dispatch(setPage2Visibility(false));
+
     }
 }
 
+
+function sendDySettingParam(params){
+    return {
+        type: types.DySettingPage_Param,
+        payload: params
+
+    };
+}
 
 export const endPointPageToDySettingPage = function (params) {
 
@@ -164,15 +163,10 @@ export const endPointPageToDySettingPage = function (params) {
 
         dispatch(setEndPointSetPageVisibility(false));
 
-        //2.Set the Visibility of Homepage
-        dispatch(setHomePageVisibility(false));
-
         dispatch(setPosSetPageVisibility(false));
 
-        //3.Set the Visibility of Page 1
-        dispatch(setPage1Visibility(false));
-        //3.Set the Visibility of Page 2
-        dispatch(setPage2Visibility(false));
+        dispatch(sendDySettingParam(params));
+
     }
 }
 
@@ -182,15 +176,8 @@ export const posSetToEndPointPage = function (params) {
 
         dispatch(setEndPointSetPageVisibility(true));
 
-        //2.Set the Visibility of Homepage
-        dispatch(setHomePageVisibility(false));
-
         dispatch(setPosSetPageVisibility(false));
 
-        //3.Set the Visibility of Page 1
-        dispatch(setPage1Visibility(false));
-        //3.Set the Visibility of Page 2
-        dispatch(setPage2Visibility(false));
     }
 }
 
@@ -199,7 +186,6 @@ export const homeToPosSetPage = function (params) {
 
     return (dispatch) => {
 
-        dispatch(setEndPointSetPageVisibility(false));
         //1.PosSetPage 
         dispatch(push(constant.route_pathName.positionSettingHome, params));
         //2.Set the Visibility of Homepage
@@ -207,10 +193,6 @@ export const homeToPosSetPage = function (params) {
 
         dispatch(setPosSetPageVisibility(true));
 
-        //3.Set the Visibility of Page 1
-        dispatch(setPage1Visibility(false));
-        //3.Set the Visibility of Page 2
-        dispatch(setPage2Visibility(false));
     }
 }
 

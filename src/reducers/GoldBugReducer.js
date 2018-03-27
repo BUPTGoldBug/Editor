@@ -5,17 +5,18 @@ const initialState = {
     isAddingGoldBugSuccess: true,
     isPage1Visible: false,
     isPage2Visible: false,
-    isPosSetHomeVisible:false,
-    isEndPointPageVisible:false,
-    isHomePageVisible:true,
-    isDySettingPageVisible:false,
-    isTimeSettingPageVisible:false,
-    contentText: "Connecting..."
+    isPosSetHomeVisible: false,
+    isEndPointPageVisible: false,
+    isHomePageVisible: true,
+    isDySettingPageVisible: false,
+    isTimeSettingPageVisible: false,
+    contentText: "Connecting...",
+    dySettingParams: {}
 };
 
 export default function GoldBugReducer(state = initialState, action = {}) {
-    console.log("action");
-    console.log(action);
+    console.log("action type");
+    console.log(action.type);
     switch (action.type) {
         case types.ADD_GoldBug_PENDING: {
             //正在加载
@@ -37,7 +38,7 @@ export default function GoldBugReducer(state = initialState, action = {}) {
                     ...state,
                     isAddingUser: false,
                     isAddingUserSuccess: false,
-                   // isVisible: false,
+                    // isVisible: false,
                     contentText: "Connection Error"
                 };
                 return newState;
@@ -47,7 +48,7 @@ export default function GoldBugReducer(state = initialState, action = {}) {
                     ...state,
                     isAddingUser: false,
                     isAddingUserSuccess: true,
-                   // isVisible: false,
+                    // isVisible: false,
                     contentText: "Success"
                 };
                 return newState;
@@ -66,28 +67,28 @@ export default function GoldBugReducer(state = initialState, action = {}) {
             };
             return newState;
         }
-        case types.PAGE1_Visibility:{
+        case types.PAGE1_Visibility: {
             let newState = {
                 ...state,
                 isPage1Visible: action.payload
             };
             return newState;
         }
-        case types.PAGE2_Visibility:{
+        case types.PAGE2_Visibility: {
             let newState = {
                 ...state,
                 isPage2Visible: action.payload
             };
             return newState;
         }
-        case types.HOMEPAGE_Visibility:{
+        case types.HOMEPAGE_Visibility: {
             let newState = {
                 ...state,
                 isHomePageVisible: action.payload
             };
             return newState;
         }
-        case types.PosSetPage_Visibility:{
+        case types.PosSetPage_Visibility: {
             let newState = {
                 ...state,
                 isPosSetHomeVisible: action.payload
@@ -96,24 +97,33 @@ export default function GoldBugReducer(state = initialState, action = {}) {
             console.log(newState);
             return newState;
         }
-        case types.EndPointSetPage_Visibility:{
+        case types.EndPointSetPage_Visibility: {
             let newState = {
                 ...state,
                 isEndPointPageVisible: action.payload
             };
             return newState;
         }
-        case types.DySettingPage_Visibility:{
+        case types.DySettingPage_Visibility: {
             let newState = {
                 ...state,
                 isDySettingPageVisible: action.payload
             };
             return newState;
         }
-        case types.TimeSettingPage_Visibility:{
+        case types.TimeSettingPage_Visibility: {
             let newState = {
                 ...state,
                 isTimeSettingPageVisible: action.payload
+            };
+            return newState;
+        }
+        case types.DySettingPage_Param: {
+            console.log("DySettingPage_Param is ~~~~~~~~~~~~~~~~***~~~~~~~~~~~~~~~~~~~~");
+            console.log(action.payload);
+            let newState = {
+                ...state,
+                dySettingParams: Object.assign({},action.payload)
             };
             return newState;
         }

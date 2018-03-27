@@ -63,9 +63,8 @@ export default class TimeSettingPage extends Component {
     render() {
         const { isTimeSettingPageVisible } = this.props;
         const { bugBasic } = this.props.navigation.state.params;
-        console.log("IS TimeSettingPage isVisible?");
-        console.log(isTimeSettingPageVisible);
-        console.log("bugBasic is>>>>>>>>>>>>>>>.");
+
+        console.log("BugBasic from Dy Setting Page is...........");
         console.log(bugBasic);
 
 
@@ -175,7 +174,6 @@ export default class TimeSettingPage extends Component {
                         <Grid style={{ marginTop: 35 }}>
                             <Col style={{}}>
                                 <Button block rounded style={{ backgroundColor: "#3CB371", height: 50 }} onPress={() => {
-                                    //this.commitGoldBug(bugBasic);
                                     console.log("Time Setting Page State is >>>>>>");
                                     console.log(this.state);
                                     this.props.actions.timeSettingPageToPage2({ bugBasic: this.state });

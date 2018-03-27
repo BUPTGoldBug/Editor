@@ -11,9 +11,10 @@ export default connect(
         console.log("PositionSettingHomeContainer state")
         console.log(state);
         return Object.assign({
-            isPosSetHomeVisible:state.goldBug.isPosSetHomeVisible,
-            isEndPointPageVisible:state.goldBug.isEndPointPageVisible,
-            isDySettingPageVisible:state.goldBug.isDySettingPageVisible            
+            isPosSetHomeVisible: state.goldBug.isPosSetHomeVisible,
+            isEndPointPageVisible: state.goldBug.isEndPointPageVisible,
+            isDySettingPageVisible: state.goldBug.isDySettingPageVisible,
+            dySettingParams: state.goldBug.dySettingParams
         })
     },
     (dispatch) => {

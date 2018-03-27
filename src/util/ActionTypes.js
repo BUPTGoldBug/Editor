@@ -31,6 +31,8 @@ export const DySettingPage_Visibility = "DySettingPage_Visibility";
 
 export const TimeSettingPage_Visibility = "TimeSettingPage_Visibility";
 
+export const DySettingPage_Param= "DySettingPage_Param";
+
 export const PUSH = "PUSH";
 export const POP = "POP";
 export const RESET = "RESET";//登出的时候使用

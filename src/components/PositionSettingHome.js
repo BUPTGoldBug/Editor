@@ -33,6 +33,7 @@ import DatePicker from 'react-native-datepicker';
 import moment from 'moment';
 
 import { TextInput, Animated, Keyboard, KeyboardAvoidingView } from 'react-native';
+import { GOBACK } from '../util/ActionTypes';
 
 
 const styles = StyleSheet.create({
@@ -66,6 +67,8 @@ export default class PositionSettingHome extends Component {
         super(props, context);
 
         this.state = {
+            start_lon: 200,
+            start_lat: 300,
             isMoved: false,
             end_lon: 200,
             end_lat: 300,
@@ -90,11 +93,18 @@ export default class PositionSettingHome extends Component {
 
 
     onPress = () => {
+
         this.props.actions.posSetToEndPointPage(this.state);
     }
 
     onPress_ = () => {
-        this.props.actions.endPointPageToDySettingPage({ pointBasic: this.state });
+        const { initPoint } = this.props.navigation.state.params;
+        var newState = Object.assign({}, this.state);
+        newState.start_lat = initPoint.lat;
+        newState.start_lon = initPoint.lon;
+        console.log("1 Watch: Only 1 point, the State to DySetting Page is ");
+        console.log(newState);
+        this.props.actions.endPointPageToDySettingPage({ pointBasic: newState });
     }
 
     _onMarkerPress = () => {
@@ -106,8 +116,13 @@ export default class PositionSettingHome extends Component {
             Alert.alert('Reminder', 'Please MOVE to Chose the Target End Point！');
         }
         else {
-            console.log("STATE IS ABOUT TO PASS-------");
-            this.props.actions.endPointPageToDySettingPage({ pointBasic: this.state });
+            const { initPoint } = this.props.navigation.state.params;
+            var newState = Object.assign({}, this.state);
+            newState.start_lat = initPoint.lat;
+            newState.start_lon = initPoint.lon;
+            console.log("2 Watch: 2 points, the State to DySetting Page is ");
+            console.log(newState);
+            this.props.actions.endPointPageToDySettingPage({ pointBasic: newState });
         }
 
     }
@@ -118,21 +133,22 @@ export default class PositionSettingHome extends Component {
         this.setState({ end_lon: nativeEvent.longitude, end_lat: nativeEvent.latitude, isMoved: true });
 
         console.log("END PPOINT READ FROM AMAP IS~~~~~~~~~~~~~~~~~ ");
-        console.log(this.state.end_lat);
-        console.log(this.state.end_lon);
+        console.log(nativeEvent.longitude);
+        console.log(nativeEvent.latitude);
 
     }
 
     render() {
 
-        const { isPosSetHomeVisible, isEndPointPageVisible, isDySettingPageVisible } = this.props;
-        const { pointBasic } = this.props.navigation.state.params;
+        const { isPosSetHomeVisible, isEndPointPageVisible, isDySettingPageVisible, dySettingParams } = this.props;
+        const { initPoint } = this.props.navigation.state.params;
 
-        // console.log("ISPOSSETHOME Visible??>>>>>>>>");
-        // console.log(isPosSetHomeVisible);
-        //console.log(pointBasic);
-        console.log("ISEndPointPageVisible??>>>>>>>>");
-        console.log(isEndPointPageVisible);
+        console.log("PROPS is ...........");
+        console.log(this.props);
+        console.log("dySettingParams is ........");
+        console.log(dySettingParams);
+       // console.log("Init Point From Home Page is ....................");
+       // console.log(initPoint);
 
 
         if (isEndPointPageVisible)
@@ -140,7 +156,7 @@ export default class PositionSettingHome extends Component {
                 <MapView
                     style={StyleSheet.absoluteFill}
                     showsTraffic={true}
-                    region={{ latitude: pointBasic.lat, longitude: pointBasic.lon, latitudeDelta: 0.005, longitudeDelta: 0.005 }}
+                    region={{ latitude: initPoint.lat, longitude: initPoint.lon, latitudeDelta: 0.005, longitudeDelta: 0.005 }}
                 >
                     <MapView.Marker
                         active
@@ -150,8 +166,8 @@ export default class PositionSettingHome extends Component {
                         onInfoWindowPress={this._onInfoWindowPress}
                         onPress={this._onMarkerPress}
                         coordinate={{
-                            latitude: pointBasic.lat - 0.003,
-                            longitude: pointBasic.lon + 0.001
+                            latitude: initPoint.lat - 0.002,
+                            longitude: initPoint.lon + 0.001
                         }}>
 
                         <TouchableOpacity activeOpacity={0.9} onPress={this._onInfoWindowPress}>
@@ -166,8 +182,8 @@ export default class PositionSettingHome extends Component {
                         title='Start Point'
                         image='flag'
                         coordinate={{
-                            latitude: pointBasic.lat,
-                            longitude: pointBasic.lon
+                            latitude: initPoint.lat,
+                            longitude: initPoint.lon
                         }}
                     />
 
@@ -175,6 +191,7 @@ export default class PositionSettingHome extends Component {
 
             );
         if (isDySettingPageVisible) {
+            
             return (
                 <View>
                     <Modal isVisible={true} swipeDirection="right">
@@ -183,8 +200,14 @@ export default class PositionSettingHome extends Component {
                             <Grid style={{ marginTop: 24, marginBottom: 30 }}>
                                 <Row>
                                     <Button rounded block style={{ margin: 10, backgroundColor: "#FF1493", height: 70, flex: 1 }} onPress={() => {
+                                       
                                         var newState = Object.assign({}, this.state);
                                         newState.ifNeedStartTime = false;
+                                        newState.start_lon = dySettingParams.pointBasic.start_lon;
+                                        newState.start_lat = dySettingParams.pointBasic.start_lat;
+                                        newState.end_lon = dySettingParams.pointBasic.end_lon;
+                                        newState.end_lat = dySettingParams.pointBasic.end_lat;
+                                        newState.isMoved = dySettingParams.pointBasic.isMoved;
                                         this.props.actions.dySettingPageToTimeSettingPage({ bugBasic: newState });
                                     }}>
                                         <Icon name='pulse' />
@@ -193,8 +216,14 @@ export default class PositionSettingHome extends Component {
                                 </Row>
                                 <Row>
                                     <Button rounded block style={{ margin: 10, backgroundColor: "#0000CD", height: 70, flex: 1 }} onPress={() => {
+                                       
                                         var newState = Object.assign({}, this.state);
                                         newState.ifNeedStartTime = true;
+                                        newState.start_lon = dySettingParams.pointBasic.start_lon;
+                                        newState.start_lat = dySettingParams.pointBasic.start_lat;
+                                        newState.end_lon = dySettingParams.pointBasic.end_lon;
+                                        newState.end_lat = dySettingParams.pointBasic.end_lat;
+                                        newState.isMoved = dySettingParams.pointBasic.isMoved;
                                         this.props.actions.dySettingPageToTimeSettingPage({ bugBasic: newState });
                                     }}>
                                         <Icon name='alarm' />
