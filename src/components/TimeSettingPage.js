@@ -41,13 +41,19 @@ export default class TimeSettingPage extends Component {
 
         super(props, context);
 
-        
+
         this.setStartTimeEvent = this.setStartTimeEvent.bind(this);
         this.setLifeCountEvent = this.setLifeCountEvent.bind(this);
         this.setDeathTimeEvent = this.setDeathTimeEvent.bind(this);
 
 
         this.state = {
+            start_lon: 200,
+            start_lat: 300,
+            isMoved: false,
+            ifNeedStartTime: false,
+            end_lon: 200,
+            end_lat: 300,
             lifeCount: 1,
             startTime: moment().add(1, 'hours').format('YYYY-MM-DD HH:mm:ss'),
             deathTime: moment().add(1, 'hours').format('YYYY-MM-DD HH:mm:ss'),
@@ -73,7 +79,7 @@ export default class TimeSettingPage extends Component {
                 <Modal isVisible={isTimeSettingPageVisible} swipeDirection="right">
 
                     <View style={{ marginTop: 80, marginLeft: 20, marginRight: 20, marginBottom: 120, backgroundColor: "#D5EAE9", borderRadius: 8, flex: 1, paddingTop: 20, paddingLeft: 8, paddingRight: 8, paddingBottom: 25 }}>
-                        <View style={{flex:1, marginBottom:20}}>
+                        <View style={{ flex: 1, marginBottom: 20 }}>
                             {renderIf(bugBasic.ifNeedStartTime)(
                                 <View style={{ flex: 1, marginTop: 20 }} >
                                     <Form>
@@ -174,9 +180,16 @@ export default class TimeSettingPage extends Component {
                         <Grid style={{ marginTop: 35 }}>
                             <Col style={{}}>
                                 <Button block rounded style={{ backgroundColor: "#3CB371", height: 50 }} onPress={() => {
-                                    console.log("Time Setting Page State is >>>>>>");
-                                    console.log(this.state);
-                                    this.props.actions.timeSettingPageToPage2({ bugBasic: this.state });
+
+                                    var newState = Object.assign({}, this.state);
+                                    newState.start_lon = bugBasic.start_lon;
+                                    newState.start_lat = bugBasic.start_lat;
+                                    newState.isMoved = bugBasic.isMoved;
+                                    newState.ifNeedStartTime = bugBasic.ifNeedStartTime;
+                                    newState.end_lon = bugBasic.end_lon;
+                                    newState.end_lat = bugBasic.end_lat;
+
+                                    this.props.actions.timeSettingPageToPage2({ bugBasic: newState });
                                 }}>
                                     <Text style={{ fontSize: 17, alignSelf: "center" }}>Load my GoldBug</Text>
                                 </Button>

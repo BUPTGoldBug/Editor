@@ -2,9 +2,6 @@ import * as types from '../util/ActionTypes'
 import { NavigationActions } from 'react-navigation'
 
 export const push = function (routeName, params) {
-    console.log("PUSH PARAMS RECEIVED !!!!!..");
-    console.log(routeName);
-    console.log(params);
     return {
         type: types.PUSH,
         payload: {
@@ -35,7 +32,7 @@ export const goBack = function (routeName) {
     return {
         type: types.GOBACK,
         payload: {
-            routeName: routeName,
+            key: routeName,
         }
 
     }
