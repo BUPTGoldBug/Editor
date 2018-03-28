@@ -101,7 +101,8 @@ export default class HomePage extends Component {
             this.props.actions.homeToPosSetPage({ initPoint: newState });
         }
         else {
-            this.props.actions.homeToPosSetPage({ initPoint: this.state });
+            var newState = Object.assign({}, this.state);
+            this.props.actions.homeToPosSetPage({ initPoint: newState });
         }
 
     }

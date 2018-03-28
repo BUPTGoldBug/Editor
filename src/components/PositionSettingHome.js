@@ -93,8 +93,8 @@ export default class PositionSettingHome extends Component {
 
 
     onPress = () => {
-
-        this.props.actions.posSetToEndPointPage(this.state);
+        var newState = Object.assign({}, this.state);
+        this.props.actions.posSetToEndPointPage(newState);
     }
 
     onPress_ = () => {
@@ -143,8 +143,6 @@ export default class PositionSettingHome extends Component {
         const { isPosSetHomeVisible, isEndPointPageVisible, isDySettingPageVisible, dySettingParams } = this.props;
         const { initPoint } = this.props.navigation.state.params;
 
-        console.log("PROPS is ...........");
-        console.log(this.props);
         console.log("dySettingParams is ........");
         console.log(dySettingParams);
        // console.log("Init Point From Home Page is ....................");
@@ -156,7 +154,7 @@ export default class PositionSettingHome extends Component {
                 <MapView
                     style={StyleSheet.absoluteFill}
                     showsTraffic={true}
-                    region={{ latitude: initPoint.lat, longitude: initPoint.lon, latitudeDelta: 0.005, longitudeDelta: 0.005 }}
+                    region={{ latitude: initPoint.lat, longitude: initPoint.lon, latitudeDelta: 0.003, longitudeDelta: 0.003 }}
                 >
                     <MapView.Marker
                         active
@@ -166,8 +164,8 @@ export default class PositionSettingHome extends Component {
                         onInfoWindowPress={this._onInfoWindowPress}
                         onPress={this._onMarkerPress}
                         coordinate={{
-                            latitude: initPoint.lat - 0.002,
-                            longitude: initPoint.lon + 0.001
+                            latitude: initPoint.lat - 0.001,
+                            longitude: initPoint.lon + 0.0003
                         }}>
 
                         <TouchableOpacity activeOpacity={0.9} onPress={this._onInfoWindowPress}>
