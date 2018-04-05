@@ -8,18 +8,16 @@ export const addGoldBug = function (state) {
 
     var goldBug = JSON.stringify({
         bugInfo: {
-            lon: state.bugInfo.lon,
-            lat: state.bugInfo.lat,
+            deathTime:state.bugInfo.deathTime,
+            startTime:state.bugInfo.startTime,
+            start_lon: state.bugInfo.start_lon,
+            start_lat: state.bugInfo.start_lat,
+            end_lon: state.bugInfo.end_lon,
+            end_lat: state.bugInfo.end_lat,
+            ifNeedStartTime: state.bugInfo.ifNeedStartTime,
+            isMoved: state.bugInfo.isMoved,
+            lifecount: state.bugInfo.lifeCount,
             planter: state.bugInfo.planter,
-            timeIndex: state.bugInfo.timeIndex,
-            timeP_1: state.bugInfo.timeP_1,
-            timeP_2: state.bugInfo.timeP_2,
-            posIndex: state.bugInfo.posIndex,
-            posP_1: state.bugInfo.posP_1,
-            posP_2: state.bugInfo.posP_2,
-            posP_3: state.bugInfo.posP_3,
-            // birthTime:state.birthTime,
-            // deathTime:state.deathTime
         },
         content: {
             description: state.content.description,
@@ -30,7 +28,7 @@ export const addGoldBug = function (state) {
             ans_3: state.content.ans_3,
             ans_4: state.content.ans_4,
             contentType: state.content.contentType,
-            // key: state.content.key
+            key_: state.content.key,
         },
     });
 
@@ -201,7 +199,7 @@ export const Page2ToHome = function (goldBugInfo) {
 
     return (dispatch) => {
 
-        //dispatch(addGoldBug(goldBugInfo));
+        dispatch(addGoldBug(goldBugInfo));
 
         //1.AddHomePage
         //dispatch(push(constant.route_pathName.homePage, goldBugInfo));

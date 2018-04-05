@@ -313,15 +313,8 @@ export default class AddGoldBugPage2 extends Component {
             lifeCount: bugBasic.lifeCount,
             startTime: bugBasic.startTime,
             deathTime: bugBasic.deathTime,
-
             planter: bugBasic.planter,
-            //timeIndex: bugBasic.timeIndex,
-            //timeP_1: bugBasic.timeP_1,
-            //timeP_2: bugBasic.timeP_2,
-            //posIndex: bugBasic.posIndex,
-            //posP_1: bugBasic.posP_1,
-            //posP_2: bugBasic.posP_2,
-            //posP_3: bugBasic.posP_3
+
         };
 
         var content = {
