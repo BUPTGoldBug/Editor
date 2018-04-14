@@ -11,7 +11,8 @@ const initialState = {
     isDySettingPageVisible: false,
     isTimeSettingPageVisible: false,
     contentText: "Connecting...",
-    dySettingParams: {}
+    dySettingParams: {},
+    bugsAround:[]
 };
 
 export default function GoldBugReducer(state = initialState, action = {}) {
@@ -124,6 +125,41 @@ export default function GoldBugReducer(state = initialState, action = {}) {
             let newState = {
                 ...state,
                 dySettingParams: Object.assign({},action.payload)
+            };
+            return newState;
+        }
+        case types.GET_AROUND_BUGS_FULFILLED:{
+            if (action.payload == false) {
+                //加载失败
+                let newState = {
+                    ...state,
+                    bugsAround:[],
+                    contentText: "Connection Error"
+                };
+                return newState;
+
+            } else {
+                let newState = {
+                    ...state,
+                    bugsAround:action.payload,
+                    contentText: "Success"
+                };
+                return newState;
+
+            }
+        }
+        case types.GET_AROUND_BUGS_PENDING:{
+            let newState = {
+                ...state,
+                contentText: "Connecting..."
+            };
+            return newState;
+        }
+        case types.GET_AROUND_BUGS_REJECTED:{
+            let newState = {
+                ...state,
+                bugsAround:[],
+                contentText: "Failed"
             };
             return newState;
         }

@@ -2,6 +2,27 @@ import * as types from '../util/ActionTypes'
 import * as constant from '../util/Constant'
 import { push, pop, reset, goBack } from './NavigatorAction'
 
+export const getAroundBugs = function (state) {
+    
+    return {
+        type: types.GET_AROUND_BUGS,
+        payload: fetch(
+            constant.ROOT_SERVER_URL + constant.URL.getAroundBugs, {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    lon:state.userLon,
+                    lat:state.userLat,               
+                })
+            }).then(response => response.json()).catch(()=>{return false;})
+
+    }
+
+
+}
+
 export const addGoldBug = function (state) {
     console.log("BEFORE JSON STRINGIFY... STATE IS ");
     console.log(state);

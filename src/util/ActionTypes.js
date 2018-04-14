@@ -17,6 +17,14 @@ export const ADD_GoldBug_FULFILLED = 'ADD_GoldBug_FULFILLED' ;
 
 export const ADD_GoldBug_REJECTED = 'ADD_GoldBug_REJECTED' ;
 
+export const GET_AROUND_BUGS = 'GET_AROUND_BUGS';
+
+export const GET_AROUND_BUGS_PENDING = 'GET_AROUND_BUGS_PENDING' ;
+
+export const GET_AROUND_BUGS_FULFILLED = 'GET_AROUND_BUGS_FULFILLED' ;
+
+export const GET_AROUND_BUGS_REJECTED = 'GET_AROUND_BUGS_REJECTED' ;
+
 export const HOMEPAGE_Visibility = "HOMEPAGE_Visibility";
 
 export const PAGE1_Visibility = "PAGE1_Visibility";

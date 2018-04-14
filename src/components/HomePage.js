@@ -16,7 +16,6 @@ import {
     Right,
     Body,
     Icon,
-    //Text,
     Card,
     Input,
     Item,
@@ -26,6 +25,7 @@ import {
     ListItem,
     Thumbnail
 } from "native-base";
+//import index from './C:/Users/Luyao/AppData/Local/Microsoft/TypeScript/2.6/node_modules/@types/react-native-datepicker';
 
 const styles = StyleSheet.create({
     customIcon: {
@@ -59,7 +59,6 @@ export default class HomePage extends Component {
 
         super(props, context);
 
-
         this.state = {
             isMoved: false,
             rt_lon: 200,
@@ -81,14 +80,21 @@ export default class HomePage extends Component {
                 this.setState({ tmpTime: new Date() })
             }
         }, 1000)
+
+        this.interval = setInterval(() => {
+            this.props.actions.getAroundBugs({ userLon: this.state.rt_lon, userLat: this.state.rt_lat });
+        }, 400);
     }
 
     componentWillUnmount() {
         this.mounted = false
+
+        this.interval && clearTimeout(this.interval);
     }
 
-
-
+    _catcherOnMarkerPress = (GoldBugId) =>{
+        Alert.alert("GoldBugId is "+ GoldBugId+" ~!");
+    }
 
     _onMarkerPress = () => {
         console.log("STATE PASSED FROM HOME_PAGE TO POS_SETTING_PAGE is >>>>");
@@ -117,7 +123,10 @@ export default class HomePage extends Component {
 
     render() {
 
-        const { isHomePageVisible } = this.props;
+        const { isHomePageVisible, bugsAround } = this.props;
+
+        console.log("++++++++BUGS AROUND+++++++++++");
+        console.log(bugsAround);
 
         return (
             <MapView
@@ -158,9 +167,25 @@ export default class HomePage extends Component {
                         </View>
                     </TouchableOpacity>
                 </MapView.Marker>
-
+                {this.renderBugsAround(bugsAround)}
             </MapView>
-        )
-    }
-}
-
+        );
+    };
+    renderBugsAround(bugsAround){
+        return bugsAround.map((bug, index) => {
+            return (<MapView.Marker
+                active
+                draggable
+                GoldBugId = { bug.bugId}
+                color="blue"
+                onPress={()=>{
+                    this._catcherOnMarkerPress(bug.bugId)
+                }}
+                coordinate={{
+                    latitude: bug.lat,
+                    longitude: bug.lon
+                }}>
+            </MapView.Marker>
+            );
+        })
+    }};
