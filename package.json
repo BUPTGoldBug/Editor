@@ -7,6 +7,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "feather-icons": "^4.7.0",
     "native-base": "^2.3.10",
     "prop-types": "^15.6.1",
     "react": "16.2.0",
@@ -14,6 +15,7 @@
     "react-native": "0.52.0",
     "react-native-amap3d": "^0.12.1",
     "react-native-datepicker": "^1.6.0",
+    "react-native-fontawesome": "^5.7.0",
     "react-native-keyboard-aware-scroll-view": "^0.4.4",
     "react-native-modal": "^5.2.0",
     "react-native-modal-datetime-picker": "^4.13.0",
