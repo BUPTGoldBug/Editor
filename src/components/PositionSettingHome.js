@@ -34,6 +34,8 @@ import moment from 'moment';
 
 import { TextInput, Animated, Keyboard, KeyboardAvoidingView } from 'react-native';
 import { GOBACK } from '../util/ActionTypes';
+import { feather } from '../util/Constant';
+import FontAwesome, { Icons } from 'react-native-fontawesome';
 
 
 const styles = StyleSheet.create({
@@ -145,8 +147,8 @@ export default class PositionSettingHome extends Component {
 
         console.log("dySettingParams is ........");
         console.log(dySettingParams);
-       // console.log("Init Point From Home Page is ....................");
-       // console.log(initPoint);
+        // console.log("Init Point From Home Page is ....................");
+        // console.log(initPoint);
 
 
         if (isEndPointPageVisible)
@@ -189,16 +191,19 @@ export default class PositionSettingHome extends Component {
 
             );
         if (isDySettingPageVisible) {
-            
+
             return (
                 <View>
                     <Modal isVisible={true} swipeDirection="right">
-                        <View style={{ marginTop: 120, marginLeft: 30, marginRight: 30, marginBottom: 160, backgroundColor: "#D5EAE9", borderRadius: 8, flex: 1, paddingTop: 30 }}>
-                            <Text style={{ fontSize: 20, margin: 4, alignSelf: "center" }}>Activate Your GoldBug</Text>
+                        <View style={{ marginTop: 120, marginLeft: 30, marginRight: 30, marginBottom: 155, backgroundColor: "#D5EAE9", borderRadius: 8, flex: 1, paddingTop: 20 }}>
+                            <FontAwesome style={{ marginTop: 0, marginLeft: 13, fontSize: 20 }}>
+                                {Icons.close}
+                            </FontAwesome>
+                            <Text style={{ fontSize: 20, margin: 5, alignSelf: "center" }}>Activate Your GoldBug</Text>
                             <Grid style={{ marginTop: 24, marginBottom: 30 }}>
                                 <Row>
                                     <Button rounded block style={{ margin: 10, backgroundColor: "#FF1493", height: 70, flex: 1 }} onPress={() => {
-                                       
+
                                         var newState = Object.assign({}, this.state);
                                         newState.ifNeedStartTime = false;
                                         newState.start_lon = dySettingParams.pointBasic.start_lon;
@@ -214,7 +219,7 @@ export default class PositionSettingHome extends Component {
                                 </Row>
                                 <Row>
                                     <Button rounded block style={{ margin: 10, backgroundColor: "#0000CD", height: 70, flex: 1 }} onPress={() => {
-                                       
+
                                         var newState = Object.assign({}, this.state);
                                         newState.ifNeedStartTime = true;
                                         newState.start_lon = dySettingParams.pointBasic.start_lon;
@@ -239,7 +244,10 @@ export default class PositionSettingHome extends Component {
                 <Modal isVisible={isPosSetHomeVisible} swipeDirection="right">
                     <View style={{ marginTop: 100, marginBottom: 100, marginLeft: 25, marginRight: 25, backgroundColor: "#D5EAE9", borderRadius: 8, flex: 1 }}>
                         <View>
-                            <Text style={{ fontSize: 16, margin: 20, alignSelf: "center" }}>Click to Chose the END POINT</Text>
+                            <FontAwesome style={{ marginTop: 15, marginLeft: 10, fontSize: 18 }}>
+                                {Icons.close}
+                            </FontAwesome>
+                            <Text style={{ fontSize: 16, marginBottom: 20, alignSelf: "center" }}>Click to Chose the END POINT</Text>
                         </View>
 
                         <View style={{ width: 300, height: 140, paddingLeft: 17 }}>

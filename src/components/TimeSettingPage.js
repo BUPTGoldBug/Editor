@@ -32,6 +32,7 @@ import renderIf from './renderIf'
 
 import { TextInput, Animated, Keyboard, KeyboardAvoidingView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import FontAwesome, { Icons } from 'react-native-fontawesome';
 
 
 export default class TimeSettingPage extends Component {
@@ -45,6 +46,7 @@ export default class TimeSettingPage extends Component {
         this.setStartTimeEvent = this.setStartTimeEvent.bind(this);
         this.setLifeCountEvent = this.setLifeCountEvent.bind(this);
         this.setDeathTimeEvent = this.setDeathTimeEvent.bind(this);
+        this.setIfNeedStartTime = this.setIfNeedStartTime.bind(this);
 
 
         this.state = {
@@ -56,7 +58,7 @@ export default class TimeSettingPage extends Component {
             end_lat: 300,
             lifeCount: 1,
             startTime: moment().add(1, 'hours').format('YYYY-MM-DD HH:mm:ss'),
-            deathTime: moment().add(1, 'hours').format('YYYY-MM-DD HH:mm:ss'),
+            deathTime: moment().add(2, 'hours').format('YYYY-MM-DD HH:mm:ss'),
 
             num: 1,
 
@@ -64,11 +66,18 @@ export default class TimeSettingPage extends Component {
 
     }
 
+    componentDidMount() {
+        const { bugBasic } = this.props.navigation.state.params;
+        this.setIfNeedStartTime(bugBasic);
+    }
+
+
     lifeCountChoices = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
     render() {
         const { isTimeSettingPageVisible } = this.props;
         const { bugBasic } = this.props.navigation.state.params;
+        
 
         console.log("BugBasic from Dy Setting Page is...........");
         console.log(bugBasic);
@@ -79,9 +88,17 @@ export default class TimeSettingPage extends Component {
                 <Modal isVisible={isTimeSettingPageVisible} swipeDirection="right">
 
                     <View style={{ marginTop: 80, marginLeft: 20, marginRight: 20, marginBottom: 120, backgroundColor: "#D5EAE9", borderRadius: 8, flex: 1, paddingTop: 20, paddingLeft: 8, paddingRight: 8, paddingBottom: 25 }}>
+                        <Row>
+                            <FontAwesome style={{ marginTop: 0, marginLeft: 13, fontSize: 3, textAlign: 'left' }}>
+                                <Icon name='ios-arrow-back' />
+                            </FontAwesome>
+                            <FontAwesome style={{ marginTop: 0, marginLeft: 200, fontSize: 20, textAlign: 'right' }}>
+                                {Icons.close}
+                            </FontAwesome>
+                        </Row>
                         <View style={{ flex: 1, marginBottom: 20 }}>
                             {renderIf(bugBasic.ifNeedStartTime)(
-                                <View style={{ flex: 1, marginTop: 20 }} >
+                                <View style={{ flex: 1, marginTop: 10 }} >
                                     <Form>
                                         <Item rounded style={{ padding: 8, backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>
                                             <View style={{ flex: 2 }}>
@@ -205,6 +222,9 @@ export default class TimeSettingPage extends Component {
 
     }
 
+    setIfNeedStartTime(bugBasic){
+        this.setState({ifNeedStartTime: bugBasic.ifNeedStartTime});
+    }
 
     setLifeCountEvent(lifeCount) {
 
@@ -228,11 +248,13 @@ export default class TimeSettingPage extends Component {
         console.log(date_1);
 
         if (date1 < date_1) {
-            Alert.alert('Reminder', 'Non-VIP user can only plant GoldBug in at least 1 Hour.');
+            Alert.alert('Reminder', 'Non-VIP user can only plant GoldBug after 1 Hour.');
             this.setState({ startTime: moment().add(1, 'hours').format('YYYY-MM-DD HH:mm:ss') });
+            this.setState({ deathTime: moment().add(2, 'hours').format('YYYY-MM-DD HH:mm:ss') });
         }
         else {
             this.setState({ startTime: startTime });
+            this.setState({ deathTime: moment(startTime).add(2, 'hours').format('YYYY-MM-DD HH:mm:ss')});
         }
     }
 
@@ -247,18 +269,24 @@ export default class TimeSettingPage extends Component {
         console.log("TIMESTAMP?????");
         console.log(date1);
 
-        var date_1 = moment().add(1, 'hours').toDate().getTime();
+       
+        if(this.state.ifNeedStartTime){
+            console.log("IF NEED STARTTIME IS TRUE");
+            console.log(this.state.startTime);
+            var date_1 = moment(this.state.startTime).add(10, 'minutes').toDate().getTime();
+        }
+        else{
+            console.log("IF NEED STARTTIME IS FALSE");
+            var date_1 = moment().add(10, 'minutes').toDate().getTime();
+        }
+        
         console.log("TIMESTAMP LIMIT ???????");
         console.log(date_1);
 
-        //var Real_Date1 = moment(date1).format("YYYY-MM-DD HH:mm:ss");
-        //var Real_Date_1 = moment(date_1).format("YYYY-MM-DD HH:mm:ss");
-        //Alert.alert('', deathTime+' '+Real_Date1+' '+date1+' '+Real_Date_1+' '+date_1 );
-
 
         if (date1 < date_1) {
-            Alert.alert('Reminder', 'Non-VIP user can only plant GoldBug in at least AN HOUR~');
-            this.setState({ deathTime: moment().add(1, 'hours').format('YYYY-MM-DD HH:mm:ss') });
+            Alert.alert('Reminder', 'GoldBug should last at least 10 minutes~');
+            this.setState({deathTime: moment(date_1)});
         }
         else {
 

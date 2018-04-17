@@ -181,7 +181,7 @@ export default class AddGoldBugPage2 extends Component {
                                     //this.props.actions.page2ToPage1();
                                     Alert.alert("Go back to Time Setting page~");
                                 }}>
-                                    <Text >Previous</Text>
+                                    <Text >Abandon</Text>
                                 </Button>
                             </Col>
                             <Col style={{}}>

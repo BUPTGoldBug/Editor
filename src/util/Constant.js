@@ -4,13 +4,15 @@
     POSITION_FILED:3
 };*/
 
-export const ROOT_SERVER_URL = "http://10.8.185.10:8080/goldbug/"; 
+export const ROOT_SERVER_URL = "http://172.20.10.2:8080/goldbug/"; 
 
 export const URL = {
     addUser: "addUser",
     addGoldBug:"addGoldBug",
     getAroundBugs:"getAroundBugs"
 };
+
+export const feather = require('feather-icons')
 
 export const route_pathName = {
     addGoldBugPage1: "AddGoldBugPage1",

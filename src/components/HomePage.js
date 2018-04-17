@@ -174,8 +174,7 @@ export default class HomePage extends Component {
     renderBugsAround(bugsAround){
         return bugsAround.map((bug, index) => {
             return (<MapView.Marker
-                active
-                draggable
+                key = {index}
                 GoldBugId = { bug.bugId}
                 color="blue"
                 onPress={()=>{
