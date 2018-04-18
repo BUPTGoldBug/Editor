@@ -104,7 +104,7 @@ export default class AddGoldBugPage2 extends Component {
                                 <TextInput placeholder="Question" onChangeText={this.setQuestionEvent} style={{ flex: 1 }} underlineColorAndroid='transparent' />
                             </Item>
 
-                            <View style={{ marginTop: 10,borderRadius: 14, backgroundColor: this.state.ans_1_selected == true ? '#ADD8E6' : '#D5EAE9' }}>
+                            <View style={{ marginTop: 10, borderRadius: 14, backgroundColor: this.state.ans_1_selected == true ? '#ADD8E6' : '#D5EAE9' }}>
                                 <Item rounded style={{ borderRadius: 14, borderColor: "#555555" }}>
                                     <View style={{ flex: 3 }}>
                                         <TextInput placeholder="Answer Candidate 1" onChangeText={this.setAns1Event} style={{ flex: 1 }} underlineColorAndroid='transparent' />
@@ -170,7 +170,14 @@ export default class AddGoldBugPage2 extends Component {
                             </View>
 
                             <Item rounded style={{ backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>
-                                <TextInput placeholder="Scores" onChangeText={this.setScoresEvent} style={{ flex: 1 }} underlineColorAndroid='transparent' />
+                                <TextInput
+                                    placeholder="Scores"
+                                    keyboardType='numeric'
+                                    value={this.state.scores}
+                                    onChangeText={this.setScoresEvent}
+                                    style={{ flex: 1 }}
+                                    underlineColorAndroid='transparent'
+                                />
                             </Item>
 
                         </Form>
@@ -203,25 +210,68 @@ export default class AddGoldBugPage2 extends Component {
         if (this.state.ans_1_selected == true) {
             this.setState({ ans_1_selected: false });
         }
-        else this.setState({ ans_1_selected: true });
+        else {
+            var regu = "^[ ]+$";
+            var re = new RegExp(regu);
+            var str = this.state.ans_1;
+            if (str == "" || re.test(str)) {
+                Alert.alert("Cannot Set Empty Answer as Key!");
+            }
+            else {
+                this.setState({ ans_1_selected: true });
+            }
+        }
     }
+
     setAns2SelectEvent() {
         if (this.state.ans_2_selected == true) {
             this.setState({ ans_2_selected: false });
         }
-        else this.setState({ ans_2_selected: true });
+        else {
+            var regu = "^[ ]+$";
+            var re = new RegExp(regu);
+            var str = this.state.ans_2;
+            if (str == "" || re.test(str)) {
+                Alert.alert("Cannot Set Empty Answer as Key!");
+            }
+            else {
+                this.setState({ ans_2_selected: true });
+            }
+        }
     }
+
     setAns3SelectEvent() {
         if (this.state.ans_3_selected == true) {
             this.setState({ ans_3_selected: false });
         }
-        else this.setState({ ans_3_selected: true });
+        else {
+            var regu = "^[ ]+$";
+            var re = new RegExp(regu);
+            var str = this.state.ans_3;
+            if (str == "" || re.test(str)) {
+                Alert.alert("Cannot Set Empty Answer as Key!");
+            }
+            else {
+                this.setState({ ans_3_selected: true });
+            }
+        }
     }
+
     setAns4SelectEvent() {
         if (this.state.ans_4_selected == true) {
             this.setState({ ans_4_selected: false });
         }
-        else this.setState({ ans_4_selected: true });
+        else {
+            var regu = "^[ ]+$";
+            var re = new RegExp(regu);
+            var str = this.state.ans_4;
+            if (str == "" || re.test(str)) {
+                Alert.alert("Cannot Set Empty Answer as Key!");
+            }
+            else {
+                this.setState({ ans_4_selected: true });
+            }
+        }
     }
 
     setQuestionEvent(question) {
@@ -232,6 +282,7 @@ export default class AddGoldBugPage2 extends Component {
         if (this.state.ans_1_selected == true) {
             this.setState({ ans_1_selected: false });
         }
+
     }
     setAns2Event(ans_2) {
         this.setState({ ans_2: ans_2 });
@@ -253,6 +304,13 @@ export default class AddGoldBugPage2 extends Component {
     }
 
     setScoresEvent(scores) {
+        scores = scores.replace(/[^\d.]/g, "");
+        //必须保证第一位为数字而不是.   
+        scores = scores.replace(/^\./g, "");
+        //保证只有出现一个.而没有多个.   
+        scores = scores.replace(/\.{2,}/g, ".");
+        //保证.只出现一次，而不能出现两次以上   
+        scores = scores.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
         this.setState({ scores: scores });
     }
     setKeyEvent(key) {
@@ -260,83 +318,82 @@ export default class AddGoldBugPage2 extends Component {
     }
 
     commitGoldBug(bugBasic) {
-        var key = "";
-        if (this.state.ans_1_selected == true) {
-            key += "1";
+        // Check Question Vadality
+        var regu = "^[ ]+$";
+        var re = new RegExp(regu);
+        var str = this.state.question;
+        if (str == "" || re.test(str)) {
+            Alert.alert("Question Cannot Be Empty!");
         }
-        else key += "0";
-        if (this.state.ans_2_selected == true) {
-            key += "1";
+
+        // Check Key
+        else if (this.state.ans_1_selected == false && this.state.ans_2_selected == false && this.state.ans_3_selected == false && this.state.ans_4_selected == false) {
+            Alert.alert("Please Set At Least 1 Key!");
         }
-        else key += "0";
-        if (this.state.ans_3_selected == true) {
-            key += "1";
+
+        // Check Score
+        else if (this.state.scores == 0 || this.state.scores == null) {
+            Alert.alert("Scores Should Be Greater Than 0!");
         }
-        else key += "0";
-        if (this.state.ans_4_selected == true) {
-            key += "1";
+
+        // Data Transfer
+        else {
+            var key = "";
+            if (this.state.ans_1_selected == true) {
+                key += "1";
+            }
+            else key += "0";
+            if (this.state.ans_2_selected == true) {
+                key += "1";
+            }
+            else key += "0";
+            if (this.state.ans_3_selected == true) {
+                key += "1";
+            }
+            else key += "0";
+            if (this.state.ans_4_selected == true) {
+                key += "1";
+            }
+            else key += "0";
+
+
+            var bugInfo = {
+                //lon: bugBasic.lon,
+                //lat: bugBasic.lat,
+                start_lon: bugBasic.start_lon,
+                start_lat: bugBasic.start_lat,
+                end_lon: bugBasic.end_lon,
+                end_lat: bugBasic.end_lat,
+                isMoved: bugBasic.isMoved,
+                ifNeedStartTime: bugBasic.ifNeedStartTime,
+                lifeCount: bugBasic.lifeCount,
+                startTime: bugBasic.startTime,
+                deathTime: bugBasic.deathTime,
+                planter: bugBasic.planter,
+
+            };
+
+            var content = {
+                contentType: this.state.contentType,
+                description: this.state.description,
+                question: this.state.question,
+                score: this.state.scores,
+                ans_1: this.state.ans_1,
+                ans_2: this.state.ans_2,
+                ans_3: this.state.ans_3,
+                ans_4: this.state.ans_4,
+                key: key
+            };
+
+            var goldBugInfo = {
+                bugInfo: bugInfo,
+                content: content
+            };
+
+            console.log("GOLGBUG PARAMS AFTER ADDGOLDBUGPAGE2>>>>>>>");
+            console.log(goldBugInfo);
+            this.props.actions.Page2ToHome(goldBugInfo);
         }
-        else key += "0";
-
-
-/*            start_lon: 200,
-            start_lat: 300,
-            isMoved: false,
-            ifNeedStartTime: false,
-            end_lon: 200,
-            end_lat: 300,
-            lifeCount: 1,
-            startTime: moment().add(1, 'hours').format('YYYY-MM-DD HH:mm:ss'),
-            deathTime: moment().add(1, 'hours').format('YYYY-MM-DD HH:mm:ss'),
-
-            description: "QA",
-            question: "",
-            scores: 0,
-            ans_1: "",
-            ans_2: "",
-            ans_3: "",
-            ans_4: "",
-            contentType: "0",
-            
-            ++ key: ""   */
-
-        var bugInfo = {
-            //lon: bugBasic.lon,
-            //lat: bugBasic.lat,
-            start_lon: bugBasic.start_lon,
-            start_lat: bugBasic.start_lat,
-            end_lon: bugBasic.end_lon,
-            end_lat: bugBasic.end_lat,
-            isMoved: bugBasic.isMoved,
-            ifNeedStartTime: bugBasic.ifNeedStartTime,
-            lifeCount: bugBasic.lifeCount,
-            startTime: bugBasic.startTime,
-            deathTime: bugBasic.deathTime,
-            planter: bugBasic.planter,
-
-        };
-
-        var content = {
-            contentType: this.state.contentType,
-            description: this.state.description,
-            question: this.state.question,
-            score: this.state.scores,
-            ans_1: this.state.ans_1,
-            ans_2: this.state.ans_2,
-            ans_3: this.state.ans_3,
-            ans_4: this.state.ans_4,
-            key: key
-        };
-
-        var goldBugInfo = {
-            bugInfo: bugInfo,
-            content: content
-        };
-
-        console.log("GOLGBUG PARAMS AFTER ADDGOLDBUGPAGE2>>>>>>>");
-        console.log(goldBugInfo);
-        this.props.actions.Page2ToHome(goldBugInfo);
-
     }
 
 }
