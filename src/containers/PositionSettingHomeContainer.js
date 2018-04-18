@@ -3,7 +3,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PositionSettingHome from "../components/PositionSettingHome"
-import { posSetToEndPointPage, endPointPageToDySettingPage, dySettingPageToTimeSettingPage } from "../actions/AddGoldBugAction"
+import { dySettingPageToHomePage, posSetToEndPointPage, endPointPageToDySettingPage, dySettingPageToTimeSettingPage } from "../actions/AddGoldBugAction"
 import { push, pop, reset, goBack } from '../actions/NavigatorAction'
 
 export default connect(
@@ -19,6 +19,6 @@ export default connect(
     },
     (dispatch) => {
 
-        return (Object.assign({ dispatch: dispatch }, { actions: bindActionCreators({ push, pop, reset, goBack, posSetToEndPointPage, endPointPageToDySettingPage, dySettingPageToTimeSettingPage }, dispatch) }));
+        return (Object.assign({ dispatch: dispatch }, { actions: bindActionCreators({ push, pop, reset, goBack,dySettingPageToHomePage, posSetToEndPointPage, endPointPageToDySettingPage, dySettingPageToTimeSettingPage }, dispatch) }));
     }
 )(PositionSettingHome);

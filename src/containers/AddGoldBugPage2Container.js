@@ -19,6 +19,6 @@ export default connect(
     },
     (dispatch) => {
 
-        return (Object.assign({ dispatch: dispatch }, { actions: bindActionCreators({ push, pop, reset, goBack, addGoldBug, page2ToPage1, switchToHome, Page2ToHome }, dispatch) }));
+        return (Object.assign({ dispatch: dispatch }, { actions: bindActionCreators({ push, pop, reset, goBack,Page2ToHome, addGoldBug, page2ToPage1, switchToHome, Page2ToHome }, dispatch) }));
     }
 )(AddGoldBugPage2);

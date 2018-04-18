@@ -26,7 +26,7 @@ import {
 } from "native-base";
 import Icon1 from 'react-native-vector-icons/FontAwesome'
 import { Col, Row, Grid } from 'react-native-easy-grid';
-import { View, Alert, TouchableOpacity, Image, StyleSheet } from 'react-native'
+import { View, Alert, TouchableOpacity, Image, StyleSheet, TouchableHighlight } from 'react-native'
 import * as constant from '../util/Constant'
 import Modal from "react-native-modal";
 import DatePicker from 'react-native-datepicker';
@@ -34,7 +34,7 @@ import moment from 'moment';
 
 import { TextInput, Animated, Keyboard, KeyboardAvoidingView } from 'react-native';
 import { GOBACK } from '../util/ActionTypes';
-import { feather } from '../util/Constant';
+import { feather, route_pathName } from '../util/Constant';
 import FontAwesome, { Icons } from 'react-native-fontawesome';
 
 
@@ -195,11 +195,13 @@ export default class PositionSettingHome extends Component {
             return (
                 <View>
                     <Modal isVisible={true} swipeDirection="right">
-                        <View style={{ marginTop: 120, marginLeft: 30, marginRight: 30, marginBottom: 155, backgroundColor: "#D5EAE9", borderRadius: 8, flex: 1, paddingTop: 20 }}>
-                            <FontAwesome style={{ marginTop: 0, marginLeft: 13, fontSize: 20 }}>
-                                {Icons.close}
-                            </FontAwesome>
-                            <Text style={{ fontSize: 20, margin: 5, alignSelf: "center" }}>Activate Your GoldBug</Text>
+                        <View style={{ marginTop: 100, marginLeft: 30, marginRight: 30, marginBottom: 155, backgroundColor: "#D5EAE9", borderRadius: 8, flex: 1, paddingTop: 12 }}>
+                            <TouchableOpacity onPress={() => this.props.actions.dySettingPageToHomePage()}>
+                                <FontAwesome style={{ marginTop: 0, marginLeft: 13, fontSize: 24 }}>
+                                    {Icons.close}
+                                </FontAwesome>
+                            </TouchableOpacity>
+                            <Text style={{ fontSize: 20, margin: 15, alignSelf: "center" }}>Activate Your GoldBug</Text>
                             <Grid style={{ marginTop: 24, marginBottom: 30 }}>
                                 <Row>
                                     <Button rounded block style={{ margin: 10, backgroundColor: "#FF1493", height: 70, flex: 1 }} onPress={() => {
@@ -244,9 +246,11 @@ export default class PositionSettingHome extends Component {
                 <Modal isVisible={isPosSetHomeVisible} swipeDirection="right">
                     <View style={{ marginTop: 100, marginBottom: 100, marginLeft: 25, marginRight: 25, backgroundColor: "#D5EAE9", borderRadius: 8, flex: 1 }}>
                         <View>
-                            <FontAwesome style={{ marginTop: 15, marginLeft: 10, fontSize: 18 }}>
-                                {Icons.close}
-                            </FontAwesome>
+                            <TouchableOpacity onPress={() => this.props.actions.pop()}>
+                                <FontAwesome style={{ marginTop: 15, marginLeft: 10, fontSize: 18, width: 20 }}>
+                                    {Icons.close}
+                                </FontAwesome>
+                            </TouchableOpacity>
                             <Text style={{ fontSize: 16, marginBottom: 20, alignSelf: "center" }}>Click to Chose the END POINT</Text>
                         </View>
 
@@ -288,22 +292,22 @@ export default class PositionSettingHome extends Component {
 
 /*
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
+                        container: {
+                        flex: 1,
         justifyContent: 'center',
         paddingHorizontal: 10
     },
     button: {
-        alignItems: 'center',
+                        alignItems: 'center',
         backgroundColor: '#DDDDDD',
         padding: 10
     },
     countContainer: {
-        alignItems: 'center',
+                        alignItems: 'center',
         padding: 10
     },
     countText: {
-        color: '#FF00FF'
+                        color: '#FF00FF'
     }
 })*/
 

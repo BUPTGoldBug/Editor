@@ -15,7 +15,6 @@ export const URL = {
 export const feather = require('feather-icons')
 
 export const route_pathName = {
-    addGoldBugPage1: "AddGoldBugPage1",
     addGoldBugPage2: "AddGoldBugPage2",
     homePage: "HomePage",
     positionSettingHome:"PositionSettingHome",

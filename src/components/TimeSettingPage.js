@@ -77,7 +77,7 @@ export default class TimeSettingPage extends Component {
     render() {
         const { isTimeSettingPageVisible } = this.props;
         const { bugBasic } = this.props.navigation.state.params;
-        
+
 
         console.log("BugBasic from Dy Setting Page is...........");
         console.log(bugBasic);
@@ -89,12 +89,17 @@ export default class TimeSettingPage extends Component {
 
                     <View style={{ marginTop: 80, marginLeft: 20, marginRight: 20, marginBottom: 120, backgroundColor: "#D5EAE9", borderRadius: 8, flex: 1, paddingTop: 20, paddingLeft: 8, paddingRight: 8, paddingBottom: 25 }}>
                         <Row>
-                            <FontAwesome style={{ marginTop: 0, marginLeft: 13, fontSize: 3, textAlign: 'left' }}>
-                                <Icon name='ios-arrow-back' />
-                            </FontAwesome>
-                            <FontAwesome style={{ marginTop: 0, marginLeft: 200, fontSize: 20, textAlign: 'right' }}>
-                                {Icons.close}
-                            </FontAwesome>
+                            <TouchableOpacity onPress={() => this.props.actions.timeSettingToDySettingPage()}>
+                                <FontAwesome style={{ marginTop: 0, marginLeft: 10, fontSize: 24, textAlign: 'left' }}>
+                                    {Icons.arrowCircleLeft}
+                                </FontAwesome>
+                            </TouchableOpacity>
+                            
+                            <TouchableOpacity onPress={() => this.props.actions.timeSettingToHomePage()}>
+                                <FontAwesome style={{ marginTop: 0, marginLeft: 200, fontSize: 24, textAlign: 'right' }}>
+                                    {Icons.close}
+                                </FontAwesome>
+                            </TouchableOpacity>
                         </Row>
                         <View style={{ flex: 1, marginBottom: 20 }}>
                             {renderIf(bugBasic.ifNeedStartTime)(
@@ -222,8 +227,8 @@ export default class TimeSettingPage extends Component {
 
     }
 
-    setIfNeedStartTime(bugBasic){
-        this.setState({ifNeedStartTime: bugBasic.ifNeedStartTime});
+    setIfNeedStartTime(bugBasic) {
+        this.setState({ ifNeedStartTime: bugBasic.ifNeedStartTime });
     }
 
     setLifeCountEvent(lifeCount) {
@@ -254,7 +259,7 @@ export default class TimeSettingPage extends Component {
         }
         else {
             this.setState({ startTime: startTime });
-            this.setState({ deathTime: moment(startTime).add(2, 'hours').format('YYYY-MM-DD HH:mm:ss')});
+            this.setState({ deathTime: moment(startTime).add(2, 'hours').format('YYYY-MM-DD HH:mm:ss') });
         }
     }
 
@@ -269,24 +274,24 @@ export default class TimeSettingPage extends Component {
         console.log("TIMESTAMP?????");
         console.log(date1);
 
-       
-        if(this.state.ifNeedStartTime){
+
+        if (this.state.ifNeedStartTime) {
             console.log("IF NEED STARTTIME IS TRUE");
             console.log(this.state.startTime);
             var date_1 = moment(this.state.startTime).add(10, 'minutes').toDate().getTime();
         }
-        else{
+        else {
             console.log("IF NEED STARTTIME IS FALSE");
             var date_1 = moment().add(10, 'minutes').toDate().getTime();
         }
-        
+
         console.log("TIMESTAMP LIMIT ???????");
         console.log(date_1);
 
 
         if (date1 < date_1) {
             Alert.alert('Reminder', 'GoldBug should last at least 10 minutes~');
-            this.setState({deathTime: moment(date_1)});
+            this.setState({ deathTime: moment(date_1) });
         }
         else {
 

@@ -10,7 +10,7 @@ const init_state = {
     index: 0,
 
     routes: [
-        { key: "0", routeName: "AddGoldBugPage1", params: {} },
+        { key: "0", routeName: "HomePage", params: {} },
     ]
 }
 
@@ -44,7 +44,7 @@ export default function NavigatorReducer(state = Original_State, action = {}) {
                 actions: [Original_Action],
                 index: 0
             });
-
+            let newState = Navigator_.router.getStateForAction(resetAction, state);
             return newState;
         }
         case types.GOBACK: {

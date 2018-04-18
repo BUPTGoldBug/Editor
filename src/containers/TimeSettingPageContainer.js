@@ -3,7 +3,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import TimeSettingPage from "../components/TimeSettingPage"
-import { timeSettingPageToPage2 } from "../actions/AddGoldBugAction"
+import {timeSettingToHomePage,timeSettingToDySettingPage, timeSettingPageToPage2 } from "../actions/AddGoldBugAction"
 import { push, pop, reset, goBack } from '../actions/NavigatorAction'
 
 export default connect(
@@ -16,6 +16,6 @@ export default connect(
     },
     (dispatch) => {
 
-        return (Object.assign({ dispatch: dispatch }, { actions: bindActionCreators({ push, pop, reset, goBack, timeSettingPageToPage2}, dispatch) }));
+        return (Object.assign({ dispatch: dispatch }, { actions: bindActionCreators({ push, pop, reset, goBack, timeSettingToHomePage,timeSettingToDySettingPage,timeSettingPageToPage2}, dispatch) }));
     }
 )(TimeSettingPage);
