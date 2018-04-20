@@ -173,7 +173,7 @@ export default class AddGoldBugPage2 extends Component {
                                 <TextInput
                                     placeholder="Scores"
                                     keyboardType='numeric'
-                                    value={this.state.scores}
+                                    value={''+this.state.scores}
                                     onChangeText={this.setScoresEvent}
                                     style={{ flex: 1 }}
                                     underlineColorAndroid='transparent'

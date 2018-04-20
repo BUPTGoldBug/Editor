@@ -245,6 +245,8 @@ export const Page2ToHome = function (goldBugInfo) {
 
     return (dispatch) => {
 
+
+        dispatch(addGoldBug(goldBugInfo));
         dispatch(reset());
 
         //2.Set the Visibility of Homepage
