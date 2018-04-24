@@ -1,7 +1,7 @@
 import * as types from '../util/ActionTypes'
 import * as constant from '../util/Constant'
 import { push, pop, reset, goBack } from './NavigatorAction'
-
+import {initSelectGameState,initCatchGame} from './ARAction'
 export const getAroundBugs = function (state) {
     
     return {
@@ -22,7 +22,21 @@ export const getAroundBugs = function (state) {
 
 
 }
+export const initStateOfSubmit=function(){
+    return (dispatch)=>{
+        dispatch(changeStateOfSubmit(0))
+    }
 
+}
+export const changeStateOfSubmit = function (state){
+    return {
+        type:types.changeStateOfSubmit,
+        payload:{
+            state:state
+        }
+    }
+
+}
 export const addGoldBug = function (state) {
     console.log("BEFORE JSON STRINGIFY... STATE IS ");
     console.log(state);
@@ -50,6 +64,7 @@ export const addGoldBug = function (state) {
             ans_4: state.content.ans_4,
             contentType: state.content.contentType,
             key_: state.content.key,
+            arIndex:state.index,
         },
     });
 
@@ -176,6 +191,69 @@ export const endPointPageToDySettingPage = function (params) {
     }
 }
 
+export const resetCatchBugs = function (){
+    return (dispatch)=>{
+        dispatch(initCatchGame());//ar的也清理下
+        dispatch(initSpecBugState());
+    }
+
+
+}
+export const vaildContent = function (goldBug){
+
+    return {
+        type: types.VAILD_BUGCONTENT,
+        payload: fetch(
+            constant.ROOT_SERVER_URL + constant.URL.vaild, {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(goldBug)
+            }).then(response => response.json()).catch(() => { return false; })
+
+    }
+
+
+
+
+
+}
+
+export const initSpecBugState = function (){
+    return {
+        type:types.initSpecBugState,
+        payload:{}
+    };
+
+
+
+}
+export const getOneSpecBug = function (bugId){
+    //捉虫
+    return {
+        type:types.GET_ONE_BUGCONTENT,
+        payload: fetch(
+            constant.ROOT_SERVER_URL + constant.URL.getSpecBug, {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    bid:bugId
+                })
+            }).then(response => response.json()).catch(() => { return false; })
+    }
+}
+export const catchOneBug =function(bugId){
+    return (dispatch)=>{
+        dispatch(initCatchGame());
+        dispatch(initSpecBugState());//先清空这两个状态
+        dispatch(getOneSpecBug(bugId));
+    }
+
+
+}
 export const posSetToEndPointPage = function (params) {
 
     return (dispatch) => {
@@ -246,21 +324,23 @@ export const Page2ToHome = function (goldBugInfo) {
     return (dispatch) => {
 
 
-        dispatch(addGoldBug(goldBugInfo));
+       
         dispatch(reset());
-
         //2.Set the Visibility of Homepage
-        dispatch(setHomePageVisibility(true));
+            dispatch(setHomePageVisibility(true));
 
         //3.Set the Visibility of Page 2
         dispatch(setPage2Visibility(false));
+        dispatch(setPage1Visibility(false));
+        // dispatch(addGoldBug(goldBugInfo));
+       
+  
     }
 }
 
 export const homeToPage1 = function (params) {
 
     return (dispatch) => {
-        //1.AddGoldBugPage1
         dispatch(push(constant.route_pathName.addGoldBugPage1, params));
         //2.Set the Visibility of Homepage
         dispatch(setHomePageVisibility(false));
@@ -268,20 +348,24 @@ export const homeToPage1 = function (params) {
         dispatch(setPage1Visibility(true));
         //3.Set the Visibility of Page 2
         dispatch(setPage2Visibility(false));
+        //1.AddGoldBugPage1
+     
     }
 }
 
 export const switchToHome = function () {
 
     return (dispatch) => {
-        //1.AddHomePage
-        dispatch(goBack(constant.route_pathName.homePage));
+ 
+
         //2.Set the Visibility of Homepage
         dispatch(setHomePageVisibility(true));
         //3.Set the Visibility of Page 1
         dispatch(setPage1Visibility(false));
         //3.Set the Visibility of Page 2
         dispatch(setPage2Visibility(false));
+               //1.AddHomePage
+        dispatch(goBack(constant.route_pathName.homePage));
     }
 }
 
@@ -289,29 +373,33 @@ export const page2ToPage1 = function () {
 
     return (dispatch) => {
         //1.AddGoldBugPage1
-        dispatch(goBack(constant.route_pathName.addGoldBugPage1));
+       
         //2.Set the Visibility of Homepage
         dispatch(setHomePageVisibility(false));
         //3.Set the Visibility of Page 2
         dispatch(setPage2Visibility(false));
         //4.Set the Visibility of Page 1
         dispatch(setPage1Visibility(true));
+        dispatch(goBack(constant.route_pathName.addGoldBugPage1));
     }
 }
 
 export const page1ToPage2 = function (params) {
 
     return (dispatch) => {
-        //1.AddGoldBugPage2
         dispatch(push(constant.route_pathName.addGoldBugPage2, params));
+        //1.AddGoldBugPage2
+        dispatch(initSelectGameState());//初始化一下
         //2.Set the Visibility of Homepage
         dispatch(setHomePageVisibility(false));
         //3.Set the Visibility of Page 2
         dispatch(setPage2Visibility(true));
         //4.Set the Visibility of Page 1
         dispatch(setPage1Visibility(false));
+    
     }
 }
+
 
 /*
  let oneFunc =  switchToPage2();

@@ -34,7 +34,7 @@ import moment from 'moment';
 
 import { TextInput, Animated, Keyboard, KeyboardAvoidingView } from 'react-native';
 import { GOBACK } from '../util/ActionTypes';
-import { feather, route_pathName } from '../util/Constant';
+import { feather, route_pathName,styles as styless } from '../util/Constant';
 import FontAwesome, { Icons } from 'react-native-fontawesome';
 
 
@@ -162,6 +162,12 @@ export default class PositionSettingHome extends Component {
                         active
                         draggable
                         color="violet"
+                        icon={() => {
+                            return (
+                                <Image style={styless.mainMark} source={require("../resources/endMark.png")} />
+                            );
+
+                        }}
                         onDragEnd={this._onDragEvent}
                         onInfoWindowPress={this._onInfoWindowPress}
                         onPress={this._onMarkerPress}
@@ -179,6 +185,13 @@ export default class PositionSettingHome extends Component {
                     </MapView.Marker>
 
                     <Marker
+
+                        icon={() => {
+                            return (
+                                <Image style={styless.mainMark} source={require("../resources/startMark.png")} />
+                            );
+
+                        }}
                         title='Start Point'
                         image='flag'
                         coordinate={{

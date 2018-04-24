@@ -41,6 +41,21 @@ export const TimeSettingPage_Visibility = "TimeSettingPage_Visibility";
 
 export const DySettingPage_Param= "DySettingPage_Param";
 
+
+export const changeStateOfSubmit = "changeStateOfSubmit";
+export const initSpecBugState = "initSpecBugState";
+
+
+export const GET_ONE_BUGCONTENT = "GET_ONE_BUGCONTENT";//捉虫完成，初始化很多东西
+export const GET_ONE_BUGCONTENT_PENDING = "GET_ONE_BUGCONTENT_PENDING";//正在获取虫子
+export const GET_ONE_BUGCONTENT_FULFILLED = "GET_ONE_BUGCONTENT_FULFILLED";//获取结束
+export const GET_ONE_BUGCONTENT_REJECTED = "GET_ONE_BUGCONTENT_REJECTED";//获取失败
+
+export const VAILD_BUGCONTENT  = "VAILD_BUGCONTENT"; //验证结果
+export const VAILD_BUGCONTENT_PENDING  = "VAILD_BUGCONTENT_PENDING";
+export const VAILD_BUGCONTENT_FULFILLED  = "VAILD_BUGCONTENT_FULFILLED";
+export const VAILD_BUGCONTENT_REJECTED  = "VAILD_BUGCONTENT_REJECTED";
+
 export const PUSH = "PUSH";
 export const POP = "POP";
 export const RESET = "RESET";//登出的时候使用

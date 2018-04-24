@@ -11,7 +11,7 @@ import AddGoldBugPage2 from '../containers/AddGoldBugPage2Container';
 import HomePage from '../containers/HomePageContainer';
 import PositionSettingHome from '../containers/PositionSettingHomeContainer'
 import TimeSettingPage from '../containers/TimeSettingPageContainer'
-
+import ArScene from "../containers/ARManagerContainer"
 export const routerConfig = {
     HomePage:{
         screen: HomePage,
@@ -33,6 +33,12 @@ export const routerConfig = {
     },
     TimeSettingPage:{
         screen: TimeSettingPage,
+        navigationOptions: (navigation) => ({
+            header: null
+        })
+    },
+    arScene: {
+        screen: ArScene,
         navigationOptions: (navigation) => ({
             header: null
         })

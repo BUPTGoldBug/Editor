@@ -22,7 +22,8 @@ import {
     Form,
     CardItem,
     ListItem,
-    Thumbnail
+    Thumbnail,
+    Spinner
 } from "native-base";
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import Icon1 from 'react-native-vector-icons/FontAwesome'
@@ -32,7 +33,7 @@ import Modal from "react-native-modal";
 import { TextInput, Image, Animated, Keyboard, KeyboardAvoidingView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import moment from 'moment';
-
+import {styles} from '../util/Constant'
 
 export default class AddGoldBugPage2 extends Component {
     constructor(props, context) {
@@ -53,7 +54,7 @@ export default class AddGoldBugPage2 extends Component {
         this.setAns2SelectEvent = this.setAns2SelectEvent.bind(this);
         this.setAns3SelectEvent = this.setAns3SelectEvent.bind(this);
         this.setAns4SelectEvent = this.setAns4SelectEvent.bind(this);
-
+        this.render1 = this.render1.bind(this);
         this.state = {
             start_lon: 200,
             start_lat: 300,
@@ -64,7 +65,7 @@ export default class AddGoldBugPage2 extends Component {
             lifeCount: 1,
             startTime: moment().add(1, 'hours').format('YYYY-MM-DD HH:mm:ss'),
             deathTime: moment().add(1, 'hours').format('YYYY-MM-DD HH:mm:ss'),
-
+            arSelect: this.props.arSelect,
             description: "QA",
             question: "",
             scores: 0,
@@ -79,8 +80,72 @@ export default class AddGoldBugPage2 extends Component {
             ans_4_selected: false,
         };
     }
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            arSelect: nextProps.arSelect
 
+        });
+    }
     render() {
+        const { stateOfSubmitBug } = this.props;
+        if (stateOfSubmitBug == 0) {
+            return this.render1();
+        } else {
+            return (
+                <Modal isVisible={true}
+                    style={styles.modalStyles}
+                >
+                    {this.renderMsgContent()}
+                </Modal>)
+
+        }
+    }
+    renderMsgContent() {
+        const { stateOfSubmitBug } = this.props;
+        if (stateOfSubmitBug == 1) {
+            //正在上传
+            return (
+
+                <View style={styles.uiControl_catch_uiCenter_panel}>
+                    <Text style={styles.content_text}>正在上传..</Text>
+                    <View style={styles.msg_catch_content}>
+                        <Spinner color='#ff0000' />
+                    </View>
+
+                </View>
+            );
+        } else if (stateOfSubmitBug == 2) {
+
+            return (<View style={styles.uiControl_catch_uiCenter_panel}>
+                <Text style={styles.content_text}>上传成功!</Text>
+                <View style={styles.msg_catch_content}>
+                    <Button style={styles.button_style} info block onPress={() => {
+                        //确定后就要完成游戏
+                        this.props.actions.Page2ToHome();//回到第一页
+                    }}><Text>确定</Text></Button>
+                </View>
+
+            </View>
+            );
+        } else if (stateOfSubmitBug == 3) {
+
+            return (<View style={styles.uiControl_catch_uiCenter_panel}>
+                <Text style={styles.content_text}>上传失败!</Text>
+                <View style={styles.msg_catch_content}>
+                    <Button style={styles.button_style} info block onPress={() => {
+                        //确定后
+                        this.props.actions.initStateOfSubmit();//回到填写东西的地方
+                    }}><Text>确定</Text></Button>
+                </View>
+
+            </View>
+            );
+
+
+        }
+
+    }
+    render1() {
         const { isAddingGoldBug, isAddingGoldBugSucces, isPage2Visible, contentText } = this.props;
         const { bugBasic } = this.props.navigation.state.params;
 
@@ -173,13 +238,13 @@ export default class AddGoldBugPage2 extends Component {
                                 <TextInput
                                     placeholder="Scores"
                                     keyboardType='numeric'
-                                    value={''+this.state.scores}
+                                    value={'' + this.state.scores}
                                     onChangeText={this.setScoresEvent}
                                     style={{ flex: 1 }}
                                     underlineColorAndroid='transparent'
                                 />
                             </Item>
-
+                            {this.renderARSelect()}
                         </Form>
 
                         <Grid style={{ marginTop: 25 }}>
@@ -205,7 +270,62 @@ export default class AddGoldBugPage2 extends Component {
         );
 
     }
+    renderARSelect() {
+        if (this.state.arSelect.edited == false) {
+            return (
+                <Item rounded style={{ backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>
+                    <Button
+                        style={constant.styles.arSelect_button_style}
+                        info
+                        onPress={() => {
+                            this.props.actions.trunToSelectPage(constant.route_pathName.arScene, {
+                                arType: 0,
 
+                            });
+
+                        }}
+                    >
+                        <Text style={{ color: "#ffffff" }}>选择vr游戏</Text>
+                    </Button>
+                </Item>);
+
+        } else {
+            return (
+                <Item rounded style={{ backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>
+                    <ListItem icon>
+                        <Left>
+                            <Text>游戏{this.state.arSelect.index + 1}</Text>
+                        </Left>
+                        <Body>
+
+                        </Body>
+                        <Right>
+                            <Button  iconRight transparent onPress={() => {
+                                this.props.actions.trunToSelectPage(constant.route_pathName.arScene, {
+                                    arType: 0,
+                                });
+                            }}>
+                                <Text>修改</Text>
+                                <Icon name="arrow-forward" />
+                            </Button>
+
+                        </Right>
+                    </ListItem>
+                </Item>);
+
+
+        }
+
+
+    }
+    arSelectButtonPress() {
+        //
+        this.props.actions.trunToSelectPage(constant.route_pathName.arScene, {
+            arType: 0,//0是桌游戏
+        });
+
+
+    }
     setAns1SelectEvent() {
         if (this.state.ans_1_selected == true) {
             this.setState({ ans_1_selected: false });
@@ -382,17 +502,19 @@ export default class AddGoldBugPage2 extends Component {
                 ans_2: this.state.ans_2,
                 ans_3: this.state.ans_3,
                 ans_4: this.state.ans_4,
-                key: key
+                key: key,
+                arIndex: this.state.arSelect.index,//取出这个
             };
 
             var goldBugInfo = {
                 bugInfo: bugInfo,
-                content: content
+                content: content,
+                index:this.state.arSelect.index
             };
 
             console.log("GOLGBUG PARAMS AFTER ADDGOLDBUGPAGE2>>>>>>>");
             console.log(goldBugInfo);
-            this.props.actions.Page2ToHome(goldBugInfo);
+            this.props.actions.addGoldBug(goldBugInfo);
         }
     }
 

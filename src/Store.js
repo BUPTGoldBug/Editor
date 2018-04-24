@@ -8,7 +8,7 @@ import UserReducer from './reducers/UserReducer';
 import GoldBugReducer from './reducers/GoldBugReducer';
 import NavigatorReducer from './reducers/NavigatorReducer';
 import {navigator_midderware } from "./components/NavigationPage"
-
+import ArReducer from './reducers/ArReducer';
 
 const logger = createLogger();
 
@@ -17,6 +17,7 @@ const store = createStore(
         navigator: NavigatorReducer,
         user: UserReducer,
         goldBug:GoldBugReducer,
+        ar:ArReducer
     }),
     {},  //initialState
     applyMiddleware(thunk, promiseMiddleware(),navigator_midderware, logger) //传入所有的
