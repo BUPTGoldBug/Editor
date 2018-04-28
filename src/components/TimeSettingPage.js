@@ -291,7 +291,7 @@ export default class TimeSettingPage extends Component {
 
         if (date1 < date_1) {
             Alert.alert('Reminder', 'GoldBug should last at least 10 minutes~');
-            this.setState({ deathTime: moment(date_1) });
+            this.setState({ deathTime: moment(date_1).format('YYYY-MM-DD HH:mm:ss') });
         }
         else {
 

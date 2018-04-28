@@ -10,7 +10,7 @@ export const getAroundBugs = function (state) {
             constant.ROOT_SERVER_URL + constant.URL.getAroundBugs, {
                 method: 'post',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                     lon:state.userLon,
@@ -64,7 +64,8 @@ export const addGoldBug = function (state) {
             ans_4: state.content.ans_4,
             contentType: state.content.contentType,
             key_: state.content.key,
-            arIndex:state.index,
+            //arIndex:state.index,
+            arIndex:-1
         },
     });
 
@@ -82,7 +83,7 @@ export const addGoldBug = function (state) {
                     'Content-Type': 'application/json'
                 },
                 body: goldBug
-            }).then(response => response.json()).catch(() => { return false; })
+            }).then(response => response.json()).then(res=>{console.log("RESULT IS");console.log(res);return res;}).catch(() => { return false; })
 
     }
 
@@ -191,7 +192,7 @@ export const endPointPageToDySettingPage = function (params) {
     }
 }
 
-export const resetCatchBugs = function (){
+export const resetCatchBugs = function (){ // 退出捉虫界面
     return (dispatch)=>{
         dispatch(initCatchGame());//ar的也清理下
         dispatch(initSpecBugState());
@@ -210,7 +211,7 @@ export const vaildContent = function (goldBug){
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(goldBug)
-            }).then(response => response.json()).catch(() => { return false; })
+            }).then(response => response.json()).then(res=>{console.log("AIAIAIAAI:");console.log(goldBug);console.log("BIBIBIBIBI:");console.log(res);return res;}).catch(() => { return false; })
 
     }
 
@@ -229,7 +230,7 @@ export const initSpecBugState = function (){
 
 
 }
-export const getOneSpecBug = function (bugId){
+export const getOneSpecBug = function (common){
     //捉虫
     return {
         type:types.GET_ONE_BUGCONTENT,
@@ -240,16 +241,20 @@ export const getOneSpecBug = function (bugId){
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    bid:bugId
+                    bid:common.bugId,
+                    userId:common.userId
                 })
-            }).then(response => response.json()).catch(() => { return false; })
+            }).then(response => response.json()).then((responseJson => {
+                //responseJson.arIndex = -1;
+                return responseJson;
+            })).catch(() => { return false; })
     }
 }
-export const catchOneBug =function(bugId){
+export const catchOneBug =function(common){
     return (dispatch)=>{
         dispatch(initCatchGame());
         dispatch(initSpecBugState());//先清空这两个状态
-        dispatch(getOneSpecBug(bugId));
+        dispatch(getOneSpecBug(common));
     }
 
 
@@ -327,11 +332,10 @@ export const Page2ToHome = function (goldBugInfo) {
        
         dispatch(reset());
         //2.Set the Visibility of Homepage
-            dispatch(setHomePageVisibility(true));
+        dispatch(setHomePageVisibility(true));
 
         //3.Set the Visibility of Page 2
         dispatch(setPage2Visibility(false));
-        dispatch(setPage1Visibility(false));
         // dispatch(addGoldBug(goldBugInfo));
        
   

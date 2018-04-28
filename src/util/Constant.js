@@ -8,15 +8,20 @@ import {ViroMaterials,ViroAnimations} from 'react-viro'
 export const sharedProps = {
     apiKey: "142365C9-3C5A-4250-AD1A-FD21C10322EB",
 }
-export const ROOT_SERVER_URL = "http://10.8.222.198:8080/goldbug/"; 
+export const ROOT_SERVER_URL = "http://172.31.3.140:8080/"; 
 
 export const URL = {
     addUser: "addUser",
-    addGoldBug:"addGoldBug",
-    getAroundBugs:"getAroundBugs",
-    getSpecBug:"getSpecBug",
-    vaild:"vaildBug"
+    addGoldBug:"goldbug/addGoldBug",
+    getAroundBugs:"goldbug/getAroundBugs",
+    getSpecBug:"goldbug/getSpecBug",
+    vaild:"goldbug/vaildBug"
 };
+
+export const coordinate = {
+    BUPT_Center_Lat:39.961458366,
+    BUPT_Center_Lon:116.358147114516
+}
 
 export const feather = require('feather-icons')
 

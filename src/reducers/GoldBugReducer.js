@@ -22,6 +22,8 @@ const initialState = {
         rightIndex:-1,
         arIndex:-1,
         bugId:-1,
+        des:"",
+        score:0
     },
     stateOfSubmitBug:0,//虫子上传状态 0 没发生 1 正在上传 2成功 3
     dySettingParams: {},
@@ -134,7 +136,7 @@ export default function GoldBugReducer(state = initialState, action = {}) {
                     let newState = {
                         ...state,
                         loadingSpecBug:3,//失败
-                        specBug:initialState.specBug
+                        specBug:action.payload
                     }
                     return newState;
                 }
@@ -151,7 +153,7 @@ export default function GoldBugReducer(state = initialState, action = {}) {
                 }
                 return newState;
             }else {
-                if(Boolean(action.payload.success) == true  ){
+                if(Boolean(action.payload.success) == true ){
                     let newState = {
                         ...state,
                         loadingSpecBug:5,//成功
