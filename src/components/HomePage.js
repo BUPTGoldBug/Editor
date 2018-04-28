@@ -558,7 +558,7 @@ export default class HomePage extends Component {
 
                         }}
                         onPress={() => {
-                            this._catcherOnMarkerPress({bugId:bug.bugId, userId:2})
+                            this._catcherOnMarkerPress({rt_lon:this.state.rt_lon,rt_lat:this.state.rt_lat,bugId:bug.bugId, userId:2})
                         }}
                         coordinate={{
                             latitude: bug.lat,

@@ -242,7 +242,9 @@ export const getOneSpecBug = function (common){
                 },
                 body: JSON.stringify({
                     bid:common.bugId,
-                    userId:common.userId
+                    userId:common.userId,
+                    rt_lon:common.rt_lon,
+                    rt_lat:common.rt_lat
                 })
             }).then(response => response.json()).then((responseJson => {
                 //responseJson.arIndex = -1;
