@@ -9,10 +9,24 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import AddGoldBugPage2 from '../containers/AddGoldBugPage2Container';
 import HomePage from '../containers/HomePageContainer';
+import LoginPage from '../containers/LoginPageContainer';
+import HeaderPage from '../containers/HeaderPageContainer';
 import PositionSettingHome from '../containers/PositionSettingHomeContainer'
 import TimeSettingPage from '../containers/TimeSettingPageContainer'
 import ArScene from "../containers/ARManagerContainer"
 export const routerConfig = {
+    LoginPage:{
+        screen: LoginPage,
+        navigationOptions: (navigation) => ({
+            header: null
+        })
+    },
+    HeaderPage:{
+        screen: HeaderPage,
+        navigationOptions: (navigation) => ({
+            header: null
+        })
+    },
     HomePage:{
         screen: HomePage,
         navigationOptions: (navigation) => ({

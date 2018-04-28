@@ -11,7 +11,6 @@ import {navigator_midderware } from "./components/NavigationPage"
 import ArReducer from './reducers/ArReducer';
 
 const logger = createLogger();
-
 const store = createStore(
     combineReducers({
         navigator: NavigatorReducer,

@@ -17,6 +17,7 @@ export default connect(
             contentText:state.goldBug.contentText,
             arSelect:state.ar.select, //关注种虫,
             stateOfSubmitBug:state.goldBug.stateOfSubmitBug,//状态
+            user:state.user
         })
     },
     (dispatch) => {

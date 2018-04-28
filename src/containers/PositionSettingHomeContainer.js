@@ -14,7 +14,8 @@ export default connect(
             isPosSetHomeVisible: state.goldBug.isPosSetHomeVisible,
             isEndPointPageVisible: state.goldBug.isEndPointPageVisible,
             isDySettingPageVisible: state.goldBug.isDySettingPageVisible,
-            dySettingParams: state.goldBug.dySettingParams
+            dySettingParams: state.goldBug.dySettingParams,
+            user:state.user
         })
     },
     (dispatch) => {

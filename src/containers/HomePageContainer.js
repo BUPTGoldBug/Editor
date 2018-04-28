@@ -20,6 +20,7 @@ export default connect(
             specBug:state.goldBug.specBug,
             specBugWindow:state.goldBug.specBugWindow,//是否打开捉虫窗口
             specBugWindowStep2:state.goldBug.specBugWindowStep2,//是否显示第二段窗口,
+            user:state.user
         })
     },
     (dispatch) => {

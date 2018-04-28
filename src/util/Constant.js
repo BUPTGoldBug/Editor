@@ -11,11 +11,14 @@ export const sharedProps = {
 export const ROOT_SERVER_URL = "http://172.31.3.140:8080/"; 
 
 export const URL = {
-    addUser: "addUser",
+    addUser: "user/addUser",
+    login:"user/login",
+    getUserDetail:"user/getUserDetail",//用cookies获取 
     addGoldBug:"goldbug/addGoldBug",
     getAroundBugs:"goldbug/getAroundBugs",
     getSpecBug:"goldbug/getSpecBug",
-    vaild:"goldbug/vaildBug"
+    vaild:"goldbug/vaildBug",
+    
 };
 
 export const coordinate = {
@@ -31,7 +34,10 @@ export const route_pathName = {
     positionSettingHome:"PositionSettingHome",
     DySettingPage:"DySettingPage",
     TimeSettingPage:"TimeSettingPage",
-    arScene: "arScene"
+    arScene: "arScene",
+    LoginPage:"LoginPage",
+    HeaderPage:"HeaderPage"
+
 }
 
 ViroMaterials.createMaterials({

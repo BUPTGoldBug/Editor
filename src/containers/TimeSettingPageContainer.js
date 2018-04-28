@@ -11,7 +11,8 @@ export default connect(
         console.log("TimeSettingPageContainer state")
         console.log(state);
         return Object.assign({
-            isTimeSettingPageVisible: state.goldBug.isTimeSettingPageVisible
+            isTimeSettingPageVisible: state.goldBug.isTimeSettingPageVisible,
+            user:state.user
         })
     },
     (dispatch) => {

@@ -18,7 +18,8 @@ import {
 } from "../actions/ARAction";
 export default ARManagerContainer = connect(
     (state) => (Object.assign({
-        ar: state.ar
+        ar: state.ar,
+        user:state.user
     })),
     (dispatch) => {
         return Object.assign({ dispatch: dispatch },

@@ -1,13 +1,7 @@
 //一个异步请求的四个action ,发起-正在-成功/拒绝
 //只用触发一个第一个type的action，其他两个action-type 由 redux-promise-middleware 进行触发
 //其他两个后缀必须是_PENDING,_FUL
-export const ADD_USER = 'ADD_USER' ;
 
-export const ADD_USER_PENDING = 'ADD_USER_PENDING' ;
-
-export const ADD_USER_FULFILLED = 'ADD_USER_FULFILLED' ;
-
-export const ADD_USER_REJECTED = 'ADD_USER_REJECTED' ;
 
 export const ADD_GoldBug = 'ADD_GoldBug' ;
 
@@ -60,3 +54,25 @@ export const PUSH = "PUSH";
 export const POP = "POP";
 export const RESET = "RESET";//登出的时候使用
 export const GOBACK = "GOBACK";
+
+
+export const LOGIN = "LOGIN";
+export const LOGIN_PENDING = "LOGIN_PENDING";
+export const LOGIN_FULFILLED = "LOGIN_FULFILLED";
+export const LOGIN_REJECTED = "LOGIN_REJECTED";
+
+export const ADD_USER = 'ADD_USER' ;
+export const ADD_USER_PENDING = 'ADD_USER_PENDING' ;
+export const ADD_USER_FULFILLED = 'ADD_USER_FULFILLED' ;
+export const ADD_USER_REJECTED = 'ADD_USER_REJECTED' ;
+
+export const GET_USER_DETAIL = 'GET_USER_DETAIL' ;
+export const GET_USER_DETAIL_PENDING = 'GET_USER_DETAIL_PENDING' ;
+export const GET_USER_DETAIL_FULFILLED = 'GET_USER_DETAIL_FULFILLED' ;
+export const GET_USER_DETAIL_REJECTED = 'GET_USER_DETAIL_REJECTED' ;
+export const ADD_COOKIE = "ADD_COOKIE";//设置cookie
+
+export const RESET_REGIST = "RESET_REGIST";//重置注册某写状态
+
+export const EXIT_REGIST = "EXIT_REGIST";//重置注册某写状态
+export const RESET_LOGIN = "RESET_LOGIN";//重置登陆装填，失败的时候会调用
