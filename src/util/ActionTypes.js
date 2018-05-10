@@ -3,21 +3,21 @@
 //其他两个后缀必须是_PENDING,_FUL
 
 
-export const ADD_GoldBug = 'ADD_GoldBug' ;
+export const ADD_GoldBug = 'ADD_GoldBug';
 
-export const ADD_GoldBug_PENDING = 'ADD_GoldBug_PENDING' ;
+export const ADD_GoldBug_PENDING = 'ADD_GoldBug_PENDING';
 
-export const ADD_GoldBug_FULFILLED = 'ADD_GoldBug_FULFILLED' ;
+export const ADD_GoldBug_FULFILLED = 'ADD_GoldBug_FULFILLED';
 
-export const ADD_GoldBug_REJECTED = 'ADD_GoldBug_REJECTED' ;
+export const ADD_GoldBug_REJECTED = 'ADD_GoldBug_REJECTED';
 
 export const GET_AROUND_BUGS = 'GET_AROUND_BUGS';
 
-export const GET_AROUND_BUGS_PENDING = 'GET_AROUND_BUGS_PENDING' ;
+export const GET_AROUND_BUGS_PENDING = 'GET_AROUND_BUGS_PENDING';
 
-export const GET_AROUND_BUGS_FULFILLED = 'GET_AROUND_BUGS_FULFILLED' ;
+export const GET_AROUND_BUGS_FULFILLED = 'GET_AROUND_BUGS_FULFILLED';
 
-export const GET_AROUND_BUGS_REJECTED = 'GET_AROUND_BUGS_REJECTED' ;
+export const GET_AROUND_BUGS_REJECTED = 'GET_AROUND_BUGS_REJECTED';
 
 export const HOMEPAGE_Visibility = "HOMEPAGE_Visibility";
 
@@ -33,7 +33,7 @@ export const DySettingPage_Visibility = "DySettingPage_Visibility";
 
 export const TimeSettingPage_Visibility = "TimeSettingPage_Visibility";
 
-export const DySettingPage_Param= "DySettingPage_Param";
+export const DySettingPage_Param = "DySettingPage_Param";
 
 
 export const changeStateOfSubmit = "changeStateOfSubmit";
@@ -45,14 +45,15 @@ export const GET_ONE_BUGCONTENT_PENDING = "GET_ONE_BUGCONTENT_PENDING";//正在�
 export const GET_ONE_BUGCONTENT_FULFILLED = "GET_ONE_BUGCONTENT_FULFILLED";//获取结束
 export const GET_ONE_BUGCONTENT_REJECTED = "GET_ONE_BUGCONTENT_REJECTED";//获取失败
 
-export const VAILD_BUGCONTENT  = "VAILD_BUGCONTENT"; //验证结果
-export const VAILD_BUGCONTENT_PENDING  = "VAILD_BUGCONTENT_PENDING";
-export const VAILD_BUGCONTENT_FULFILLED  = "VAILD_BUGCONTENT_FULFILLED";
-export const VAILD_BUGCONTENT_REJECTED  = "VAILD_BUGCONTENT_REJECTED";
+export const VAILD_BUGCONTENT = "VAILD_BUGCONTENT"; //验证结果
+export const VAILD_BUGCONTENT_PENDING = "VAILD_BUGCONTENT_PENDING";
+export const VAILD_BUGCONTENT_FULFILLED = "VAILD_BUGCONTENT_FULFILLED";
+export const VAILD_BUGCONTENT_REJECTED = "VAILD_BUGCONTENT_REJECTED";
 
 export const PUSH = "PUSH";
 export const POP = "POP";
 export const RESET = "RESET";//登出的时候使用
+export const RESET_1 = "RESET_1";//登出
 export const GOBACK = "GOBACK";
 
 
@@ -60,19 +61,52 @@ export const LOGIN = "LOGIN";
 export const LOGIN_PENDING = "LOGIN_PENDING";
 export const LOGIN_FULFILLED = "LOGIN_FULFILLED";
 export const LOGIN_REJECTED = "LOGIN_REJECTED";
+export const LOGOUT = "LOGOUT";
+export const ADD_USER = 'ADD_USER';
+export const ADD_USER_PENDING = 'ADD_USER_PENDING';
+export const ADD_USER_FULFILLED = 'ADD_USER_FULFILLED';
+export const ADD_USER_REJECTED = 'ADD_USER_REJECTED';
 
-export const ADD_USER = 'ADD_USER' ;
-export const ADD_USER_PENDING = 'ADD_USER_PENDING' ;
-export const ADD_USER_FULFILLED = 'ADD_USER_FULFILLED' ;
-export const ADD_USER_REJECTED = 'ADD_USER_REJECTED' ;
-
-export const GET_USER_DETAIL = 'GET_USER_DETAIL' ;
-export const GET_USER_DETAIL_PENDING = 'GET_USER_DETAIL_PENDING' ;
-export const GET_USER_DETAIL_FULFILLED = 'GET_USER_DETAIL_FULFILLED' ;
-export const GET_USER_DETAIL_REJECTED = 'GET_USER_DETAIL_REJECTED' ;
+export const GET_USER_DETAIL = 'GET_USER_DETAIL';
+export const GET_USER_DETAIL_PENDING = 'GET_USER_DETAIL_PENDING';
+export const GET_USER_DETAIL_FULFILLED = 'GET_USER_DETAIL_FULFILLED';
+export const GET_USER_DETAIL_REJECTED = 'GET_USER_DETAIL_REJECTED';
 export const ADD_COOKIE = "ADD_COOKIE";//设置cookie
 
 export const RESET_REGIST = "RESET_REGIST";//重置注册某写状态
-
+export const START_REGISTER = "START_REGISTER";//注册
 export const EXIT_REGIST = "EXIT_REGIST";//重置注册某写状态
 export const RESET_LOGIN = "RESET_LOGIN";//重置登陆装填，失败的时候会调用
+
+export const CLEAR_USER_STATE = "CLEAR_USER_STATE";//清理用户状态
+
+//
+export const GET_CHECKING_LIST = "GET_CHECKING_LIST"; //获取checking list
+export const GET_CHECKING_LIST_PENDING = "GET_CHECKING_LIST_PENDING"; //获取checking list
+export const GET_CHECKING_LIST_FULFILLED = "GET_CHECKING_LIST_FULFILLED"; //获取checking list
+export const GET_CHECKING_LIST_REJECTED = "GET_CHECKING_LIST_REJECTED"; //获取checking list
+
+export const GET_CHECKED_LIST = "GET_CHECKED_LIST";//获取 checked list
+export const GET_CHECKED_LIST_PENDING = "GET_CHECKED_LIST_PENDING";//获取 checked list
+export const GET_CHECKED_LIST_FULFILLED = "GET_CHECKED_LIST_FULFILLED";//获取 checked list
+export const GET_CHECKED_LIST_REJECTED= "GET_CHECKED_LIST_REJECTED";//获取 checked list
+
+export const GET_BUG_DETAIL = "GET_BUG_DETAIL"; //获取detail 
+export const GET_BUG_DETAIL_PENDING = "GET_BUG_DETAIL_PENDING"; //获取detail 
+export const GET_BUG_DETAIL_FULFILLED = "GET_BUG_DETAIL_FULFILLED"; //获取detail 
+export const GET_BUG_DETAIL_REJECTED = "GET_BUG_DETAIL_REJECTED"; //获取detail 
+
+export const CHECK_BUG = "CHECK_BUG"; //审核bug
+export const CHECK_BUG_PENDING = "CHECK_BUG_PENDING"; //审核bug
+export const CHECK_BUG_FULFILLED = "CHECK_BUG_FULFILLED"; //审核bug
+export const CHECK_BUG_REJECTED = "CHECK_BUG_REJECTED"; //审核bug
+
+export const DRAWBACK_BUG = "DRAWBACK_BUG"; //撤回Bug
+export const DRAWBACK_BUG_PENDING = "DRAWBACK_BUG_PENDING"; //撤回Bug
+export const DRAWBACK_BUG_FULFILLED = "DRAWBACK_BUG_FULFILLED"; //撤回Bug
+export const DRAWBACK_BUG_REJECTED = "DRAWBACK_BUG_REJECTED"; //撤回Bug
+
+//---放弃或失败的时候间接调用---
+export const RESET_GET_STATE = "RESET_GET_STATE";
+export const RESET_CHECKING_STATE = "RESET_CHECKING_STATE";//
+export const RESET_DRAWBACKING_STATE = "RESET_DRAWBACKING_STATE";//

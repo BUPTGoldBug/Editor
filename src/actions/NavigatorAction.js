@@ -26,7 +26,12 @@ export const reset = function () { // 登出时候出现
         payload: {}
     }
 }
-
+export const reset1 = function () { // 登出时候出现
+    return {
+        type: types.RESET_1,
+        payload: {}
+    }
+}
 // Return to a specific page
 export const goBack = function (routeName) {
     return {

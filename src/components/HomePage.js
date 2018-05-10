@@ -15,7 +15,7 @@ import {
     Left,
     Right,
     Body,
-    //   Icon,
+
     Card,
     Input,
     Item,
@@ -34,12 +34,17 @@ import renderIf from './renderIf';
 import moment from 'moment';
 //import index from './C:/Users/Luyao/AppData/Local/Microsoft/TypeScript/2.6/node_modules/@types/react-native-datepicker';
 import { styles as styless, route_pathName, coordinate } from "../util/Constant"
-//import Icon from 'react-native-vector-icons/FontAwesome';
-import {Icon} from "react-native-vector-icons";
-
+import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon1 from 'react-native-vector-icons/SimpleLineIcons';
+import ActionButton from "react-native-action-button"
 
 
 const styles = StyleSheet.create({
+    actionButtonIcon: {
+        fontSize: 20,
+        height: 22,
+        color: 'white',
+    },
     customIcon: {
         width: 40,
         height: 40,
@@ -76,6 +81,7 @@ export default class HomePage extends Component {
         this.renderCatherPanel = this.renderCatherPanel.bind(this);
         this.renderMsgContent = this.renderMsgContent.bind(this);
         this.isEmpty = this.isEmpty.bind(this);
+        this.renderUserButton = this.renderUserButton.bind(this);
         this.state = {
             isMoved: false,
             rt_lon: 200,
@@ -92,17 +98,18 @@ export default class HomePage extends Component {
             checkBox3: false,
             checkBox4: false,
             cathModalVisiable: props.arCatch.inGame == 0 ? true : false,
+            hasGetUser:false
         };
     }
 
 
     componentDidMount() {
-        this.mounted = true
-        this.timer = setInterval(() => {
-            if (this.mounted) {
-                this.setState({ tmpTime: new Date() })
-            }
-        }, 1000)
+        // this.mounted = true
+        // this.timer = setInterval(() => {
+        //     if (this.mounted) {
+        //         this.setState({ tmpTime: new Date() })
+        //     }
+        // }, 1000)
 
         this.interval = setInterval(() => {
             this.props.actions.getAroundBugs({ userLon: this.state.rt_lon, userLat: this.state.rt_lat });
@@ -171,8 +178,38 @@ export default class HomePage extends Component {
 
         return (
             <View style={{ flex: 1 }}>
+
                 {this.renderCatherPanel()}
                 {this.renderMap()}
+                {this.renderUserButton()}
+
+            </View>
+
+
+        );
+
+
+    }
+    renderUserButton() {
+        const { userDetail, getDetail } = this.props.user;
+        return (
+            <View style={{flex:1}}>
+                <Text style={{position:"absolute",marginLeft:100,marginTop:45,color:"#555555",fontSize:20}}>{userDetail.userName}</Text>
+                <ActionButton buttonColor="rgba(231,76,60,1)" position='left' renderIcon={()=>{return (<Icon name="user" style={{color:"#ffffff",fontSize:18}} /> )}} verticalOrientation='down' onPress={() => {
+                 
+                    this.props.actions.getUserDetailByUid(1);
+                }}>
+                  
+                    <ActionButton.Item buttonColor='#3498db'  textStyle={{backgroundColor:"#000000",color:"#ffffff"}}  onPress={() => { }}>
+                        <Icon1 name="wallet" style={styles.actionButtonIcon} />
+                        <Text style={{color:"#ffffff",fontSize:10}}>{userDetail.score}分</Text>
+                    </ActionButton.Item>
+                    <ActionButton.Item buttonColor='#3498db' onPress={() => { 
+                        this.props.actions.logOut();//退出,还要清空
+                    }}>
+                        <Icon1 name="logout" style={styles.actionButtonIcon} />
+                    </ActionButton.Item>
+                </ActionButton>
 
             </View>
 
@@ -382,7 +419,7 @@ export default class HomePage extends Component {
                             <Col style={{}}>
                                 <Button block rounded style={{ backgroundColor: "#ff00c9", padding: 25 }} onPress={() => {
                                     this.props.actions.vaildContent({
-                                        userId: 2,
+                                        userId: 1,
                                         bugId: specBug.bugId,
                                         debugDate: moment().format('YYYY-MM-DD HH:mm:ss'),
                                         choose: "" + Number(this.state.checkBox1) + Number(this.state.checkBox2) + Number(this.state.checkBox3) + Number(this.state.checkBox4)
@@ -494,7 +531,7 @@ export default class HomePage extends Component {
                 showsTraffic={true}
                 region={{ latitude: coordinate.BUPT_Center_Lat, longitude: coordinate.BUPT_Center_Lon, latitudeDelta: 0.006, longitudeDelta: 0.007 }}
             >
-                <MapView.Marker
+                {/* <MapView.Marker
                     active
                     draggable
                     color="violet"
@@ -520,7 +557,7 @@ export default class HomePage extends Component {
                             <Text ref={(component) => { this.timeText = component; }} style={{ textAlign: "center" }}>{this.state.tmpTime.toLocaleTimeString()}</Text>
                         </View>
                     </TouchableOpacity>
-                </MapView.Marker>
+                </MapView.Marker> */}
                 {this.renderBugsAround(bugsAround)}
             </MapView>
         );
@@ -558,7 +595,7 @@ export default class HomePage extends Component {
 
                         }}
                         onPress={() => {
-                            this._catcherOnMarkerPress({rt_lon:this.state.rt_lon,rt_lat:this.state.rt_lat,bugId:bug.bugId, userId:2})
+                            this._catcherOnMarkerPress({ rt_lon: this.state.rt_lon, rt_lat: this.state.rt_lat, bugId: bug.bugId, userId: 1 })
                         }}
                         coordinate={{
                             latitude: bug.lat,

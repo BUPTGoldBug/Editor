@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import HomePage from "../components/HomePage"
 import { homeToPosSetPage, homeToPage1, getAroundBugs,catchOneBug,initSpecBugState,resetCatchBugs,vaildContent} from "../actions/AddGoldBugAction"
-import { push, pop, reset, goBack } from '../actions/NavigatorAction'
+import { push, pop, reset, goBack ,reset1} from '../actions/NavigatorAction'
 import {trunToCatchPage} from '../actions/ARAction'
-
+import {getUserDetailByUid,logOut} from '../actions/UserAction'
 export default connect(
     (state) => {
         console.log("HomePageContainer state")
@@ -34,9 +34,12 @@ export default connect(
             homeToPage1,
             getAroundBugs,
             catchOneBug,
+            logOut,
             resetCatchBugs,
             vaildContent,
-            trunToCatchPage
+            trunToCatchPage,
+            getUserDetailByUid,
+            reset1,
 
         }, dispatch) }));
     }

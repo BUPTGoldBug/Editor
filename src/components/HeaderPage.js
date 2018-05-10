@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { MapView, Offline } from 'react-native-amap3d';
-import { AsyncStorage,Alert, StyleSheet, Text, TouchableOpacity, View, Image, Opac, ScrollView, TouchableWithoutFeedback } from 'react-native';
+import { AsyncStorage, Alert, StyleSheet, Text, TouchableOpacity, View, Image, Opac, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import Modal from "react-native-modal";
 import {
     Container,
@@ -32,39 +32,34 @@ import {
 import { Col, Grid } from 'react-native-easy-grid';
 import renderIf from './renderIf';
 import moment from 'moment';
+import { PullView } from 'react-native-pull';
 //import index from './C:/Users/Luyao/AppData/Local/Microsoft/TypeScript/2.6/node_modules/@types/react-native-datepicker';
 import { styles as styless, route_pathName, coordinate } from "../util/Constant"
 //import Icon from 'react-native-vector-icons/FontAwesome';
 import { Icon } from "react-native-vector-icons";
 export default class HeaderPage extends Component {
     constructor(props, context) {
+        console.log("首页")
         super(props, context);
 
     }
-    componentDidMount(){
-        //这里检查
-        if(AsyncStorage.getItem("cookie") == undefined || AsyncStorage.getItem("cookie") ==null){
-            //未定义
-            this.timer = setTimeout(()=>{
-                this.props.actions.push({
-                    key:route_pathName.LoginPage,
-                    params:{}
-                });//进入到登陆页面
+    componentDidMount() {
+        this.timer = setTimeout(() => {
+            if (this.props.user.cookie == null) {
+                this.props.actions.push(route_pathName.LoginPage, {});//进入到登陆页面
 
-
-            },1000);
-        }else {
-            //有定义
-            this.timer = setTimeout(()=>{
+            } else {
                 this.props.actions.turnToHomePage();//直接进入到首页
+            }
 
 
-            },1000)
-            
-        }
+        }, 2000);
+
+
+
 
     }
-    componentWillUnmount(){
+    componentWillUnmount() {
         this.timer && clearTimeout(this.timer);
     }
     render() {

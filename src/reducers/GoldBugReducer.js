@@ -31,8 +31,7 @@ const initialState = {
 };
 
 export default function GoldBugReducer(state = initialState, action = {}) {
-    console.log("action type");
-    console.log(action.type);
+    
     switch (action.type) {
         case types.ADD_GoldBug_PENDING: {
             //正在加载

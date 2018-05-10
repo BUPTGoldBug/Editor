@@ -1,15 +1,15 @@
 import * as types from '../util/ActionTypes';
 import {AsyncStorage} from 'react-native';
 const initialState = {
-    addingUser: 0,//-1 未打开界面 0 打开界面未开始注册 1 正在注册 2 注册成功 3 注册失败
+    addingUser: -1,//-1 未打开界面 0 打开界面未开始注册 1 正在注册 2 注册成功 3 注册失败
     login:0,//0 未登陆 1 正在登陆 2 登陆失败
     getDetail:0,// 0 未开始获取 ,1 获取中 2 获取成功 3 获取失败
-    cookie:{},//cookie，两种设置途径 1.从存储中获得 2 从访问中获得
+    cookie:null,//cookie，两种设置途径 1.从存储中获得 2 从访问中获得
+    getUserDetailSuccess:0,
     userDetail:{
         userId:-1,//用户id
-        score:0,//分数
+        score:-1,//分数
         userName:"未命名",//姓名
-
     },
     des:"",//登陆或者注册失败后的东西
 
@@ -27,6 +27,15 @@ export default function UserReducer(state = initialState, action = {}) {
                 addingUser:1
             };
            return newState;
+        }
+        case types.START_REGISTER:{
+            //开始发起这个了
+            let newState = {
+                ...state,
+                addingUser:0
+            };
+            return newState;
+
         }
         case types.ADD_USER_FULFILLED: {
             //成功加载-或者catch了异常
@@ -103,7 +112,8 @@ export default function UserReducer(state = initialState, action = {}) {
                 let newState = {
                     ...state,
                     login:2,
-                    userDetail:action.payload,
+                    userDetail:action.payload.userDetail,
+          
                     cookie:action.payload.cookie,//保存一下在这里
                     
                 };
@@ -200,7 +210,17 @@ export default function UserReducer(state = initialState, action = {}) {
                 ...state,
                 cookie:action.payload,//保存在运行state里面
             }; 
+            return newState;
         }
+        //清理用户抓鬼太
+        case types.CLEAR_USER_STATE:{
+            //保存一下cookies在state
+            let newState = {
+                ...initialState,
+            }; 
+        }
+
+        
         default: {
             return state;
         }

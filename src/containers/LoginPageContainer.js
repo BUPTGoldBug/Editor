@@ -2,15 +2,14 @@
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import HeaderPage from "../components/HeaderPage";
-import { register, login, finishRegister, setCookie, getUserDetail,exitRegister,finishLogin } from "../actions/UserAction";
-import { push, pop, reset, goBack } from '../actions/NavigatorAction'
+import LoginPage from "../components/LoginPage";
+import { register, login, finishRegister, setCookie, getUserDetail,exitRegister,finishLogin,startRegister,logOut } from "../actions/UserAction";
+import { push, pop, reset, goBack } from '../actions/NavigatorAction';
 
 
 export default connect(
     (state) => {
-        console.log("HomePageContainer state")
-        console.log(state);
+    
         return Object.assign({
             user:state.user,//user全都要
         })
@@ -27,13 +26,13 @@ export default connect(
                 register,
                 login,
                 finishRegister,
+                logOut,
                 setCookie,
                 getUserDetail,
                 exitRegister,
-                finishLogin
-
-
+                finishLogin,
+                startRegister
             }, dispatch)
         }));
     }
-)(HeaderPage);
+)(LoginPage);

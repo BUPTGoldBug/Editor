@@ -3,13 +3,13 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import HeaderPage from "../components/HeaderPage";
-import { register, login, finishRegister, setCookie, getUserDetail } from "../actions/UserAction";
+import { register, login, finishRegister, setCookie, getUserDetail,turnToHomePage } from "../actions/UserAction";
 import { push, pop, reset, goBack } from '../actions/NavigatorAction'
 
 
 export default connect(
     (state) => {
-        console.log("HomePageContainer state")
+
         console.log(state);
         return Object.assign({
             user:state.user,//user全都要
@@ -28,8 +28,8 @@ export default connect(
                 login,
                 finishRegister,
                 setCookie,
-                getUserDetail
-
+                getUserDetail,
+                turnToHomePage
 
             }, dispatch)
         }));

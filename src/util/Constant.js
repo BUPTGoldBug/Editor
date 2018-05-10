@@ -5,10 +5,11 @@
 };*/
 import { View, StyleSheet } from 'react-native'
 import {ViroMaterials,ViroAnimations} from 'react-viro'
+import storage from 'redux-persist/es/storage';
 export const sharedProps = {
     apiKey: "142365C9-3C5A-4250-AD1A-FD21C10322EB",
 }
-export const ROOT_SERVER_URL = "http://172.31.3.140:8080/"; 
+export const ROOT_SERVER_URL = "http://101.201.64.196:8084/"; 
 
 export const URL = {
     addUser: "user/addUser",
@@ -17,7 +18,18 @@ export const URL = {
     addGoldBug:"goldbug/addGoldBug",
     getAroundBugs:"goldbug/getAroundBugs",
     getSpecBug:"goldbug/getSpecBug",
+
+    getCheckedOrCheckingDetail:"goldbug/getSpecBug",
+
     vaild:"goldbug/vaildBug",
+    //1
+    getDetail:"goldbug/getSpecBug",
+    //2
+    getCheckingList:"superuser/getBugList",
+    getCheckedList:"superuser/getBugList",
+    //3
+    checkBug:"superuser/checkBug",
+    drawBackBug:"superuser/checkBug"
     
 };
 
@@ -36,7 +48,9 @@ export const route_pathName = {
     TimeSettingPage:"TimeSettingPage",
     arScene: "arScene",
     LoginPage:"LoginPage",
-    HeaderPage:"HeaderPage"
+    HeaderPage:"HeaderPage",
+    CheckPage:"CheckPage",
+   
 
 }
 
@@ -237,6 +251,17 @@ export const styles = StyleSheet.create({
         flexDirection: "row",
         height:30,
         justifyContent: 'center',
+        marginBottom:60
+
+
+    },
+    top_controller: {
+        //放置消息的
+        display: "flex",
+        flexDirection: "row",
+        height:30,
+        justifyContent: 'center',
+  
 
 
     },
@@ -256,6 +281,10 @@ export const styles = StyleSheet.create({
         color: "#ffffff",
         alignSelf: "center"
     },
+    
+
+
+
     button_style: {
         //按钮属性
         justifyContent: 'center',
@@ -263,6 +292,16 @@ export const styles = StyleSheet.create({
         borderRadius: 50,
         padding: 20,
         height: 70,
+        flex: 1,
+
+    },
+    button_style_login: {
+        //按钮属性
+        justifyContent: 'center',
+
+        borderRadius: 50,
+        padding: 10,
+        height: 40,
         flex: 1,
 
     },
@@ -331,7 +370,11 @@ export const styles = StyleSheet.create({
 })
 export const vectorList = [3, 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, 4];//12个数字
 export const xConfilt = [-4, -3.5, -2.5, -1.5, -1, -0.5, 0, -0.5, 1, 1.5, 2.5, 3.5, 4]; //13个数组
-
+export const persistConfig = {
+    key: 'root',
+    storage: storage,
+    whitelist: ['user'] // only navigation will be persisted
+  };
 export const getRandom =  function (start, end) {
 
     var length = end - start + 1;
@@ -342,3 +385,11 @@ export const getRandom =  function (start, end) {
     
 };
 export const gameList = [1,2];
+export const getStrContent = function (txt,size){
+    if(txt.length>size){
+       let str=  txt.substr(0,size)+"...";
+       return str;
+    }else {
+        return txt;
+    }
+}
