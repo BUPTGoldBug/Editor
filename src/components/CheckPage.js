@@ -48,21 +48,39 @@ export default class CheckPage extends Component {
         this.renderBugModal = this.renderBugModal.bind(this);
         this.renderBugContent = this.renderBugContent.bind(this);
         this.isEmpty = this.isEmpty.bind(this);
+        this.renderButton = this.renderButton.bind(this);
         this.state = {
             type: -1,//0 未审核 1 已审核
-
+            checkedList:[],
+            checkingList:[],
             re: new RegExp("^[ ]+$")
         }
     }
     componentDidMount() {
         //这里偷偷发起两次action
-
-
+        const {
+            getCheckingList,
+            getCheckedList,
+            checkThisBug,
+            drawBackBug,
+            finishChecking,
+            finishDrawBack,
+            exitChecking,
+            getBugDetail,
+            exitDrawBack,
+            quitDetail,
+        } = this.props.actions;
+        getCheckingList();
+        getCheckedList();
 
 
     }
     componentWillUnmount() {
 
+    }
+    componentWillReceiveProps(nextProps){
+        console.log("nextProps");
+       
     }
     render() {
         return (
@@ -75,7 +93,7 @@ export default class CheckPage extends Component {
                         <Title>审核管理</Title>
                     </Body>
                     <Right>
-                        <Button transparent onPress={()=>{
+                        <Button transparent onPress={() => {
                             this.props.actions.logOut();
 
                         }}>
@@ -84,12 +102,12 @@ export default class CheckPage extends Component {
                     </Right>
                 </Header>
                 {this.renderBugModal()}
-                <Tabs style={{ backgroundColor: "#ffffff" }}>
-                    <Tab tabStyle={{ backgroundColor: "#ffffff" }} activeTabStyle={{ backgroundColor: "#ffffff", }} heading={<TabHeading><Icon name="camera" style={{ fontSize: 15, color: "#ffffff" }} /><Text style={{ fontSize: 15, color: "#ffffff" }}>已审核</Text></TabHeading>}>
-                        {this.renderCheckingList()}
-                    </Tab>
+                <Tabs locked style={{ backgroundColor: "#ffffff" }}>
                     <Tab tabStyle={{ backgroundColor: "#ffffff" }} activeTabStyle={{ backgroundColor: "#ffffff", }} heading={<TabHeading><Icon name="camera" style={{ fontSize: 15, color: "#ffffff" }} /><Text style={{ fontSize: 15, color: "#ffffff" }}>未审核</Text></TabHeading>}>
                         {this.renderCheckingList()}
+                    </Tab>
+                    <Tab tabStyle={{ backgroundColor: "#ffffff" }} activeTabStyle={{ backgroundColor: "#ffffff", }} heading={<TabHeading><Icon name="camera" style={{ fontSize: 15, color: "#ffffff" }} /><Text style={{ fontSize: 15, color: "#ffffff" }}>已审核</Text></TabHeading>}>
+                        {this.renderCheckedList()}
                     </Tab>
                 </Tabs>
             </Container>
@@ -169,6 +187,8 @@ export default class CheckPage extends Component {
             exitDrawBack,
             resetGetDetailState,
             quitDetail, } = this.props.actions;
+        
+        console.log("checkingState:" + checkingState + " getDetail:" + getDetail + " drawBackStae:" + drawBackStae);
         if (getDetail == 1) {
             //正在获取
             return (
@@ -195,7 +215,7 @@ export default class CheckPage extends Component {
 
 
             );
-        } else if (checkingState == 0 || drawBackStae == 0) {//现在有了内容
+        } else if (checkingState == 0 && drawBackStae == 0) {//现在有了内容
             //没有点击发布或者drawback
             return (
                 <View style={{ marginTop: 70, marginLeft: 10, marginRight: 10, marginBottom: 90, backgroundColor: "#D5EAE9", borderRadius: 14, flex: 1, paddingBottom: 25 }}>
@@ -261,22 +281,7 @@ export default class CheckPage extends Component {
 
                     </List>
 
-                    <Grid style={{ marginTop: 25, marginLeft: 10, marginRight: 10, marginBottom: 20 }}>
-                        <Col style={{}}>
-                            <Button block rounded style={{ backgroundColor: "#1CBBCF", padding: 25 }} onPress={() => {
-                                drawBackBug(bugDetail.bugId);
-                            }}>
-                                <Text style={{ fontSize: 16 }} >撤回</Text>
-                            </Button>
-                        </Col>
-                        <Col style={{}}>
-                            <Button block rounded style={{ backgroundColor: "#ff00c9", padding: 25 }} onPress={() => {
-                                checkThisBug(bugDetail.bugId);
-                            }}>
-                                <Text style={{ fontSize: 16, margin: 15 }}>确认</Text>
-                            </Button>
-                        </Col>
-                    </Grid>
+                    {this.renderButton(bugDetail)}
                 </View>
             );
 
@@ -293,12 +298,13 @@ export default class CheckPage extends Component {
 
             );
         } else if (checkingState == 2 || drawBackStae == 2) {
+            console.log("我去！！！！！！");
             return (
                 <View style={{ marginTop: 70, marginLeft: 10, marginRight: 10, marginBottom: 90, backgroundColor: "#D5EAE9", borderRadius: 14, flex: 1, paddingBottom: 25 }}>
                     <Text style={{ textAlign: 'center', fontSize: 28, marginBottom: 120, marginTop: 120 }}>{des}</Text>
                     <View style={styless.msg_catch_content}>
                         <Button style={styless.button_style_login} info onPress={() => {
-                            checkingState == 2 ? finishChecking() : drawBackStae();
+                            checkingState == 2 ? finishChecking() : finishDrawBack();
 
                         }}><Text style={{ color: "#ffffff", fontSize: 20 }}>确定</Text></Button>
                     </View>
@@ -322,6 +328,43 @@ export default class CheckPage extends Component {
         }
 
     }
+    renderButton(bugDetail) {
+        const {
+            getCheckingList,
+            getCheckedList,
+            checkThisBug,
+            drawBackBug,
+            finishChecking,
+            finishDrawBack,
+            exitChecking,
+            getBugDetail,
+            exitDrawBack,
+            getOneSpecBug,
+            quitDetail, } = this.props.actions;
+        if (this.state.type == 1) {
+            return null;
+        } else {
+            return (
+                <Grid style={{ marginTop: 25, marginLeft: 10, marginRight: 10, marginBottom: 20 }}>
+                    <Col style={{}}>
+                        <Button block rounded style={{ backgroundColor: "#1CBBCF", padding: 25 }} onPress={() => {
+                            drawBackBug(bugDetail.bugId);
+                        }}>
+                            <Text style={{ fontSize: 16, color: "#ffffff" }} >驳回</Text>
+                        </Button>
+                    </Col>
+                    <Col style={{}}>
+                        <Button block rounded style={{ backgroundColor: "#ff00c9", padding: 25 }} onPress={() => {
+                            checkThisBug(bugDetail.bugId);
+                        }}>
+                            <Text style={{ fontSize: 16, margin: 15, color: "#ffffff" }}>发布</Text>
+                        </Button>
+                    </Col>
+                </Grid>
+            );
+        }
+
+    }
     renderCheckingList() {
         //渲染待审核list
         const {
@@ -341,45 +384,54 @@ export default class CheckPage extends Component {
             exitChecking,
             getBugDetail,
             exitDrawBack,
+            getOneSpecBug,
             quitDetail, } = this.props.actions;
-        return (
         
-                <FlatList
-                    ListHeaderComponent={() => {
-                        return (
-                            <View style={styless.top_controller}>
-                                <Text style={{ textAlign: "center", fontSize: 16, color: "#bbbbbb" }}>下拉刷新</Text>
-                            </View>);//返回一个
+        return (
 
-                    }}
-                    onRefresh={() => {
-                        //取数据,
-                        console.log("renderCheckingList ");
-                        getCheckingList();
-                        /*
-                        每一个都是 bugId+score+question
-                        */
-                    }}
-                    refreshing={loadingChecking == 1 ? true : false}
-                    data={checkingList}
-                    renderItem={(item) => {
-                        return (
-                            <View style={{ marginLeft: 10, borderRadius: 5, borderWidth: 1 }}>
-                                <TouchableOpacity style={{ flexDirection: "row", flex: 1 }} onPress={() => {
-                                    getBugDetail(item.bugId, this.props.user.userName, 0);//0是待审核
-                                    this.setState({
-                                        type: 0
-                                    })
-                                }}>
-                                    <Text style={{ color: "#999999" }}>{getStrContent(item.question)}</Text>
-                                </TouchableOpacity>
-                            </View>
-                        );
+            <FlatList
+              
+                ListHeaderComponent={() => {
+                    return (
+                        <View style={styless.top_controller}>
+                            <Text style={{ textAlign: "center", fontSize: 16, color: "#bbbbbb" }}>下拉刷新</Text>
+                        </View>);//返回一个
+
+                }}
+                onRefresh={() => {
+                    //取数据,
+                    console.log("renderCheckingList ");
+                    getCheckingList();
+                    /*
+                    每一个都是 bugId+score+question
+                    */
+                }}
+                keyExtractor={(item, index) => {
+                    return item.bugId;
 
 
-                    }}
-                />
-     
+                }}
+                refreshing={loadingChecking == 1 ? true : false}
+                data={this.props.check.checkingList}
+                renderItem={(item) => {
+                    item = item.item;
+                    return (
+                        <ListItem style={{}}>
+                            <TouchableOpacity style={{ flexDirection: "row", flex: 1 }} onPress={() => {
+                                getBugDetail(item.bugId, 0);//0是待审核
+                                this.setState({
+                                    type: 0
+                                })
+                            }}>
+                                <Text style={{ color: "#999999" }}>{getStrContent(item.question)}</Text>
+                            </TouchableOpacity>
+                        </ListItem>
+                    );
+
+
+                }}
+            />
+
         );
 
 
@@ -403,53 +455,50 @@ export default class CheckPage extends Component {
             getBugDetail,
             exitDrawBack,
             quitDetail, } = this.props.actions;
-        if (chec.length <= 0) {
-            return (
-                <View style={{ flex: 1 }}>
-                    <Text style={{ textAlign: "center", fontSize: 20, color: "#bbbbbb" }}>没有数据</Text>
-                </View>)
-
-        } else {
-
-        }
         return (
-            <ScrollView>
-                <FlatList
-                    ListHeaderComponent={() => {
-                        return (
-                            <View style={styless.top_controller}>
-                                <Text style={{ textAlign: "center", fontSize: 16, color: "#bbbbbb" }}>下拉刷新</Text>
-                            </View>);//返回一个
 
-                    }}
-                    onRefresh={() => {
-                        console.log("renderCheckingList ");
-                        //取数据,
-                        getCheckedList();
-                        /*
-                        每一个都是 bugId+score+question
-                        */
-                    }}
-                    refreshing={loadingChecked == 1 ? true : false}
-                    data={checkedList}
-                    renderItem={(item) => {
-                        return (
-                            <View style={{ marginLeft: 10, borderRadius: 5, borderWidth: 1 }}>
-                                <TouchableOpacity style={{ flexDirection: "row", flex: 1 }} onPress={() => {
-                                    getBugDetail(item.bugId, this.props.user.userName, 1);//1是已审核
-                                    this.setState({
-                                        type: 1
-                                    })
-                                }}>
-                                    <Text style={{ color: "#999999" }}>{getStrContent(item.question)}</Text>
-                                </TouchableOpacity>
-                            </View>
-                        );
+            <FlatList
+              
+                ListHeaderComponent={() => {
+                    return (
+                        <View style={styless.top_controller}>
+                            <Text style={{ textAlign: "center", fontSize: 16, color: "#bbbbbb" }}>下拉刷新</Text>
+                        </View>);//返回一个
+
+                }}
+                onRefresh={() => {
+                    console.log("renderCheckingList ");
+                    //取数据,
+                    getCheckedList();
+                    /*
+                    每一个都是 bugId+score+question
+                    */
+                }}
+                refreshing={loadingChecked == 1 ? true : false}
+                data={this.props.check.checkedList}
+                keyExtractor={(item, index) => {
+                    return item.bugId;
+                }}
+                renderItem={(item) => {
+                    item = item.item;
+                    return (
+
+                        <ListItem style={{}}>
+                            <TouchableOpacity style={{ flexDirection: "row", flex: 1 }} onPress={() => {
+                                getBugDetail(item.bugId, this.props.user.userName, 1);//1是已审核
+                                this.setState({
+                                    type: 1
+                                })
+                            }}>
+                                <Text style={{ color: "#999999" }}>{getStrContent(item.question)}</Text>
+                            </TouchableOpacity>
+                        </ListItem>
+                    );
 
 
-                    }}
-                />
-            </ScrollView>
+                }}
+            />
+
         );
 
     }

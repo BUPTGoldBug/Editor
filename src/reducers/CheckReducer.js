@@ -51,7 +51,7 @@ export default function CheckReducer(state = init_state, action = {}) {
         }
         case types.GET_CHECKING_LIST_FULFILLED: {
             //成功
-            if (action.payload == false || action.payload.status != 200) {
+            if (action.payload == false || ( action.payload.status && action.payload.status != 200)) {
                 //加载失败
                 let newState = {
                     ...state,
@@ -60,11 +60,12 @@ export default function CheckReducer(state = init_state, action = {}) {
                 };
                 return newState;
 
-            } else if (action.payload.length > 0) {
+            } else if (action.payload instanceof Array) {
+                console.log("action.payload instanceof Array > 0")
                 let newState = {
                     ...state,
-                    loadingChecking: 0,//加载成功,回到起点
-                    checkingList: action.payload,//放进去
+                    loadingChecking: 2,//加载成功,回到起点
+                    checkingList: Object.assign([],action.payload) ,//放进去
                     des: "",
                 };
                 return newState;
@@ -87,7 +88,7 @@ export default function CheckReducer(state = init_state, action = {}) {
             let newState = {
                 ...state,
 
-                getDetail: 1,//正在loading
+                loadingChecked: 1,//正在loading
             };
             return newState;
         }
@@ -95,27 +96,27 @@ export default function CheckReducer(state = init_state, action = {}) {
             //失败
             let newState = {
                 ...state,
-                getDetail: 3,//失败
+                loadingChecked: 3,//失败
                 des: "网络错误!",
             };
             return newState;
         }
         case types.GET_CHECKED_LIST_FULFILLED: {
             //成功
-            if (action.payload == false || action.payload.status != 200) {
+            if (action.payload == false || ( action.payload.status && action.payload.status != 200)) {
                 //加载失败
                 let newState = {
                     ...state,
-                    getDetail: 3,//失败
+                    loadingChecked: 3,//失败
                     des: "网络错误!",
                 };
                 return newState;
 
-            } else if (action.payload.length>0) {
+            } else if (action.payload instanceof Array) {
                 let newState = {
                     ...state,
-                    getDetail: 2,//加载成功,回到起点
-                    checkedList: action.payload,//放进去
+                    loadingChecked: 2,//加载成功,回到起点
+                    checkedList: Object.assign([],action.payload),//放进去
                     des: "",
                 };
                 return newState;
@@ -155,7 +156,9 @@ export default function CheckReducer(state = init_state, action = {}) {
         }
         case types.GET_BUG_DETAIL_FULFILLED: {
             //成功
-            if (action.payload == false || action.payload.status != 200) {
+            console.log("卧槽！！！！")
+            console.log(action.payload)
+            if (action.payload == false || ( action.payload.status && action.payload.status != 200)) {
                 //加载失败
                 let newState = {
                     ...state,
@@ -206,7 +209,7 @@ export default function CheckReducer(state = init_state, action = {}) {
         }
         case types.CHECK_BUG_FULFILLED: {
             //成功
-            if (action.payload == false || action.payload.status != 200) {
+            if (action.payload == false || ( action.payload.status && action.payload.status != 200)){
                 //加载失败
                 let newState = {
                     ...state,
@@ -254,7 +257,7 @@ export default function CheckReducer(state = init_state, action = {}) {
         }
         case types.DRAWBACK_BUG_FULFILLED: {
             //成功
-            if (action.payload == false || action.payload.status != 200) {
+            if (action.payload == false || ( action.payload.status && action.payload.status != 200)) {
                 //加载失败
                 let newState = {
                     ...state,
@@ -299,6 +302,7 @@ export default function CheckReducer(state = init_state, action = {}) {
 
         }
         case types.RESET_GET_STATE: {
+            console.log("你他妈重置啊！！！")
             let newState = {
                 ...state,
                 getDetail: action.payload,//

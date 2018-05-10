@@ -111,9 +111,9 @@ export default class HomePage extends Component {
         //     }
         // }, 1000)
 
-        this.interval = setInterval(() => {
-            this.props.actions.getAroundBugs({ userLon: this.state.rt_lon, userLat: this.state.rt_lat });
-        }, 1000);
+        // this.interval = setInterval(() => {
+        //     this.props.actions.getAroundBugs({ userLon: this.state.rt_lon, userLat: this.state.rt_lat });
+        // }, 1000);
     }
 
     componentWillUnmount() {
@@ -196,8 +196,9 @@ export default class HomePage extends Component {
             <View style={{flex:1}}>
                 <Text style={{position:"absolute",marginLeft:100,marginTop:45,color:"#555555",fontSize:20}}>{userDetail.userName}</Text>
                 <ActionButton buttonColor="rgba(231,76,60,1)" position='left' renderIcon={()=>{return (<Icon name="user" style={{color:"#ffffff",fontSize:18}} /> )}} verticalOrientation='down' onPress={() => {
-                 
-                    this.props.actions.getUserDetailByUid(1);
+                    console.log("userDetailbibibi:");
+                    console.log(userDetail)
+                    this.props.actions.getUserDetailByUid(userDetail.userId);
                 }}>
                   
                     <ActionButton.Item buttonColor='#3498db'  textStyle={{backgroundColor:"#000000",color:"#ffffff"}}  onPress={() => { }}>
@@ -507,8 +508,8 @@ export default class HomePage extends Component {
 
         const { isHomePageVisible, bugsAround } = this.props;
 
-        console.log("++++++++BUGS AROUND+++++++++++");
-        console.log(bugsAround);
+      //  console.log("++++++++BUGS AROUND+++++++++++");
+       // console.log(bugsAround);
         //<View><Text>asd</Text></View>
         return (
             <MapView
@@ -516,7 +517,7 @@ export default class HomePage extends Component {
                 style={StyleSheet.absoluteFill}
                 locationEnabled
                 onLocation={({ nativeEvent }) => {
-                    console.log("nativeEvent.longitude:" + nativeEvent.longitude + ",nativeEvent.latitude:" + nativeEvent.latitude)
+                    //console.log("nativeEvent.longitude:" + nativeEvent.longitude + ",nativeEvent.latitude:" + nativeEvent.latitude)
                     this.setState({ rt_lon: nativeEvent.longitude, rt_lat: nativeEvent.latitude });
                     if (this.state.isMoved) {
                         this.setState({ mark_lat: this.state.lat, mark_lon: this.state.lon });
@@ -525,7 +526,7 @@ export default class HomePage extends Component {
                         this.setState({ mark_lat: nativeEvent.latitude - 0.003, mark_lon: nativeEvent.longitude + 0.001 });
                     }
 
-                    console.log(`User Real Location ${nativeEvent.latitude}, ${nativeEvent.longitude}`)
+                   // console.log(`User Real Location ${nativeEvent.latitude}, ${nativeEvent.longitude}`)
                 }
                 }
                 showsTraffic={true}

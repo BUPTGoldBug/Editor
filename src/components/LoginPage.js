@@ -53,14 +53,41 @@ export default class LoginPage extends Component {
         this.renderLogin = this.renderLogin.bind(this);
         this.renderLogInModal = this.renderLogInModal.bind(this);
     }
+    componentDidMount() {
+
+        if ( this.props.user.login == 2) {
+            if (nextProps.user.isSuperUser) {
+                this.props.actions.push(
+                    route_pathName.CheckPage,
+                    {}
+                )
+            } else {
+                this.props.actions.push(
+                    route_pathName.homePage,
+                    {}
+                )
+            }
+
+
+        }
+
+    }
     componentWillReceiveProps(nextProps) {
 
         if (nextProps.user.login == 2) {
+            if (nextProps.user.isSuperUser) {
+                this.props.actions.push(
+                    route_pathName.CheckPage,
+                    {}
+                )
+            } else {
+                this.props.actions.push(
+                    route_pathName.homePage,
+                    {}
+                )
+            }
 
-            this.props.actions.push(
-                route_pathName.homePage,
-                {}
-            )
+
         }
     }
     render() {
@@ -79,29 +106,31 @@ export default class LoginPage extends Component {
         const { login, des } = this.props.user;
         return (
 
-            <View style={{ flex: 1}}>
+            <View style={{ flex: 1 }}>
 
                 <View style={{ marginBottom: 20, marginTop: 30, justifyContent: "center", alignItems: "center" }}><Image style={{ justifyContent: "center" }} source={require("../resources/bee.png")}></Image></View>
                 <View style={{ flex: 1, flexDirection: "column" }}>
                     <View >
 
-                        <Form style={{  borderRadius: 10 }}>
-                            <Item style={{  marginLeft: 10,marginTop:1 ,marginRight:10,borderRadius:5}}>
-                                <Input style={{backgroundColor:"#ffffff"}} placeholderTextColor="#aaaaaa" placeholder="用户名" onChangeText={(Text) => { this.setState({ userName: Text }) }} />
+                        <Form style={{ borderRadius: 10 }}>
+                            <Item style={{ marginLeft: 10, marginTop: 1, marginRight: 10, borderRadius: 5 }}>
+                                <Input style={{ backgroundColor: "#ffffff" }} placeholderTextColor="#aaaaaa" placeholder="用户名" onChange={(Text) => { this.setState({ userName: Text }) }} onChangeText={(Text) => { this.setState({ userName: Text }) }} />
                             </Item>
-                            <Item style={{  marginLeft: 10,marginTop:1,marginRight:10,borderRadius:5 }}>
-                                <Input style={{backgroundColor:"#ffffff"}}  placeholderTextColor="#aaaaaa" placeholder="密码" secureTextEntry={true} onChangeText={(Text) => { this.setState({ password: Text }) }} />
+                            <Item style={{ marginLeft: 10, marginTop: 1, marginRight: 10, borderRadius: 5 }}>
+                                <Input style={{ backgroundColor: "#ffffff" }} placeholderTextColor="#aaaaaa" placeholder="密码" secureTextEntry={true} onChange={(Text) => { this.setState({ password: Text }) }} onChangeText={(Text) => { this.setState({ password: Text }) }} />
                             </Item>
 
                         </Form>
-                        <Button style={{ marginTop: 5, borderRadius: 5, marginLeft: 10, marginRight: 10 }} disabled={login == 0 ? false : true} info full onPress={() => {
+                        <Button style={{ marginTop: 5, borderRadius: 5, marginLeft: 10, marginRight: 10 }} disabled={login == 0 || login == 2 ? false : true} info full onPress={() => {
+
+
                             this.props.actions.login({
                                 userName: this.state.userName,
-                                passWord: this.state.password,
+                                password: this.state.password,
                             });//发起regis
 
                         }}>
-                            <Text style={{ color: "#ffffff", fontSize: 20 }}>{login == 0 ? "登录" : "正在登录..."}</Text>
+                            <Text style={{ color: "#ffffff", fontSize: 20 }}>{login == 0 || login == 2 ? "登录" : "正在登录..."}</Text>
                         </Button>
 
                         <Button style={{ backgroundColor: "#ff00c9", marginTop: 5, borderRadius: 5, marginLeft: 10, marginRight: 10 }} full onPress={() => {
@@ -119,6 +148,7 @@ export default class LoginPage extends Component {
     }
     renderLogInModal() {
         const { login, des } = this.props.user;
+        console.log("des:" + des)
         if (login != 3) {
             return null;
         } else {
@@ -168,10 +198,10 @@ export default class LoginPage extends Component {
             return (
 
                 <KeyboardAwareScrollView style={{ marginTop: 60, marginBottom: 80, marginLeft: 20, marginRight: 20, backgroundColor: "#D5EAE9", borderRadius: 15, flex: 1, paddingTop: 30, paddingLeft: 25, paddingRight: 25, paddingBottom: 30 }}>
-                    
-                    <Text style={{marginTop:10,textAlign:'center',color:"#000000",fontSize:18}}>欢迎加入GoldBug大家庭</Text>
+
+                    <Text style={{ marginTop: 10, textAlign: 'center', color: "#000000", fontSize: 18 }}>欢迎加入GoldBug大家庭</Text>
                     <Form>
-                        <Item rounded style={{ marginTop:40, backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>
+                        <Item rounded style={{ marginTop: 40, backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>
                             <TextInput placeholder="用户名" onChangeText={(Text) => { this.setState({ reg_userName: Text }) }} style={{ flex: 1 }} underlineColorAndroid='transparent' />
                         </Item>
 
@@ -184,7 +214,7 @@ export default class LoginPage extends Component {
                         </View>
 
 
-                        <View style={{ marginTop: 10, borderRadius: 14, backgroundColor:  '#D5EAE9' }}>
+                        <View style={{ marginTop: 10, borderRadius: 14, backgroundColor: '#D5EAE9' }}>
                             <Item rounded style={{ borderRadius: 14, borderColor: "#555555" }}>
                                 <View style={{ flex: 3 }}>
                                     <TextInput placeholder="手机号码" keyboardType="numeric" onChangeText={(Text) => { this.setState({ reg_phone: Text }) }} underlineColorAndroid='transparent' />
@@ -202,7 +232,7 @@ export default class LoginPage extends Component {
                                 onPress={() => {
                                     this.props.actions.exitRegister();//退出
                                 }}>
-                                <Text  style={{ color: "#ffffff", fontSize: 20 }}>取消</Text>
+                                <Text style={{ color: "#ffffff", fontSize: 20 }}>取消</Text>
                             </Button>
                         </Col>
                         <Col style={{}}>
@@ -210,12 +240,12 @@ export default class LoginPage extends Component {
                                 onPress={() => {
                                     this.props.actions.register({
                                         userName: this.state.reg_userName,
-                                        passWord: this.state.reg_password,
-                                        phone: this.state.reg_phone,
-                                        createTime: new Date().toLocaleTimeString(),
+                                        password: this.state.reg_password,
+                                        userPhone: this.state.reg_phone,
+                                        createTime: moment().format('YYYY-MM-DD HH:mm:ss'),
                                     });//发起regis
                                 }}>
-                                <Text  style={{ color: "#ffffff", fontSize: 20 }}>确认</Text>
+                                <Text style={{ color: "#ffffff", fontSize: 20 }}>确认</Text>
                             </Button>
                         </Col>
                     </Grid>
@@ -244,6 +274,7 @@ export default class LoginPage extends Component {
                         <Button block rounded style={{ backgroundColor: "#3CB371", padding: 25, marginLeft: 15, marginRight: 15 }} onPress={() => {
                             this.props.actions.exitRegister();//退出注册界面
                         }}>
+                            <Text style={{ color: "#ffffff", fontSize: 20 }}>确定</Text>
                         </Button>
                     </View>
                 </View>);
@@ -256,7 +287,7 @@ export default class LoginPage extends Component {
                         <Button block rounded style={{ backgroundColor: "#3CB371", padding: 25, marginLeft: 15, marginRight: 15 }} onPress={() => {
                             this.props.actions.finishRegister();
                         }}>
-                            <Text  style={{ color: "#ffffff", fontSize: 20 }}>确定</Text>
+                            <Text style={{ color: "#ffffff", fontSize: 20 }}>确定</Text>
                         </Button>
                     </View>
                 </View>);

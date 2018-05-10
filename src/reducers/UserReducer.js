@@ -1,17 +1,18 @@
 import * as types from '../util/ActionTypes';
-import {AsyncStorage} from 'react-native';
+import { AsyncStorage } from 'react-native';
 const initialState = {
     addingUser: -1,//-1 未打开界面 0 打开界面未开始注册 1 正在注册 2 注册成功 3 注册失败
-    login:0,//0 未登陆 1 正在登陆 2 登陆失败
-    getDetail:0,// 0 未开始获取 ,1 获取中 2 获取成功 3 获取失败
-    cookie:null,//cookie，两种设置途径 1.从存储中获得 2 从访问中获得
-    getUserDetailSuccess:0,
-    userDetail:{
-        userId:-1,//用户id
-        score:-1,//分数
-        userName:"未命名",//姓名
+    login: 0,//0 未登陆 1 正在登陆 2 登陆失败
+    getDetail: 0,// 0 未开始获取 ,1 获取中 2 获取成功 3 获取失败
+    cookie: null,//cookie，两种设置途径 1.从存储中获得 2 从访问中获得
+    getUserDetailSuccess: 0,
+    userDetail: {
+        userId: -1,//用户id
+        score: -1,//分数
+        userName: "未命名",//姓名
     },
-    des:"",//登陆或者注册失败后的东西
+    isSuperUser:false,
+    des: "",//登陆或者注册失败后的东西
 
 };
 
@@ -24,15 +25,15 @@ export default function UserReducer(state = initialState, action = {}) {
             //注册正在加载
             let newState = {
                 ...state,
-                addingUser:1
+                addingUser: 1
             };
-           return newState;
+            return newState;
         }
-        case types.START_REGISTER:{
+        case types.START_REGISTER: {
             //开始发起这个了
             let newState = {
                 ...state,
-                addingUser:0
+                addingUser: 0
             };
             return newState;
 
@@ -40,21 +41,30 @@ export default function UserReducer(state = initialState, action = {}) {
         case types.ADD_USER_FULFILLED: {
             //成功加载-或者catch了异常
 
-            if (action.payload == false ) {
+            if (action.payload == false) {
                 //加载失败
                 let newState = {
                     ...state,
-                    addingUser:3
+                    addingUser: 3
                 };
                 return newState;
 
-            } else if(Boolean(action.payload.success)){
+            } else if (Boolean(action.payload.success)) {
                 let newState = {
                     ...state,
-                    addingUser:2
+                    addingUser: 2,
+                    des: action.payload.des,
                 };
                 return newState;
 
+            } else {
+
+                let newState = {
+                    ...state,
+                    addingUser: 3,
+                    des: action.payload.des,
+                };
+                return newState;
             }
 
         }
@@ -62,7 +72,8 @@ export default function UserReducer(state = initialState, action = {}) {
             //加载失败
             let newState = {
                 ...state,
-                addingUser:3
+                addingUser: 3,
+                des: "错误",
             };
             return newState;
         }
@@ -70,8 +81,8 @@ export default function UserReducer(state = initialState, action = {}) {
             //重置
             let newState = {
                 ...state,
-                addingUser:0,//重置一下,比较特殊
-                des:""
+                addingUser: 0,//重置一下,比较特殊
+                des: ""
             };
             return newState;
         };
@@ -79,8 +90,8 @@ export default function UserReducer(state = initialState, action = {}) {
             //退出注册
             let newState = {
                 ...state,
-                addingUser:-1,//重置一下,比较特殊
-                des:""
+                addingUser: -1,//重置一下,比较特殊
+                des: ""
             };
             return newState;
         };
@@ -89,41 +100,42 @@ export default function UserReducer(state = initialState, action = {}) {
             //注册正在加载
             let newState = {
                 ...state,
-                login:1
+                login: 1
             };
-           return newState;
+            return newState;
         }
         case types.LOGIN_FULFILLED: {
             //成功加载-或者catch了异常
 
-            if (action.payload == false ) {
+            if (action.payload == false) {
                 //加载失败
                 let newState = {
                     ...state,
-                    login:3
+                    login: 3
                 };
                 return newState;
 
-            } else if(Boolean(action.payload.success)){
+            } else if (Boolean(action.payload.success)) {
+
                 //获取成功了,在界面的login = 2那里finish一下，然后跳转
-              
-                AsyncStorage.setItem("cookie",action.payload.cookie);//保存cookie
 
                 let newState = {
                     ...state,
-                    login:2,
-                    userDetail:action.payload.userDetail,
-          
-                    cookie:action.payload.cookie,//保存一下在这里
-                    
+                    login: 2,
+                    userDetail: action.payload.userDetail,
+                    isSuperUser:Boolean(action.payload.isSuperUser),
+                    des: action.payload.des,
+
+
                 };
                 return newState;
 
-            }else {
+            } else {
                 //其他情况
                 let newState = {
                     ...state,
-                    login:3
+                    login: 3,
+                    des: action.payload.des
                 };
                 return newState;
             }
@@ -133,7 +145,7 @@ export default function UserReducer(state = initialState, action = {}) {
             //加载失败
             let newState = {
                 ...state,
-                login:3
+                login: 3
             };
             return newState;
         }
@@ -141,8 +153,8 @@ export default function UserReducer(state = initialState, action = {}) {
             //加载失败
             let newState = {
                 ...state,
-                login:0,//重置一下,
-                des:"",
+                login: 0,//重置一下,
+                des: "",
             };
             return newState;
         };
@@ -152,35 +164,35 @@ export default function UserReducer(state = initialState, action = {}) {
             //注册正在加载
             let newState = {
                 ...state,
-                getDetail:1
+                getDetail: 1
             };
-           return newState;
+            return newState;
         }
         case types.GET_USER_DETAIL_FULFILLED: {
             //成功加载-或者catch了异常
 
-            if (action.payload == false ) {
+            if (action.payload == false) {
                 //加载失败
                 let newState = {
                     ...state,
-                    getDetail:3
+                    getDetail: 3
                 };
                 return newState;
 
-            } else if(Boolean(action.payload.success)){
+            } else if (Boolean(action.payload.success)) {
                 //
                 let newState = {
                     ...state,
-                    getDetail:2,
-                    userDetail:action.payload,//放进来
+                    getDetail: 2,
+                    userDetail: action.payload,//放进来
                 };
                 return newState;
 
-            }else {
+            } else {
                 //其他情况
                 let newState = {
                     ...state,
-                    getDetail:3
+                    getDetail: 3
                 };
                 return newState;
             }
@@ -190,7 +202,7 @@ export default function UserReducer(state = initialState, action = {}) {
             //加载失败
             let newState = {
                 ...state,
-                getDetail:3
+                getDetail: 3
             };
             return newState;
         }
@@ -198,29 +210,29 @@ export default function UserReducer(state = initialState, action = {}) {
             //加载失败
             let newState = {
                 ...state,
-                getDetail:0,//重置一下
-                des:"",
+                getDetail: 0,//重置一下
+                des: "",
             };
             return newState;
         };
         //
-        case types.ADD_COOKIE:{
+        case types.ADD_COOKIE: {
             //保存一下cookies在state
             let newState = {
                 ...state,
-                cookie:action.payload,//保存在运行state里面
-            }; 
+                cookie: action.payload,//保存在运行state里面
+            };
             return newState;
         }
         //清理用户抓鬼太
-        case types.CLEAR_USER_STATE:{
+        case types.CLEAR_USER_STATE: {
             //保存一下cookies在state
             let newState = {
                 ...initialState,
-            }; 
+            };
+            return newState;
         }
-
-        
+       
         default: {
             return state;
         }

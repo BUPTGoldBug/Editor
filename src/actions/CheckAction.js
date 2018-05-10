@@ -43,7 +43,8 @@ export const getCheckingList = function () {
     }
 
 }
-export const getBugDetail = function (bugId, userName,type) {
+export const getBugDetail = function (bugId,userName,type) {
+ 
     //获取详情,成功后的_FULFILLED里面设置2 3
     return {
         type: types.GET_BUG_DETAIL,
@@ -54,9 +55,12 @@ export const getBugDetail = function (bugId, userName,type) {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    bugId: bugId, //id传进来
-                    userName: userName,
-                    type:type,//判断是哪一种 0是待审核 1是已审核
+            
+                    bid:bugId,
+                    userId:1,
+                    rt_lon:0,
+                    rt_lat:0,
+                    isSuperUser:0,
                 })
             }).then(response => {
                 let responseJson = response.json();
@@ -124,8 +128,9 @@ export const quitDetail = function () {
 export const finishChecking = function () {
     //点击确认完成checking,成功的时候
     return (dispatch) => {
-        dispatch(resetGetDetailState(0));//关闭窗口
+     
         dispatch(resetCheckingState(0));//重置状态
+        dispatch(resetGetDetailState(0));//关闭窗口
         dispatch(getCheckingList());//重新拉取一下
     }
 
@@ -134,21 +139,24 @@ export const finishDrawBack = function () {
     //点击确认完成drawback,成功的时候
 
     return (dispatch) => {
-        dispatch(resetGetDetailState(0));//关闭窗口
+
         dispatch(resetdrawBackState(0));//重置状态
-        dispatch(getCheckedList());//重新拉取一下
+        dispatch(resetGetDetailState(0));//关闭窗口
+        dispatch(getCheckingList());//重新拉取一下
 
     }
 }
 export const exitChecking = function () {
     //checking失败，失败按钮确认
     return (dispatch) => {
+        dispatch(resetdrawBackState(0));//重置状态
         dispatch(resetCheckingState(0));//重置状态
     }
 }
 export const exitDrawBack = function () {
     //drawback失败，失败按钮确认
     return (dispatch) => {
+        dispatch(resetCheckingState(0));//重置状态
         dispatch(resetdrawBackState(0));//重置状态
     }
 }

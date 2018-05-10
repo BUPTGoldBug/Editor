@@ -155,7 +155,7 @@ export const getUserDetailByUid = function (uid){
     return {
         type:types.GET_USER_DETAIL,
         payload: fetch(
-            constant.ROOT_SERVER_URL + constant.URL.getDetail, {
+            constant.ROOT_SERVER_URL + constant.URL.getUserDetail, {
                 method: 'post',
                 headers: {
                     'Content-Type': 'application/json',

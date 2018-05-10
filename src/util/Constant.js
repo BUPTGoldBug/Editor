@@ -9,12 +9,12 @@ import storage from 'redux-persist/es/storage';
 export const sharedProps = {
     apiKey: "142365C9-3C5A-4250-AD1A-FD21C10322EB",
 }
-export const ROOT_SERVER_URL = "http://101.201.64.196:8084/"; 
+export const ROOT_SERVER_URL = "http://10.8.176.30:8080/"; 
 
 export const URL = {
     addUser: "user/addUser",
     login:"user/login",
-    getUserDetail:"user/getUserDetail",//用cookies获取 
+    getUserDetail:"user/getDetail",//用cookies获取 
     addGoldBug:"goldbug/addGoldBug",
     getAroundBugs:"goldbug/getAroundBugs",
     getSpecBug:"goldbug/getSpecBug",
@@ -386,6 +386,7 @@ export const getRandom =  function (start, end) {
 };
 export const gameList = [1,2];
 export const getStrContent = function (txt,size){
+    console.log("txt:"+txt)
     if(txt.length>size){
        let str=  txt.substr(0,size)+"...";
        return str;

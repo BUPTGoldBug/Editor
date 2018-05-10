@@ -6,7 +6,7 @@ import CheckPage from "../components/CheckPage";
 import { getBugDetail, getCheckingList, getCheckedList, checkThisBug, drawBackBug, finishChecking, finishDrawBack, exitChecking, exitDrawBack, quitDetail,resetGetDetailState } from "../actions/CheckAction";
 import { logOut } from "../actions/UserAction"
 import { push, pop, reset, goBack } from '../actions/NavigatorAction'
-
+import {getOneSpecBug} from "../actions/AddGoldBugAction"
 
 export default connect(
     (state) => {
@@ -37,6 +37,7 @@ export default connect(
                 exitDrawBack,
                 quitDetail,
                 resetGetDetailState,
+                getOneSpecBug,
                 logOut,//注销
 
             }, dispatch)
