@@ -6,6 +6,7 @@ const initialState = {
     getDetail: 0,// 0 未开始获取 ,1 获取中 2 获取成功 3 获取失败
     cookie: null,//cookie，两种设置途径 1.从存储中获得 2 从访问中获得
     getUserDetailSuccess: 0,
+    canTurn:false,
     userDetail: {
         userId: -1,//用户id
         score: -1,//分数
@@ -73,7 +74,7 @@ export default function UserReducer(state = initialState, action = {}) {
             let newState = {
                 ...state,
                 addingUser: 3,
-                des: "错误",
+                des: "注册失败，网络错误！",
             };
             return newState;
         }
@@ -87,7 +88,7 @@ export default function UserReducer(state = initialState, action = {}) {
             return newState;
         };
         case types.EXIT_REGIST: {
-            //退出注册
+            //
             let newState = {
                 ...state,
                 addingUser: -1,//重置一下,比较特殊
@@ -95,7 +96,40 @@ export default function UserReducer(state = initialState, action = {}) {
             };
             return newState;
         };
+        case types.FAILED_REGISTER: {
+            //注册失败
+            let newState = {
+                ...state,
+                addingUser: 4,//第四个页面
+                des: action.payload
+            };
+            return newState;
+        };
+
         //----登陆------
+        case types.LOGIN:{
+            let newState = {
+                ...state,
+                canTurn:false,
+            }
+            return newState;
+        }
+        case types.RESET_CAN_TURN:{
+            let newState = {
+                ...state,
+                canTurn:false,
+            }
+            return newState;
+        }
+        
+        case types.LOGIN_PENDING: {
+            //注册正在加载
+            let newState = {
+                ...state,
+                login: 1
+            };
+            return newState;
+        }
         case types.LOGIN_PENDING: {
             //注册正在加载
             let newState = {
@@ -111,6 +145,7 @@ export default function UserReducer(state = initialState, action = {}) {
                 //加载失败
                 let newState = {
                     ...state,
+                    des:"网络错误",
                     login: 3
                 };
                 return newState;
@@ -123,9 +158,9 @@ export default function UserReducer(state = initialState, action = {}) {
                     ...state,
                     login: 2,
                     userDetail: action.payload.userDetail,
-                    isSuperUser:Boolean(action.payload.isSuperUser),
+                    isSuperUser:Boolean(action.payload.superUser),
                     des: action.payload.des,
-
+                    canTurn:true,
 
                 };
                 return newState;
@@ -154,7 +189,7 @@ export default function UserReducer(state = initialState, action = {}) {
             let newState = {
                 ...state,
                 login: 0,//重置一下,
-                des: "",
+                des: "登陆失败",
             };
             return newState;
         };

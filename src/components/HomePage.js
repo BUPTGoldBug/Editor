@@ -45,6 +45,11 @@ const styles = StyleSheet.create({
         height: 22,
         color: 'white',
     },
+    actionButtonIcon_1: {
+        fontSize: 20,
+        height: 22,
+        color: 'black',
+    },
     customIcon: {
         width: 40,
         height: 40,
@@ -98,7 +103,7 @@ export default class HomePage extends Component {
             checkBox3: false,
             checkBox4: false,
             cathModalVisiable: props.arCatch.inGame == 0 ? true : false,
-            hasGetUser:false
+            hasGetUser: false
         };
     }
 
@@ -111,9 +116,9 @@ export default class HomePage extends Component {
         //     }
         // }, 1000)
 
-        // this.interval = setInterval(() => {
-        //     this.props.actions.getAroundBugs({ userLon: this.state.rt_lon, userLat: this.state.rt_lat });
-        // }, 1000);
+        this.interval = setInterval(() => {
+            this.props.actions.getAroundBugs({ userLon: this.state.rt_lon, userLat: this.state.rt_lat });
+        }, 1500);
     }
 
     componentWillUnmount() {
@@ -122,8 +127,8 @@ export default class HomePage extends Component {
         this.interval && clearInterval(this.interval);
         this.interval = null;
 
-        this.timer && clearInterval(this.timer);
-        this.timer = null;
+        // this.timer && clearInterval(this.timer);
+        // this.timer = null;
     }
     componentWillReceiveProps(nextProps) {
 
@@ -193,19 +198,19 @@ export default class HomePage extends Component {
     renderUserButton() {
         const { userDetail, getDetail } = this.props.user;
         return (
-            <View style={{flex:1}}>
-                <Text style={{position:"absolute",marginLeft:100,marginTop:45,color:"#555555",fontSize:20}}>{userDetail.userName}</Text>
-                <ActionButton buttonColor="rgba(231,76,60,1)" position='left' renderIcon={()=>{return (<Icon name="user" style={{color:"#ffffff",fontSize:18}} /> )}} verticalOrientation='down' onPress={() => {
+            <View style={{ flex: 1 }}>
+                <Text style={{ position: "absolute", marginLeft: 100, marginTop: 45, color: "#555555", fontSize: 20 }}>{userDetail.userName}</Text>
+                <ActionButton buttonColor="#1E90FF" position='left' renderIcon={() => { return (<Icon name="user" style={{ color: "#ffffff", fontSize: 18 }} />) }} verticalOrientation='down' onPress={() => {
                     console.log("userDetailbibibi:");
                     console.log(userDetail)
                     this.props.actions.getUserDetailByUid(userDetail.userId);
                 }}>
-                  
-                    <ActionButton.Item buttonColor='#3498db'  textStyle={{backgroundColor:"#000000",color:"#ffffff"}}  onPress={() => { }}>
+
+                    <ActionButton.Item buttonColor='#F4A460' textStyle={{ backgroundColor: "#000000", color: "#ffffff" }} onPress={() => { }}>
                         <Icon1 name="wallet" style={styles.actionButtonIcon} />
-                        <Text style={{color:"#ffffff",fontSize:10}}>{userDetail.score}分</Text>
+                        <Text style={{ color: "#ffffff", fontSize: 10 }}>{userDetail.score}</Text>
                     </ActionButton.Item>
-                    <ActionButton.Item buttonColor='#3498db' onPress={() => { 
+                    <ActionButton.Item buttonColor='#A9A9A9' onPress={() => {
                         this.props.actions.logOut();//退出,还要清空
                     }}>
                         <Icon1 name="logout" style={styles.actionButtonIcon} />
@@ -420,7 +425,7 @@ export default class HomePage extends Component {
                             <Col style={{}}>
                                 <Button block rounded style={{ backgroundColor: "#ff00c9", padding: 25 }} onPress={() => {
                                     this.props.actions.vaildContent({
-                                        userId: 1,
+                                        userId: this.props.user.userDetail.userId,
                                         bugId: specBug.bugId,
                                         debugDate: moment().format('YYYY-MM-DD HH:mm:ss'),
                                         choose: "" + Number(this.state.checkBox1) + Number(this.state.checkBox2) + Number(this.state.checkBox3) + Number(this.state.checkBox4)
@@ -508,8 +513,8 @@ export default class HomePage extends Component {
 
         const { isHomePageVisible, bugsAround } = this.props;
 
-      //  console.log("++++++++BUGS AROUND+++++++++++");
-       // console.log(bugsAround);
+        //  console.log("++++++++BUGS AROUND+++++++++++");
+        // console.log(bugsAround);
         //<View><Text>asd</Text></View>
         return (
             <MapView
@@ -526,7 +531,7 @@ export default class HomePage extends Component {
                         this.setState({ mark_lat: nativeEvent.latitude - 0.003, mark_lon: nativeEvent.longitude + 0.001 });
                     }
 
-                   // console.log(`User Real Location ${nativeEvent.latitude}, ${nativeEvent.longitude}`)
+                    // console.log(`User Real Location ${nativeEvent.latitude}, ${nativeEvent.longitude}`)
                 }
                 }
                 showsTraffic={true}
@@ -564,8 +569,9 @@ export default class HomePage extends Component {
         );
     };
     renderBugsAround(bugsAround) {
-        console.log("bugsAround");
-        console.log(bugsAround);
+        console.log("bugsAround.length");
+        console.log(bugsAround.length);
+
 
         return bugsAround.map((bug, index) => {
             return (
@@ -576,7 +582,6 @@ export default class HomePage extends Component {
 
                         icon={() => {
                             if (bug.arIndex == -1) { // common
-
                                 return (
 
                                     <Image style={styless.customMarker} source={require("../resources/party.png")} />
@@ -596,7 +601,7 @@ export default class HomePage extends Component {
 
                         }}
                         onPress={() => {
-                            this._catcherOnMarkerPress({ rt_lon: this.state.rt_lon, rt_lat: this.state.rt_lat, bugId: bug.bugId, userId: 1 })
+                            this._catcherOnMarkerPress({ rt_lon: this.state.rt_lon, rt_lat: this.state.rt_lat, bugId: bug.bugId, userId: this.props.user.userDetail.userId })
                         }}
                         coordinate={{
                             latitude: bug.lat,

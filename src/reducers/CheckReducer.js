@@ -20,7 +20,7 @@ const init_state = {
     checkingList: [], //未审核列表
     bugDetail: { //点击已审核/未审核列表出现的详情
         question: "",
-        answer: ["","","","",""],
+        answer: ["", "", "", "", ""],
         rightIndex: -1,
         arIndex: -1,
         bugId: -1,
@@ -51,7 +51,8 @@ export default function CheckReducer(state = init_state, action = {}) {
         }
         case types.GET_CHECKING_LIST_FULFILLED: {
             //成功
-            if (action.payload == false || ( action.payload.status && action.payload.status != 200)) {
+            console.log("action.payload instanceof Array:" + (action.payload instanceof Array));
+            if ((action.payload == false && ((action.payload instanceof Array) == false)) || (action.payload.status != undefined && action.payload.status != 200)) {
                 //加载失败
                 let newState = {
                     ...state,
@@ -61,13 +62,15 @@ export default function CheckReducer(state = init_state, action = {}) {
                 return newState;
 
             } else if (action.payload instanceof Array) {
-                console.log("action.payload instanceof Array > 0")
+                console.log("create new state");
                 let newState = {
                     ...state,
                     loadingChecking: 2,//加载成功,回到起点
-                    checkingList: Object.assign([],action.payload) ,//放进去
+                    checkingList: Object.assign([], action.payload),//放进去
                     des: "",
                 };
+                console.log("newState after checeking");
+                console.log(newState);
                 return newState;
 
             } else {
@@ -103,7 +106,7 @@ export default function CheckReducer(state = init_state, action = {}) {
         }
         case types.GET_CHECKED_LIST_FULFILLED: {
             //成功
-            if (action.payload == false || ( action.payload.status && action.payload.status != 200)) {
+            if ((action.payload == false && ((action.payload instanceof Array) == false)) || (action.payload.status && action.payload.status != 200)) {
                 //加载失败
                 let newState = {
                     ...state,
@@ -115,10 +118,13 @@ export default function CheckReducer(state = init_state, action = {}) {
             } else if (action.payload instanceof Array) {
                 let newState = {
                     ...state,
+
                     loadingChecked: 2,//加载成功,回到起点
-                    checkedList: Object.assign([],action.payload),//放进去
+                    checkedList: Object.assign([], action.payload),//放进去
                     des: "",
                 };
+                console.log("newState after checked");
+                console.log(newState);
                 return newState;
 
             } else {
@@ -158,7 +164,7 @@ export default function CheckReducer(state = init_state, action = {}) {
             //成功
             console.log("卧槽！！！！")
             console.log(action.payload)
-            if (action.payload == false || ( action.payload.status && action.payload.status != 200)) {
+            if (action.payload == false || (action.payload.status && action.payload.status != 200)) {
                 //加载失败
                 let newState = {
                     ...state,
@@ -209,7 +215,7 @@ export default function CheckReducer(state = init_state, action = {}) {
         }
         case types.CHECK_BUG_FULFILLED: {
             //成功
-            if (action.payload == false || ( action.payload.status && action.payload.status != 200)){
+            if (action.payload == false || (action.payload.status && action.payload.status != 200)) {
                 //加载失败
                 let newState = {
                     ...state,
@@ -257,7 +263,7 @@ export default function CheckReducer(state = init_state, action = {}) {
         }
         case types.DRAWBACK_BUG_FULFILLED: {
             //成功
-            if (action.payload == false || ( action.payload.status && action.payload.status != 200)) {
+            if (action.payload == false || (action.payload.status && action.payload.status != 200)) {
                 //加载失败
                 let newState = {
                     ...state,

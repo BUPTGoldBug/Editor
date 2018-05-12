@@ -78,8 +78,12 @@ export const START_REGISTER = "START_REGISTER";//注册
 export const EXIT_REGIST = "EXIT_REGIST";//重置注册某写状态
 export const RESET_LOGIN = "RESET_LOGIN";//重置登陆装填，失败的时候会调用
 
-export const CLEAR_USER_STATE = "CLEAR_USER_STATE";//清理用户状态
+export const BEFORE_REGISTER = "BEFORE_REGISTER";
 
+export const FAILED_REGISTER = "FAILED_REGISTER";
+
+export const CLEAR_USER_STATE = "CLEAR_USER_STATE";//清理用户状态
+export const RESET_CAN_TURN = "RESET_CAN_TURN"
 //
 export const GET_CHECKING_LIST = "GET_CHECKING_LIST"; //获取checking list
 export const GET_CHECKING_LIST_PENDING = "GET_CHECKING_LIST_PENDING"; //获取checking list

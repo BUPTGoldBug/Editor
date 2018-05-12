@@ -9,7 +9,7 @@ import storage from 'redux-persist/es/storage';
 export const sharedProps = {
     apiKey: "142365C9-3C5A-4250-AD1A-FD21C10322EB",
 }
-export const ROOT_SERVER_URL = "http://10.8.176.30:8080/"; 
+export const ROOT_SERVER_URL = "http://10.209.8.116:8084/"; 
 
 export const URL = {
     addUser: "user/addUser",
@@ -368,8 +368,8 @@ export const styles = StyleSheet.create({
     },
 
 })
-export const vectorList = [3, 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, 4];//12个数字
-export const xConfilt = [-4, -3.5, -2.5, -1.5, -1, -0.5, 0, -0.5, 1, 1.5, 2.5, 3.5, 4]; //13个数组
+export const vectorList = [3, 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, 4];//12个数字,速度数组
+export const xConfilt = [-4, -3.5, -2.5, -1.5, -1, -0.5, 0, -0.5, 1, 1.5, 2.5, 3.5, 4]; //13个干扰因子
 export const persistConfig = {
     key: 'root',
     storage: storage,
@@ -386,7 +386,7 @@ export const getRandom =  function (start, end) {
 };
 export const gameList = [1,2];
 export const getStrContent = function (txt,size){
-    console.log("txt:"+txt)
+
     if(txt.length>size){
        let str=  txt.substr(0,size)+"...";
        return str;
@@ -394,3 +394,12 @@ export const getStrContent = function (txt,size){
         return txt;
     }
 }
+export const regUtils ={
+
+
+    passwordReg:/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/,
+    phone:/^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/,
+    regEn : /[`~!@#$%^&*()_+<>?:"{},.\/;'[\]\s+\r+\n+]/im,
+    regCn : /[·！#￥（——）：；“”‘、，|《。》？、【】[\]\s+\r+\n+]/im,
+
+} 

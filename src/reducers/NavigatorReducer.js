@@ -11,7 +11,7 @@ const init_state = {
     index: 0,
 
     routes: [
-        { key: "0", routeName:constant.route_pathName.CheckPage, params: {} },
+        { key: "0", routeName:constant.route_pathName.LoginPage, params: {} },
     ]
 }
 

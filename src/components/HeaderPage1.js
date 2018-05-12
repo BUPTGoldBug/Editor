@@ -38,7 +38,7 @@ import { styles as styless, route_pathName, coordinate ,getStrContent} from "../
 import { Icon } from "react-native-vector-icons";
 export default class HeaderPage1 extends Component {
     constructor(props, context) {
-        console.log("首页")
+       
         super(props, context);
 
     }

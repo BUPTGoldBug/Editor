@@ -6,6 +6,7 @@ import { push, pop, reset, goBack } from './NavigatorAction'
 
 export const getCheckedList = function () {
     //拉取,成功后的_FULFILLED里面 设置2 3
+    console.log("getCheckedList:"+  constant.ROOT_SERVER_URL + constant.URL.getCheckedList)
     return {
         type: types.GET_CHECKED_LIST,
         payload: fetch(
@@ -25,8 +26,9 @@ export const getCheckedList = function () {
 }
 export const getCheckingList = function () {
     //拉取,成功后的_FULFILLED里面 设置2 3
+    console.log("getCheckingList:"+  constant.ROOT_SERVER_URL + constant.URL.getCheckingList)
     return {
-        type: types.GET_CHECKING_LIST,
+        type: types.GET_CHECKING_LIST, 
         payload: fetch(
             constant.ROOT_SERVER_URL + constant.URL.getCheckingList, {
                 method: 'post',
