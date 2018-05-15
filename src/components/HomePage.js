@@ -117,7 +117,7 @@ export default class HomePage extends Component {
         // }, 1000)
 
         this.interval = setInterval(() => {
-            this.props.actions.getAroundBugs({ userLon: this.state.rt_lon, userLat: this.state.rt_lat });
+            this.props.actions.getAroundBugs({ userLon: this.state.rt_lon, userLat: this.state.rt_lat ,userId:this.props.user.userDetail.userId});
         }, 1500);
     }
 
@@ -581,27 +581,67 @@ export default class HomePage extends Component {
                         GoldBugId={bug.bugId}
 
                         icon={() => {
-                            if (bug.arIndex == -1) { // common
-                                return (
+                            if (bug.type == undefined) {
+                                if (bug.arIndex == -1) { // common
+                                    return (
 
-                                    <Image style={styless.customMarker} source={require("../resources/party.png")} />
-                                )
-                            } else if (bug.arIndex == 0) { // Basketball
+                                        <Image style={styless.customMarker} source={require("../resources/party.png")} />
+                                    )
+                                } else if (bug.arIndex == 0) { // Basketball
 
-                                return (
+                                    return (
 
-                                    <Image style={styless.customMarker} source={require("../resources/AR.png")} />
-                                )
-                            } else { // Catoon Entrance
-                                return (
+                                        <Image style={styless.customMarker} source={require("../resources/AR.png")} />
+                                    )
+                                } else { // Catoon Entrance
+                                    return (
 
-                                    <Image style={styless.customMarker} source={require("../resources/VR.png")} />
-                                )
+                                        <Image style={styless.customMarker} source={require("../resources/VR.png")} />
+                                    )
+                                }
+                            } else {
+                                if (bug.arIndex == -1) { // common
+                                    if (bug.type == 0) {
+                                        //未答的
+                                        return (
+                                            //可以答的
+                                            <Image style={styless.customMarker} source={require("../resources/active.png")} />
+                                        )
+
+                                    } else if (bug.type == 1) {
+                                        //已答的
+                                        return (
+                                            //可以答的
+                                            <Image style={styless.customMarker} source={require("../resources/light.png")} />
+                                        )
+
+                                    } else return (
+                                        //可以答的
+                                        <Image style={styless.customMarker} source={require("../resources/non_active.png")} />
+                                    )
+                                } else if (bug.arIndex == 0) { // Basketball
+
+                                    return (
+
+                                        <Image style={styless.customMarker} source={require("../resources/AR.png")} />
+                                    )
+                                } else { // Catoon Entrance
+                                    return (
+
+                                        <Image style={styless.customMarker} source={require("../resources/VR.png")} />
+                                    )
+                                }
+
+
+
+
+
+
                             }
 
                         }}
                         onPress={() => {
-                            this._catcherOnMarkerPress({ rt_lon: this.state.rt_lon, rt_lat: this.state.rt_lat, bugId: bug.bugId, userId: this.props.user.userDetail.userId })
+                            this._catcherOnMarkerPress({ rt_lon: this.state.rt_lon, rt_lat: this.state.rt_lat, bugId: bug.bugId, userId: this.props.user.userDetail.userId,type:bug.type })
                         }}
                         coordinate={{
                             latitude: bug.lat,

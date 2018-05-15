@@ -56,7 +56,7 @@ export default class HeaderPage1 extends Component {
         return (
             <View style={styles.container}>
                 <Text style={styles.welcome}>
-                    金虫子
+                    答题来点亮周边的党图标吧
                  </Text>
             </View>
         )
@@ -75,9 +75,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#F5FCFF',
     },
     welcome: {
-        fontSize: 50,
+        fontSize: 25,
         textAlign: 'center',
         margin: 10,
+        color:"#008B8B",
     },
     instructions: {
         textAlign: 'center',

@@ -127,10 +127,9 @@ export default class LoginPage extends Component {
 
             <View style={{ flex: 1 }}>
 
-                <View style={{ marginBottom: 20, marginTop: 30, justifyContent: "center", alignItems: "center" }}><Image style={{ justifyContent: "center" }} source={require("../resources/light.png")}></Image></View>
+                <View style={{ marginBottom: 10, marginTop: 20, justifyContent: "center", alignItems: "center" }}><Image style={{ justifyContent: "center" ,width:150,height:150}} source={require("../resources/logo.png")}></Image></View>
                 <View style={{ flex: 1, flexDirection: "column" }}>
                     <View >
-
                         <Form style={{ borderRadius: 10 }}>
                             <Item style={{ marginLeft: 10, marginTop: 1, marginRight: 10, borderRadius: 5 }}>
                                 <Input style={{ backgroundColor: "#ffffff" }} placeholderTextColor="#aaaaaa" placeholder="用户名" onChange={(Text) => { this.setState({ userName: Text }) }} onChangeText={(Text) => { this.setState({ userName: Text }) }} />
@@ -218,16 +217,16 @@ export default class LoginPage extends Component {
 
                 <KeyboardAwareScrollView style={{ marginTop: 60, marginBottom: 80, marginLeft: 20, marginRight: 20, backgroundColor: "#D5EAE9", borderRadius: 15, flex: 1, paddingTop: 30, paddingLeft: 25, paddingRight: 25, paddingBottom: 30 }}>
 
-                    <Text style={{ marginTop: 10, textAlign: 'center', color: "#000000", fontSize: 18 }}>欢迎新用户!</Text>
+            
                     <Form>
                         <Item rounded style={{ marginTop: 40, backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>
-                            <TextInput maxLength={22} placeholder="用户名" onChangeText={(Text) => { this.setState({ reg_userName: Text }) }} style={{ flex: 1 }} underlineColorAndroid='transparent' />
+                            <TextInput maxLength={22} value = {this.state.reg_userName}  placeholder="用户名" onChangeText={(Text) => { this.setState({ reg_userName: Text }) }} style={{ flex: 1 }} underlineColorAndroid='transparent' />
                         </Item>
 
                         <View style={{ marginTop: 10, borderRadius: 14, backgroundColor: '#D5EAE9' }}>
                             <Item rounded style={{ borderRadius: 14, borderColor: "#555555" }}>
                                 <View style={{ flex: 3 }}>
-                                    <TextInput maxLength={18} placeholder="密码" onChangeText={(Text) => { this.setState({ reg_password: Text }) }} underlineColorAndroid='transparent' />
+                                    <TextInput maxLength={18} value = {this.state.reg_password} placeholder="密码" onChangeText={(Text) => { this.setState({ reg_password: Text }) }} underlineColorAndroid='transparent' />
                                 </View>
                             </Item>
                         </View>
@@ -236,7 +235,7 @@ export default class LoginPage extends Component {
                         <View style={{ marginTop: 10, borderRadius: 14, backgroundColor: '#D5EAE9' }}>
                             <Item rounded style={{ borderRadius: 14, borderColor: "#555555" }}>
                                 <View style={{ flex: 3 }}>
-                                    <TextInput placeholder="手机号码" keyboardType="numeric" onChangeText={(Text) => { this.setState({ reg_phone: Text }) }} underlineColorAndroid='transparent' />
+                                    <TextInput value = {this.state.reg_phone} placeholder="手机号码" keyboardType="numeric" onChangeText={(Text) => { this.setState({ reg_phone: Text }) }} underlineColorAndroid='transparent' />
                                 </View>
 
                             </Item>

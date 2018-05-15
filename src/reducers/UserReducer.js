@@ -46,7 +46,8 @@ export default function UserReducer(state = initialState, action = {}) {
                 //加载失败
                 let newState = {
                     ...state,
-                    addingUser: 3
+                    addingUser: 3,
+                    des:"网络异常"
                 };
                 return newState;
 

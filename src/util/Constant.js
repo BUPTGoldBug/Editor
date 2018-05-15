@@ -9,7 +9,7 @@ import storage from 'redux-persist/es/storage';
 export const sharedProps = {
     apiKey: "142365C9-3C5A-4250-AD1A-FD21C10322EB",
 }
-export const ROOT_SERVER_URL = "http://10.209.8.116:8084/"; 
+export const ROOT_SERVER_URL = "http://10.8.190.199:8084/"; 
 
 export const URL = {
     addUser: "user/addUser",
@@ -398,7 +398,7 @@ export const regUtils ={
 
 
     passwordReg:/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/,
-    phone:/^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/,
+    phone:/^1\d{10}$/,
     regEn : /[`~!@#$%^&*()_+<>?:"{},.\/;'[\]\s+\r+\n+]/im,
     regCn : /[·！#￥（——）：；“”‘、，|《。》？、【】[\]\s+\r+\n+]/im,
 

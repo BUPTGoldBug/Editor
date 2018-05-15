@@ -40,7 +40,10 @@ export const beforeRegister = function (data) {
     return (dispatch) => {
         const { regUtils } = constant;
         let userName = data.userName, password = data.password, userPhone = data.userPhone;//提出来
-        if (regUtils.regCn.test(userName) || regUtils.regCn.test(password) || regUtils.regCn.test(userPhone) ||
+        if( userName.length <=0 || password.length <= 0 || userPhone.length <= 0){
+            dispatch(failedRegister("用户名，密码，手机号均不可为空!"));
+
+        } else if (regUtils.regCn.test(userName) || regUtils.regCn.test(password) || regUtils.regCn.test(userPhone) ||
             regUtils.regEn.test(userName) || regUtils.regEn.test(password) || regUtils.regEn.test(userPhone)
         ) {
             //有特殊字符
@@ -50,7 +53,7 @@ export const beforeRegister = function (data) {
         } else if (regUtils.passwordReg.test(password) == false) {
             //注册
             //有特殊字符
-            dispatch(failedRegister("密码只能有数字和字母，且长度在6-16位之间"));
+            dispatch(failedRegister("密码必须只含有数字和字母，且长度在6-16位之间"));
 
 
         } else if (regUtils.phone.test(userPhone) == false) {

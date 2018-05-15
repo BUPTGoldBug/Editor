@@ -1,9 +1,9 @@
 import * as types from '../util/ActionTypes'
 import * as constant from '../util/Constant'
 import { push, pop, reset, goBack } from './NavigatorAction'
-import {initSelectGameState,initCatchGame} from './ARAction'
+import { initSelectGameState, initCatchGame } from './ARAction'
 export const getAroundBugs = function (state) {
-    
+
     return {
         type: types.GET_AROUND_BUGS,
         payload: fetch(
@@ -13,26 +13,27 @@ export const getAroundBugs = function (state) {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    lon:state.userLon,
-                    lat:state.userLat,               
+                    lon: state.userLon,
+                    lat: state.userLat,
+                    userId: state.userId
                 })
-            }).then(response => response.json()).catch(()=>{return false;})
+            }).then(response => response.json()).catch(() => { return false; })
 
     }
 
 
 }
-export const initStateOfSubmit=function(){
-    return (dispatch)=>{
+export const initStateOfSubmit = function () {
+    return (dispatch) => {
         dispatch(changeStateOfSubmit(0))
     }
 
 }
-export const changeStateOfSubmit = function (state){
+export const changeStateOfSubmit = function (state) {
     return {
-        type:types.changeStateOfSubmit,
-        payload:{
-            state:state
+        type: types.changeStateOfSubmit,
+        payload: {
+            state: state
         }
     }
 
@@ -43,8 +44,8 @@ export const addGoldBug = function (state) {
 
     var goldBug = JSON.stringify({
         bugInfo: {
-            deathTime:state.bugInfo.deathTime,
-            startTime:state.bugInfo.startTime,
+            deathTime: state.bugInfo.deathTime,
+            startTime: state.bugInfo.startTime,
             start_lon: state.bugInfo.start_lon,
             start_lat: state.bugInfo.start_lat,
             end_lon: state.bugInfo.end_lon,
@@ -65,7 +66,7 @@ export const addGoldBug = function (state) {
             contentType: state.content.contentType,
             key_: state.content.key,
             //arIndex:state.index,
-            arIndex:-1
+            arIndex: -1
         },
     });
 
@@ -83,7 +84,7 @@ export const addGoldBug = function (state) {
                     'Content-Type': 'application/json'
                 },
                 body: goldBug
-            }).then(response => response.json()).then(res=>{console.log("RESULT IS");console.log(res);return res;}).catch(() => { return false; })
+            }).then(response => response.json()).then(res => { console.log("RESULT IS"); console.log(res); return res; }).catch(() => { return false; })
 
     }
 
@@ -170,7 +171,7 @@ export const dySettingPageToTimeSettingPage = function (params) {
 }
 
 
-function sendDySettingParam(params){
+function sendDySettingParam(params) {
     return {
         type: types.DySettingPage_Param,
         payload: params
@@ -192,15 +193,15 @@ export const endPointPageToDySettingPage = function (params) {
     }
 }
 
-export const resetCatchBugs = function (){ // 退出捉虫界面
-    return (dispatch)=>{
+export const resetCatchBugs = function () { // 退出捉虫界面
+    return (dispatch) => {
         dispatch(initCatchGame());//ar的也清理下
         dispatch(initSpecBugState());
     }
 
 
 }
-export const vaildContent = function (goldBug){
+export const vaildContent = function (goldBug) {
 
     return {
         type: types.VAILD_BUGCONTENT,
@@ -211,7 +212,7 @@ export const vaildContent = function (goldBug){
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(goldBug)
-            }).then(response => response.json()).then(res=>{console.log("AIAIAIAAI:");console.log(goldBug);console.log("BIBIBIBIBI:");console.log(res);return res;}).catch(() => { return false; })
+            }).then(response => response.json()).then(res => { console.log("AIAIAIAAI:"); console.log(goldBug); console.log("BIBIBIBIBI:"); console.log(res); return res; }).catch(() => { return false; })
 
     }
 
@@ -221,19 +222,19 @@ export const vaildContent = function (goldBug){
 
 }
 
-export const initSpecBugState = function (){
+export const initSpecBugState = function () {
     return {
-        type:types.initSpecBugState,
-        payload:{}
+        type: types.initSpecBugState,
+        payload: {}
     };
 
 
 
 }
-export const getOneSpecBug = function (common){
+export const getOneSpecBug = function (common) {
     //捉虫
     return {
-        type:types.GET_ONE_BUGCONTENT,
+        type: types.GET_ONE_BUGCONTENT,
         payload: fetch(
             constant.ROOT_SERVER_URL + constant.URL.getSpecBug, {
                 method: 'post',
@@ -241,10 +242,11 @@ export const getOneSpecBug = function (common){
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    bid:common.bugId,
-                    userId:common.userId,
-                    rt_lon:common.rt_lon,
-                    rt_lat:common.rt_lat
+                    bid: common.bugId,
+                    userId: common.userId,
+                    rt_lon: common.rt_lon,
+                    rt_lat: common.rt_lat,
+                    type:common.type
                 })
             }).then(response => response.json()).then((responseJson => {
                 //responseJson.arIndex = -1;
@@ -252,8 +254,8 @@ export const getOneSpecBug = function (common){
             })).catch(() => { return false; })
     }
 }
-export const catchOneBug =function(common){
-    return (dispatch)=>{
+export const catchOneBug = function (common) {
+    return (dispatch) => {
         dispatch(initCatchGame());
         dispatch(initSpecBugState());//先清空这两个状态
         dispatch(getOneSpecBug(common));
@@ -331,7 +333,7 @@ export const Page2ToHome = function (goldBugInfo) {
     return (dispatch) => {
 
 
-       
+
         dispatch(reset());
         //2.Set the Visibility of Homepage
         dispatch(setHomePageVisibility(true));
@@ -339,8 +341,8 @@ export const Page2ToHome = function (goldBugInfo) {
         //3.Set the Visibility of Page 2
         dispatch(setPage2Visibility(false));
         // dispatch(addGoldBug(goldBugInfo));
-       
-  
+
+
     }
 }
 
@@ -355,14 +357,14 @@ export const homeToPage1 = function (params) {
         //3.Set the Visibility of Page 2
         dispatch(setPage2Visibility(false));
         //1.AddGoldBugPage1
-     
+
     }
 }
 
 export const switchToHome = function () {
 
     return (dispatch) => {
- 
+
 
         //2.Set the Visibility of Homepage
         dispatch(setHomePageVisibility(true));
@@ -370,7 +372,7 @@ export const switchToHome = function () {
         dispatch(setPage1Visibility(false));
         //3.Set the Visibility of Page 2
         dispatch(setPage2Visibility(false));
-               //1.AddHomePage
+        //1.AddHomePage
         dispatch(goBack(constant.route_pathName.homePage));
     }
 }
@@ -379,7 +381,7 @@ export const page2ToPage1 = function () {
 
     return (dispatch) => {
         //1.AddGoldBugPage1
-       
+
         //2.Set the Visibility of Homepage
         dispatch(setHomePageVisibility(false));
         //3.Set the Visibility of Page 2
@@ -402,7 +404,7 @@ export const page1ToPage2 = function (params) {
         dispatch(setPage2Visibility(true));
         //4.Set the Visibility of Page 1
         dispatch(setPage1Visibility(false));
-    
+
     }
 }
 

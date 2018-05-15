@@ -63,6 +63,8 @@ export const getBugDetail = function (bugId,userName,type) {
                     rt_lon:0,
                     rt_lat:0,
                     isSuperUser:0,
+                    type:-1,
+                    
                 })
             }).then(response => {
                 let responseJson = response.json();

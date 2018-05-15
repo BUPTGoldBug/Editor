@@ -224,7 +224,7 @@ export default class CheckPage extends Component {
                     </ScrollView>
                     <List>
                         {renderIf(!this.isEmpty(bugDetail.answer[0]))(
-                            <View style={{ marginTop: 10, marginLeft: 15, marginRight: 15, borderRadius: 14, backgroundColor: '#D5EAE9' }}>
+                            <View style={{ marginTop: 10, marginLeft: 15, marginRight: 15, borderRadius: 14, backgroundColor: bugDetail.key_.substring(0,1) == "1" ? '#A9A9A9' : '#D5EAE9'  }}>
                                 <Item rounded style={{ marginLeft: 0, borderRadius: 14, borderColor: "#555555" }}>
                                     <TouchableWithoutFeedback
                                         style={{ flex: 1 }}
@@ -237,7 +237,7 @@ export default class CheckPage extends Component {
                             </View>)}
 
                         {renderIf(!this.isEmpty(bugDetail.answer[1]))(
-                            <View style={{ marginTop: 10, marginLeft: 15, marginRight: 15, borderRadius: 14, backgroundColor: '#D5EAE9' }}>
+                            <View style={{ marginTop: 10, marginLeft: 15, marginRight: 15, borderRadius: 14, backgroundColor: bugDetail.key_.substring(1,2) == "1" ? '#A9A9A9' : '#D5EAE9'  }}>
                                 <Item rounded style={{ marginLeft: 0, borderRadius: 14, borderColor: "#555555" }}>
                                     <TouchableWithoutFeedback
                                         style={{ flex: 1 }}
@@ -250,7 +250,7 @@ export default class CheckPage extends Component {
                             </View>)}
 
                         {renderIf(!this.isEmpty(bugDetail.answer[2]))(
-                            <View style={{ marginTop: 10, marginLeft: 15, marginRight: 15, borderRadius: 14, backgroundColor: '#D5EAE9' }}>
+                            <View style={{ marginTop: 10, marginLeft: 15, marginRight: 15, borderRadius: 14, backgroundColor: bugDetail.key_.substring(2,3) == "1" ? '#A9A9A9' : '#D5EAE9'  }}>
                                 <Item rounded style={{ marginLeft: 0, borderRadius: 14, borderColor: "#555555" }}>
                                     <TouchableWithoutFeedback
                                         style={{ flex: 1 }}
@@ -263,7 +263,7 @@ export default class CheckPage extends Component {
                             </View>)}
 
                         {renderIf(!this.isEmpty(bugDetail.answer[3]))(
-                            <View style={{ marginTop: 10, marginLeft: 15, marginRight: 15, borderRadius: 14, backgroundColor: '#D5EAE9' }}>
+                            <View style={{ marginTop: 10, marginLeft: 15, marginRight: 15, borderRadius: 14, backgroundColor: bugDetail.key_.substring(3,4) == "1" ? '#A9A9A9' : '#D5EAE9'  }}>
                                 <Item rounded style={{ marginLeft: 0, borderRadius: 14, borderColor: "#555555" }}>
                                     <TouchableWithoutFeedback
                                         style={{ flex: 1 }}
@@ -455,7 +455,7 @@ export default class CheckPage extends Component {
                                         type: 0
                                     })
                                 }}>
-                                    <Text style={{ color: "#999999" }}>{getStrContent(item.question, 30)}</Text>
+                                    <Text style={{ color: "#999999" }}>{getStrContent(item.question, 20)}</Text>
                                 </TouchableOpacity>
                             </ListItem>
                         );
@@ -556,7 +556,7 @@ export default class CheckPage extends Component {
                                         type: 1
                                     })
                                 }}>
-                                    <Text style={{ color: "#999999" }}>{getStrContent(item.question, 30)}</Text>
+                                    <Text style={{ color: "#999999" }}>{getStrContent(item.question, 20)}</Text>
                                 </TouchableOpacity>
                             </ListItem>
                         );

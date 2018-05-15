@@ -27,6 +27,7 @@ const init_state = {
         des: "",
         score: 0,
         type: -1,
+        key:"0000"
     },
     //里面场景需要的
 }
