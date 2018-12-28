@@ -65,8 +65,8 @@ export const addGoldBug = function (state) {
             ans_4: state.content.ans_4,
             contentType: state.content.contentType,
             key_: state.content.key,
-            //arIndex:state.index,
-            arIndex: -1
+            arIndex:state.index,
+            //arIndex: -1
         },
     });
 
@@ -321,9 +321,9 @@ export const timeSettingToHomePage = function (params) {
 
         dispatch(reset());
 
-        dispatch(setTimeSettingPageVisibility(false));
+      //  dispatch(setTimeSettingPageVisibility(false));
 
-        dispatch(setHomePageVisibility(true));
+      //  dispatch(setHomePageVisibility(true));
 
     }
 }
@@ -336,10 +336,10 @@ export const Page2ToHome = function (goldBugInfo) {
 
         dispatch(reset());
         //2.Set the Visibility of Homepage
-        dispatch(setHomePageVisibility(true));
+       // dispatch(setHomePageVisibility(true));
 
         //3.Set the Visibility of Page 2
-        dispatch(setPage2Visibility(false));
+       // dispatch(setPage2Visibility(false));
         // dispatch(addGoldBug(goldBugInfo));
 
 

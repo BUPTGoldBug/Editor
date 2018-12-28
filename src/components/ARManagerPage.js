@@ -51,7 +51,7 @@ import {
 } from 'native-base';
 import ARSceneSelectPage from './ARSceneSelectPage'; //种虫的AR页面
 import ARSceneCatchPage from './ARSceneCatchPage'; //捉虫的AR页面
-import { styles, sharedProps, gameList, vectorList, xConfilt } from '../util/Constant';
+import { styles, sharedProps, gameList, vectorList, xConfilt ,checkPermissions,arRequest,requsetPermissions} from '../util/Constant';
 import Icon1 from 'react-native-vector-icons/Feather'
 import Modal from 'react-native-modal'
 import TimeMix from 'react-timer-mixin'
@@ -92,11 +92,16 @@ export default class ARManagerPage extends Component {
 
 
     }
+    componentDidMount(){
+     
+
+
+    }
     componentWillUnmount() {
         this.distoryTimeout();
     }
     distoryTimeout() {
-        console.log("!!!!!!distoryTimeout!!!!!!!!!!!")
+ 
         this.timer && TimeMix.clearInterval(this.timer);
         this.timer = null;
     }
@@ -117,7 +122,7 @@ export default class ARManagerPage extends Component {
 
                     });
 
-                }, 300
+                }, 100
             );
             
         } else if (loading == false) {
@@ -139,8 +144,7 @@ export default class ARManagerPage extends Component {
     render() {
         //在这个函数里面，需要根据params传进来的type决定渲染什么页面（种虫还是捉虫）
         const { arType, index, content } = this.props.navigation.state.params;
-        console.log("render once!!!");
-
+     
         return (
             <View style={styles.arContainer}>
                 {this.renderArContent(arType, index, content)}
@@ -382,7 +386,7 @@ export default class ARManagerPage extends Component {
                 }
 
 
-            } else if (index == 1) {
+            } else if (index == 1 || index == 2 || index == 3) {
                 //进图答题类型，一个输入框，一个按钮
                 return (
                     <ScrollView
@@ -502,7 +506,7 @@ export default class ARManagerPage extends Component {
                 else return (
                     null
                 );
-            } else if (index == 1) {
+            } else if (index == 1 || index == 2 || index ==3 ) {
                 //当游戏时 0 的时候
                 if (times <= 0 && success == 0) {
                     //失败了

@@ -6,7 +6,7 @@
 
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import store,{persistor}from './Store';
+import store, { persistor } from './Store';
 
 //import AddUserPageContainer from "./container/AddUserPageContainer";
 import NavigationContainer from './containers/NavigationPageContainer';
@@ -18,15 +18,34 @@ import {
     View
 } from 'react-native';
 import { PersistGate } from 'redux-persist/integration/react'
+import { checkPermissions, requsetPermissions, resultsOfPermission, rootRequests } from './util/Constant'
 
 export default class App extends Component {
+
+
     render() {
         return (
             <Provider store={store}>
                 {/*<AddUserPageContainer />*/}
-                <PersistGate loading={ <HeaderPage1 />}  persistor={persistor}>
+                <PersistGate loading={<HeaderPage1 />} persistor={persistor}>
                     <NavigationContainer />
                 </PersistGate>
             </Provider>);
+    }
+
+    componentDidMount() {
+        let a =  checkPermissions(rootRequests);
+        a.then((opt)=>{
+
+        
+            if (opt == false) {
+                requsetPermissions(rootRequests);
+    
+    
+            }
+        })
+      
+
+
     }
 }

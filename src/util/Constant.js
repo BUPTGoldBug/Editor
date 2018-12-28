@@ -4,56 +4,71 @@
     POSITION_FILED:3
 };*/
 import { View, StyleSheet } from 'react-native'
-import {ViroMaterials,ViroAnimations} from 'react-viro'
+import { ViroMaterials, ViroAnimations ,ViroARTrackingTargets} from 'react-viro'
 import storage from 'redux-persist/es/storage';
+import { PermissionsAndroid, BackAndroid } from 'react-native'
 export const sharedProps = {
     apiKey: "142365C9-3C5A-4250-AD1A-FD21C10322EB",
 }
-export const ROOT_SERVER_URL = "http://10.8.190.199:8084/"; 
+export const ROOT_SERVER_URL = "http://101.201.64.196:8084/";
 
 export const URL = {
     addUser: "user/addUser",
-    login:"user/login",
-    getUserDetail:"user/getDetail",//用cookies获取 
-    addGoldBug:"goldbug/addGoldBug",
-    getAroundBugs:"goldbug/getAroundBugs",
-    getSpecBug:"goldbug/getSpecBug",
+    login: "user/login",
+    getUserDetail: "user/getDetail",//用cookies获取 
+    addGoldBug: "goldbug/addGoldBug",
+    getAroundBugs: "goldbug/getAroundBugs",
+    getSpecBug: "goldbug/getSpecBug",
 
-    getCheckedOrCheckingDetail:"goldbug/getSpecBug",
+    getCheckedOrCheckingDetail: "goldbug/getSpecBug",
 
-    vaild:"goldbug/vaildBug",
+    vaild: "goldbug/vaildBug",
     //1
-    getDetail:"goldbug/getSpecBug",
+    getDetail: "goldbug/getSpecBug",
     //2
-    getCheckingList:"superuser/getBugList",
-    getCheckedList:"superuser/getBugList",
+    getCheckingList: "superuser/getBugList",
+    getCheckedList: "superuser/getBugList",
     //3
-    checkBug:"superuser/checkBug",
-    drawBackBug:"superuser/checkBug"
-    
+    checkBug: "superuser/checkBug",
+    drawBackBug: "superuser/checkBug"
+
 };
 
 export const coordinate = {
-    BUPT_Center_Lat:39.961458366,
-    BUPT_Center_Lon:116.358147114516
+    BUPT_Center_Lat: 39.961458366,
+    BUPT_Center_Lon: 116.358147114516
 }
 
 export const feather = require('feather-icons')
 
+export const permissions = [
+    PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+    PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+    PermissionsAndroid.PERMISSIONS.CAMERA,
+    PermissionsAndroid.PERMISSIONS.SYSTEM_ALERT_WINDOW,
+    PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
+    PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+
+
+]
 export const route_pathName = {
     addGoldBugPage2: "AddGoldBugPage2",
     homePage: "HomePage",
-    positionSettingHome:"PositionSettingHome",
-    DySettingPage:"DySettingPage",
-    TimeSettingPage:"TimeSettingPage",
+    positionSettingHome: "PositionSettingHome",
+    DySettingPage: "DySettingPage",
+    TimeSettingPage: "TimeSettingPage",
     arScene: "arScene",
-    LoginPage:"LoginPage",
-    HeaderPage:"HeaderPage",
-    CheckPage:"CheckPage",
-   
+    LoginPage: "LoginPage",
+    HeaderPage: "HeaderPage",
+    CheckPage: "CheckPage",
+
 
 }
-
+export const resultsOfPermission = {
+    granted: 'granted',
+    denied: 'denied',
+    never_ask_again: 'never_ask_again'
+}
 ViroMaterials.createMaterials({
     grid: {
         lightingModel: "Blinn",
@@ -73,9 +88,74 @@ ViroMaterials.createMaterials({
     },
     cube_color: {
         diffuseColor: "#0021cbE6"
-    }
+    },
+    white: {
+        lightingModel: "PBR",
+        diffuseTexture: require('../resources/tesla/object_car_main_Base_Color.png'),
+        metalnessTexture: require('../resources/tesla/object_car_main_Metallic.png'),
+        roughnessTexture: require('../resources/tesla/object_car_main_Roughness.png'),
+      },
+      blue: {
+        lightingModel: "PBR",
+        diffuseTexture: require('../resources/tesla/object_car_main_Base_Color_blue.png'),
+        metalnessTexture: require('../resources/tesla/object_car_main_Metallic.png'),
+        roughnessTexture: require('../resources/tesla/object_car_main_Roughness.png'),
+      },
+      grey: {
+        lightingModel: "PBR",
+        diffuseTexture: require('../resources/tesla/object_car_main_Base_Color_grey.png'),
+        metalnessTexture: require('../resources/tesla/object_car_main_Metallic.png'),
+        roughnessTexture: require('../resources/tesla/object_car_main_Roughness.png'),
+      },
+      red: {
+        lightingModel: "PBR",
+        diffuseTexture: require('../resources/tesla/object_car_main_Base_Color_red.png'),
+        metalnessTexture: require('../resources/tesla/object_car_main_Metallic.png'),
+        roughnessTexture: require('../resources/tesla/object_car_main_Roughness.png'),
+      },
+      yellow: {
+        lightingModel: "PBR",
+        diffuseTexture: require('../resources/tesla/object_car_main_Base_Color_yellow.png'),
+        metalnessTexture: require('../resources/tesla/object_car_main_Metallic.png'),
+        roughnessTexture: require('../resources/tesla/object_car_main_Roughness.png'),
+      },
+      white_sphere: {
+        lightingModel: "PBR",
+        diffuseColor: "rgb(231,231,231)",
+      },
+      blue_sphere: {
+        lightingModel: "PBR",
+        diffuseColor: "rgb(19,42,143)",
+      },
+      grey_sphere: {
+        lightingModel: "PBR",
+        diffuseColor: "rgb(75,76,79)",
+      },
+      red_sphere: {
+        lightingModel: "PBR",
+        diffuseColor: "rgb(168,0,0)",
+      },
+      yellow_sphere: {
+        lightingModel: "PBR",
+        diffuseColor: "rgb(200,142,31)",
+    },
 });
+ViroARTrackingTargets.createTargets({
+    logo : {
+      source : require('../resources/logo1.png'),
+      orientation : "Up",
+      physicalWidth : 0.165 // real world width in meters
+    },
+    poster : {
+        source : require('../resources/blackpanther.jpg'),
+        orientation : "Up",
+        physicalWidth : 0.6096 // real world width in meters
+      }
+  });
+
 ViroAnimations.registerAnimations({
+    scaleModel:{properties:{scaleX:1, scaleY:1, scaleZ:1,},
+    duration: 1000},
     animateObject: {
         properties: {
 
@@ -94,10 +174,21 @@ ViroAnimations.registerAnimations({
         easing: "Bounce",
         duration: 1
     },
+    scaleUp:{properties:{scaleX:1, scaleY:1, scaleZ:1,},
+                  duration: 500, easing: "bounce"},
+    scaleDown:{properties:{scaleX:0, scaleY:0, scaleZ:0,},
+                  duration: 200,},
+    scaleCar:{properties:{scaleX:.09, scaleY:.09, scaleZ:.09,},
+                  duration: 500, easing: "bounce"},
+    scaleSphereUp:{properties:{scaleX:.8, scaleY:.8, scaleZ:.8,},
+                  duration: 50, easing: "easeineaseout"},
+    scaleSphereDown:{properties:{scaleX:1, scaleY:1, scaleZ:1,},
+                  duration: 50, easing: "easeineaseout"},
+    tapAnimation:[["scaleSphereUp", "scaleSphereDown"],]
 });
 
 export const pushStrength = [1, 1.5, 2.5, 3.1, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, 4, 4.5]; //在3-4之间徘徊 3 3.1 3.2 3.3 3.4 3.5 3.6 3.7 3.8 3.9 4 (12个值)
-export const xConfict = [-5, -4.5, -4, -3.5, -1.5, 1, 0, 1, 1.5, 3.5, 4, 4.5,5]//x轴上的 4  -3.5 -2.5  -1.5 0 1.5  2.5 3.25 3.5  4
+export const xConfict = [-5, -4.5, -4, -3.5, -1.5, 1, 0, 1, 1.5, 3.5, 4, 4.5, 5]//x轴上的 4  -3.5 -2.5  -1.5 0 1.5  2.5 3.25 3.5  4
 //vip几率更高 非vip几率更低
 export const styles = StyleSheet.create({
     middle_text: {
@@ -249,9 +340,9 @@ export const styles = StyleSheet.create({
         //放置消息的
         display: "flex",
         flexDirection: "row",
-        height:30,
+        height: 30,
         justifyContent: 'center',
-        marginBottom:60
+        marginBottom: 60
 
 
     },
@@ -259,9 +350,9 @@ export const styles = StyleSheet.create({
         //放置消息的
         display: "flex",
         flexDirection: "row",
-        height:30,
+        height: 30,
         justifyContent: 'center',
-  
+
 
 
     },
@@ -281,7 +372,7 @@ export const styles = StyleSheet.create({
         color: "#ffffff",
         alignSelf: "center"
     },
-    
+
 
 
 
@@ -315,12 +406,12 @@ export const styles = StyleSheet.create({
 
     },
     customMarker: {
-        width:35,
-        height:35
+        width: 35,
+        height: 35
     },
     mainMark: {
-        width:45,
-        height:45
+        width: 45,
+        height: 45
     },
     content_text_view: {
         flex: 1,
@@ -374,32 +465,126 @@ export const persistConfig = {
     key: 'root',
     storage: storage,
     whitelist: ['user'] // only navigation will be persisted
-  };
-export const getRandom =  function (start, end) {
+};
+export const getRandom = function (start, end) {
 
     var length = end - start + 1;
-    
-    var num = parseInt(Math.random() * (length) + end);
-    
-    return num;
-    
-};
-export const gameList = [1,2];
-export const getStrContent = function (txt,size){
 
-    if(txt.length>size){
-       let str=  txt.substr(0,size)+"...";
-       return str;
-    }else {
+    var num = parseInt(Math.random() * (length) + end);
+
+    return num;
+
+};
+export const gameList = [1, 2,3,4];
+export const getStrContent = function (txt, size) {
+
+    if (txt.length > size) {
+        let str = txt.substr(0, size) + "...";
+        return str;
+    } else {
         return txt;
     }
 }
-export const regUtils ={
+export const regUtils = {
 
 
-    passwordReg:/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/,
-    phone:/^1\d{10}$/,
-    regEn : /[`~!@#$%^&*()_+<>?:"{},.\/;'[\]\s+\r+\n+]/im,
-    regCn : /[·！#￥（——）：；“”‘、，|《。》？、【】[\]\s+\r+\n+]/im,
+    passwordReg: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/,
+    phone: /^1\d{10}$/,
+    regEn: /[`~!@#$%^&*()_+<>?:"{},.\/;'[\]\s+\r+\n+]/im,
+    regCn: /[·！#￥（——）：；“”‘、，|《。》？、【】[\]\s+\r+\n+]/im,
 
-} 
+}
+
+
+
+export const rootRequests = [
+
+    PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+
+];
+
+export const baseRequests = [
+
+    PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
+    PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+    PermissionsAndroid.PERMISSIONS.CAMERA
+
+];
+export const arRequest = [
+    PermissionsAndroid.PERMISSIONS.WAKE_LOCK
+];
+export const checkPermissions = async function (permissions) {
+    if (permissions instanceof Array) {
+        let result = true;
+        for (let i in permissions) {
+            //循环判断
+            let a = await checkPermissions(permissions[i])
+            console.log(permissions[i]+":"+a)
+            if ( a == false) {
+                return false;//失败了
+            }
+        }
+        return true; //都有，那就true
+    } else {
+
+        //检查权限的通用函数
+        try {
+            //返回Promise类型
+            const granted = await PermissionsAndroid.check(
+                permissions
+            )
+            return granted;
+        } catch (err) {
+            //出错，返回false
+            return false;
+        }
+
+    }
+
+
+
+
+
+}
+export const requsetPermissions = async function (permissions) {
+    if (permissions instanceof Array) {
+        //多个权限
+        try {
+            const granteds = await PermissionsAndroid.requestMultiple(permissions);
+            for (let i in permissions) {
+                //遍历检查每个权限是否申请完整
+                if (granteds[permissions[i]] === resultsOfPermission.granted) {
+                    continue;
+                } else {
+                    //不同意被，退出
+                    BackAndroid.exitApp();
+                }
+            }
+            return true;
+        } catch (error) {
+            BackAndroid.exitApp();
+        }
+
+    } else {
+        //不是数组
+        try {
+            const granted = await PermissionsAndroid.request(
+                permissions
+            );
+            if (granted === resultsOfPermission.granted) {
+                //申请成功
+                return true;
+            } else {
+                BackAndroid.exitApp();
+            }
+
+
+        } catch (error) {
+            BackAndroid.exitApp();
+        }
+
+
+    }
+
+
+}

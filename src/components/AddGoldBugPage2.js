@@ -288,7 +288,6 @@ export default class AddGoldBugPage2 extends Component {
                         <Text style={{ color: "#ffffff" }}>选择vr游戏</Text>
                     </Button>
                 </Item>);
-
         } else {
             return (
                 <Item rounded style={{ backgroundColor: "#D5EAE9", borderRadius: 14, borderColor: "#555555" }}>

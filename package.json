@@ -11,9 +11,9 @@
     "feather-icons": "^4.7.0",
     "native-base": "^2.3.10",
     "prop-types": "^15.6.1",
-    "react": "16.2.0",
+    "react": "16.3.1",
     "react-logger": "^1.1.0",
-    "react-native": "0.52.0",
+    "react-native": "^0.55.1",
     "react-native-action-button": "^2.8.4",
     "react-native-amap3d": "^0.12.1",
     "react-native-datepicker": "^1.6.0",
@@ -26,7 +26,7 @@
     "react-navigation": "^1.5.1",
     "react-navigation-redux-helpers": "^1.0.3",
     "react-redux": "^5.0.7",
-    "react-viro": "^2.5.1",
+    "react-viro": "2.7.0",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
     "redux-persist": "^5.9.1",
@@ -39,7 +39,7 @@
     "babel-jest": "22.4.1",
     "babel-preset-react-native": "4.0.0",
     "jest": "22.4.2",
-    "react-test-renderer": "16.2.0"
+    "react-test-renderer": "16.3.1"
   },
   "jest": {
     "preset": "react-native"

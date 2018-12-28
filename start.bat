@@ -1,4 +1,4 @@
 start npm start
 cd "./android"
 
-gradlew.bat installGvrDebug
+gradlew.bat installGvrDebug --stacktrace

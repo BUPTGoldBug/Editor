@@ -27,7 +27,10 @@ import {
     ViroAmbientLight,
     ViroParticleEmitter,
     ViroSphere,
-    ViroController
+    ViroController,
+    ViroLightingEnvironment,
+    ViroARImageMarker,
+    ViroOmniLight
 } from 'react-viro';
 import TimeMix from 'react-timer-mixin'
 import {
@@ -95,25 +98,54 @@ export default class ARSceneCatchPage extends Component {
                 restitution: 0.65,
 
             },
+            texture: "white",
+            playAnim: false,
+            animateCar: false,
+            tapWhite: false,
+            tapBlue: false,
+            tapGrey: false,
+            tapRed: false,
+            tapYellow: false,
+
+            loopState:false,
+            animationName:"01",
+            pauseUpdates : false,
+            modelAnim: false,
         }
+        this._onAnchorFound = this._onAnchorFound.bind(this);
+        this._toggleButtons= this._toggleButtons.bind(this);
+        this. _selectWhite= this._selectWhite.bind(this);
+        this. _selectBlue= this._selectBlue.bind(this);
+        this. _selectGrey= this._selectGrey.bind(this);
+        this. _selectRed= this._selectRed.bind(this);
+        this. _selectYellow= this._selectYellow.bind(this);
+        this. _animateFinished= this._animateFinished.bind(this);
         this.clicked = false;//一个记录变量
         this.renderGame = this.renderGame.bind(this);
         this.renderGame1 = this.renderGame1.bind(this);
         this.renderGame2 = this.renderGame2.bind(this);
+        this.renderGame3 = this.renderGame3.bind(this);
         this.initScene = this.initScene.bind(this);
         this.onCollide = this.onCollide.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onClickState = this.onClickState.bind(this);
         this._setBoxRef = this._setBoxRef.bind(this);
         this._setControllerNodeRef = this._setControllerNodeRef.bind(this);
+        this.renderGame4 = this.renderGame4 .bind(this);
 
+        this.  _onFinish= this._onFinish.bind(this);
+        
+        this.  _onAnchorFound1= this._onAnchorFound1.bind(this);
+        
+        this. _onModelLoad = this._onModelLoad.bind(this);
     }
     componentWillReceiveProps(nextProps) {
        // console.log("nextProps")
        // console.log(nextProps);
         const catch_  = nextProps.arSceneNavigator.viroAppProps.ar.catch;
         this.setState({
-            catch_: catch_
+            catch_: catch_,
+        
         });
 
     }
@@ -137,8 +169,12 @@ export default class ARSceneCatchPage extends Component {
     renderGame(typeIndex) {
         if (typeIndex == 0) {
             return this.renderGame1();
-        } else {
+        } else if(typeIndex == 1){
             return this.renderGame2();
+        }else if(typeIndex == 2){
+            return this.renderGame3();
+        }else if(typeIndex == 3){
+            return this.renderGame4();
         }
 
 
@@ -185,7 +221,7 @@ export default class ARSceneCatchPage extends Component {
                        null
                     }
                     viroTag={this.state.ballTag}
-                    onDrag={undefined}
+              
                 >
 
                     <Viro3DObject
@@ -198,12 +234,7 @@ export default class ARSceneCatchPage extends Component {
                         require('../resources/res/blinn1_Roughness.png'),
                         require('../resources/res/blinn1_Normal_OpenGL.png')]}
                         type="VRX"
-
-
-                       
-
                     />
-
                 </ViroNode>
                 <ViroQuad
                     position={[0, -1, 0]}
@@ -243,6 +274,7 @@ export default class ARSceneCatchPage extends Component {
             startCatchProcesser();
         } else if (state == 2) {
             //弹上来
+            console.log("un press!!!!")
             endCatchProcesser();
            
             this.initScene();
@@ -262,11 +294,167 @@ export default class ARSceneCatchPage extends Component {
                             require('../resources/portal_res/portal_wood_frame/portal_wood_frame_specular.png')]}
                             type="VRX" />
                     </ViroPortal>
-                    <Viro360Image source={require("../resources/portal_res/2.jpg")} />
+                    <Viro360Image source={require("../resources/portal_res/yourname.jpg")} />
                 </ViroPortalScene>
 
             </ViroARScene>
         );
+
+    }
+    renderGame3(){
+        return (
+            <ViroARScene>
+      
+              <ViroLightingEnvironment source={require('../resources/tesla/garage_1k.hdr')}/>
+      
+              <ViroARImageMarker target={"logo"} onAnchorFound={this._onAnchorFound} pauseUpdates={this.state.pauseUpdates}>
+                <ViroNode scale={[0, 0, 0]} transformBehaviors={["billboardY"]} animation={{name:this.state.animName, run:this.state.playAnim,}}>
+                  <ViroSphere materials={["white_sphere"]}
+                    heightSegmentCount={20} widthSegmentCount={20} radius={.03}
+                    position={[-.2, .25, 0]}
+                    onClick={this._selectWhite}
+                    animation={{name:"tapAnimation", run:this.state.tapWhite, onFinish:this._animateFinished}}
+                    shadowCastingBitMask={0} />
+      
+                  <ViroSphere materials={["blue_sphere"]}
+                    heightSegmentCount={20} widthSegmentCount={20} radius={.03}
+                    position={[-.1, .25, 0]}
+                    onClick={this._selectBlue}
+                    animation={{name:"tapAnimation", run:this.state.tapBlue, onFinish:this._animateFinished}}
+                    shadowCastingBitMask={0} />
+      
+                  <ViroSphere materials={["grey_sphere"]}
+                    heightSegmentCount={20} widthSegmentCount={20} radius={.03}
+                    position={[0, .25, 0]}
+                    onClick={this._selectGrey}
+                    animation={{name:"tapAnimation", run:this.state.tapGrey, onFinish:this._animateFinished}}
+                    shadowCastingBitMask={0} />
+      
+                  <ViroSphere materials={["red_sphere"]}
+                    heightSegmentCount={20} widthSegmentCount={20} radius={.03}
+                    position={[.1, .25, 0]}
+                    onClick={this._selectRed}
+                    animation={{name:"tapAnimation", run:this.state.tapRed, onFinish:this._animateFinished}}
+                    shadowCastingBitMask={0} />
+      
+                  <ViroSphere materials={["yellow_sphere"]}
+                    heightSegmentCount={20} widthSegmentCount={20} radius={.03}
+                    position={[.2, .25, 0]}
+                    onClick={this._selectYellow}
+                    animation={{name:"tapAnimation", run:this.state.tapYellow, onFinish:this._animateFinished}}
+                    shadowCastingBitMask={0}/>
+                </ViroNode>
+      
+                <Viro3DObject
+                  scale={[0, 0, 0]}
+                  source={require('../resources/tesla/object_car.obj')}
+                  resources={[require('../resources/tesla/object_car_2.mtl'),
+                              ]}
+                  type="OBJ"
+                  materials={this.state.texture}
+                  onClick={this._toggleButtons}
+                  animation={{name:"scaleCar", run:this.state.animateCar,}} />
+      
+                <ViroSpotLight
+                  innerAngle={5}
+                  outerAngle={25}
+                  direction={[0,-1,0]}
+                  position={[0, 5, 1]}
+                  color="#ffffff"
+                  castsShadow={true}
+                  shadowMapSize={2048}
+                  shadowNearZ={2}
+                  shadowFarZ={7}
+                  shadowOpacity={.7} />
+      
+                <ViroQuad
+                  rotation={[-90, 0, 0]}
+                  position={[0, -0.001, 0]}
+                  width={2.5} height={2.5}
+                  arShadowReceiver={true} />
+      
+              </ViroARImageMarker>
+            </ViroARScene>
+          );
+     
+
+
+
+    }
+    renderGame4(){
+        return (
+            <ViroARScene>
+              <ViroAmbientLight color="#ffffff" intensity={200}/>
+      
+              <ViroARImageMarker target={"poster"} onAnchorFound={this._onAnchorFound1} pauseUpdates={this.state.pauseUpdates}>
+      
+                <ViroNode position={[0, -.1, 0]} scale={[0,0,0]} rotation={[-90, 0, 0]} dragType="FixedToWorld" onDrag={()=>{}}
+                  animation={{name:"scaleModel", run:this.state.playAnim,}} >
+                  <Viro3DObject onLoadEnd={this._onModelLoad}
+                    source={require('../resources/blackpanther/object_bpanther_anim.vrx')}
+                    resources={[require('../resources/blackpanther/object_bpanther_Base_Color.png'),
+                                require('../resources/blackpanther/object_bpanther_Metallic.png'),
+                                require('../resources/blackpanther/object_bpanther_Mixed_AO.png'),
+                                require('../resources/blackpanther/object_bpanther_Normal_OpenGL.png'),
+                                require('../resources/blackpanther/object_bpanther_Roughness.png')]}
+                    position={[0, -1.45, 0]}
+                    scale={[.9,.9,.9]}
+                    animation={{name:this.state.animationName, run:this.state.modelAnim, loop:this.state.loopState, onFinish:this._onFinish,}}
+                    type="VRX" />
+        
+                </ViroNode>
+      
+              </ViroARImageMarker>
+      
+              <ViroOmniLight
+                  intensity={300}
+                  position={[-10, 10, 1]}
+                  color={"#FFFFFF"}
+                  attenuationStartDistance={20}
+                  attenuationEndDistance={30} />
+      
+              <ViroOmniLight
+                  intensity={300}
+                  position={[10, 10, 1]}
+                  color={"#FFFFFF"}
+                  attenuationStartDistance={20}
+                  attenuationEndDistance={30} />
+      
+              <ViroOmniLight
+                  intensity={300}
+                  position={[-10, -10, 1]}
+                  color={"#FFFFFF"}
+                  attenuationStartDistance={20}
+                  attenuationEndDistance={30} />
+      
+              <ViroOmniLight
+                  intensity={300}
+                  position={[10, -10, 1]}
+                  color={"#FFFFFF"}
+                  attenuationStartDistance={20}
+                  attenuationEndDistance={30} />
+      
+              <ViroSpotLight
+                position={[0, 8, -2]}
+                color="#ffffff"
+                direction={[0, -1, 0]}
+                intensity={50}
+                attenuationStartDistance={5}
+                attenuationEndDistance={10}
+                innerAngle={5}
+                outerAngle={20}
+                castsShadow={true}
+              />
+      
+              <ViroQuad
+                rotation={[-90, 0, 0]}
+                position={[0, -1.6, 0]}
+                width={5} height={5}
+                arShadowReceiver={true}
+                />
+      
+            </ViroARScene>
+          );
 
     }
     onCollide(collidedTag, collidedPoint, collidedNormal) {
@@ -336,4 +524,76 @@ export default class ARSceneCatchPage extends Component {
 
 
     }
+    _onFinish(){
+        this.setState({
+          animationName : "02",
+          loopState: true,
+        })
+      }
+    
+      _onAnchorFound1() {
+        this.setState({
+          pauseUpdates: true,
+          playAnim: true,
+          modelAnim: true,
+        })
+      }
+    
+      _onModelLoad() {
+        setTimeout(()=> {
+          this.setState({
+    
+          })
+        }, 3000);
+      }
+    _onAnchorFound() {
+        this.setState({
+          animateCar: true,
+        })
+      }
+      _toggleButtons() {
+        this.setState({
+          animName: (this.state.animName == "scaleUp" ? "scaleDown" : "scaleUp"),
+          playAnim: true
+        })
+      }
+      _selectWhite(){
+        this.setState({
+          texture : "white",
+          tapWhite: true
+        })
+      }
+      _selectBlue(){
+        this.setState({
+          texture : "blue",
+          tapBlue: true
+        })
+      }
+      _selectGrey(){
+        this.setState({
+          texture : "grey",
+          tapGrey: true
+        })
+      }
+      _selectRed(){
+        this.setState({
+          texture : "red",
+          tapRed: true
+        })
+      }
+      _selectYellow(){
+        this.setState({
+          texture : "yellow",
+          tapYellow: true
+        })
+      }
+      _animateFinished(){
+        this.setState({
+          tapWhite: false,
+          tapBlue: false,
+          tapGrey: false,
+          tapRed: false,
+          tapYellow: false,
+        })
+      }
 }

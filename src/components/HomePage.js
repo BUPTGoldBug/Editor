@@ -33,7 +33,7 @@ import { Col, Grid } from 'react-native-easy-grid';
 import renderIf from './renderIf';
 import moment from 'moment';
 //import index from './C:/Users/Luyao/AppData/Local/Microsoft/TypeScript/2.6/node_modules/@types/react-native-datepicker';
-import { styles as styless, route_pathName, coordinate } from "../util/Constant"
+import { styles as styless, route_pathName, coordinate,checkPermissions,requsetPermissions,baseRequests } from "../util/Constant"
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon1 from 'react-native-vector-icons/SimpleLineIcons';
 import ActionButton from "react-native-action-button"
@@ -116,6 +116,16 @@ export default class HomePage extends Component {
         //     }
         // }, 1000)
 
+        let a = checkPermissions(baseRequests);
+        a.then((txt)=>{
+            console.log("request permission : "+txt)
+            if ( txt== false) {
+                requsetPermissions(baseRequests);
+    
+    
+            }
+        });
+       
         this.interval = setInterval(() => {
             this.props.actions.getAroundBugs({ userLon: this.state.rt_lon, userLat: this.state.rt_lat ,userId:this.props.user.userDetail.userId});
         }, 1500);
@@ -263,16 +273,24 @@ export default class HomePage extends Component {
                     //没玩
                     return (
                         <View style={styless.uiControl_catch_uiCenter_panel}>
-                            <Text style={styless.content_text}>点击按钮开始小游戏</Text>
+                            <Text style={styless.content_text}>点击按钮开始{specBug.arIndex == 0?"砸人物":specBug.arIndex == 1?"虚拟镜像":"跟踪图片"}小游戏</Text>
                             <View style={styless.msg_catch_content}>
                                 <Button style={styless.button_style} info block onPress={() => {
                                     //确定后就要完成游戏
                                     this.props.actions.trunToCatchPage(route_pathName.arScene, {
                                         arType: 1,//捉虫
                                         index: specBug.arIndex,
-                                        content: {
+                                        content:specBug.arIndex == 1? {
                                             question: "这部电影的女主角是",
                                             answer: "米子哈"
+                                        }:specBug.arIndex == 3?{
+                                            question: "这部电影的男主角是",
+                                            answer: "黑豹"
+                                        }:specBug.arIndex == 2?{
+                                            question: "这部车是",
+                                            answer: "特斯拉"
+                                        }:{
+
                                         }
                                     });//回到第一页
                                 }}><Text>确定</Text></Button>
@@ -513,7 +531,7 @@ export default class HomePage extends Component {
 
         const { isHomePageVisible, bugsAround } = this.props;
 
-        //  console.log("++++++++BUGS AROUND+++++++++++");
+        //  console.log("++++++++BUGS AROUND+++++++++++"); 
         // console.log(bugsAround);
         //<View><Text>asd</Text></View>
         return (
@@ -537,7 +555,7 @@ export default class HomePage extends Component {
                 showsTraffic={true}
                 region={{ latitude: coordinate.BUPT_Center_Lat, longitude: coordinate.BUPT_Center_Lon, latitudeDelta: 0.006, longitudeDelta: 0.007 }}
             >
-                {/* <MapView.Marker
+                <MapView.Marker
                     active
                     draggable
                     color="violet"
@@ -563,7 +581,7 @@ export default class HomePage extends Component {
                             <Text ref={(component) => { this.timeText = component; }} style={{ textAlign: "center" }}>{this.state.tmpTime.toLocaleTimeString()}</Text>
                         </View>
                     </TouchableOpacity>
-                </MapView.Marker> */}
+                </MapView.Marker>
                 {this.renderBugsAround(bugsAround)}
             </MapView>
         );
@@ -625,10 +643,20 @@ export default class HomePage extends Component {
 
                                         <Image style={styless.customMarker} source={require("../resources/AR.png")} />
                                     )
-                                } else { // Catoon Entrance
+                                } else if(bug.arIndex == 1){ // Catoon Entrance
                                     return (
 
                                         <Image style={styless.customMarker} source={require("../resources/VR.png")} />
+                                    )
+                                } else if(bug.arIndex == 2){ // Catoon Entrance
+                                    return (
+
+                                        <Image style={styless.customMarker} source={require("../resources/AR_T.png")} />
+                                    )
+                                } else if(bug.arIndex == 3){ // Catoon Entrance
+                                    return (
+
+                                        <Image style={styless.customMarker} source={require("../resources/ionic.png")} />
                                     )
                                 }
 
